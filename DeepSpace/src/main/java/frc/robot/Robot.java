@@ -7,31 +7,29 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.commands.ultrasonic.*;
+
+import java.sql.Time;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
 
 /**
- * This is a demo program showing the use of the RobotDrive class, specifically
- * it contains the code necessary to operate a robot with tank drive.
+ * This class is at the highest level and initializes all of our subsystems, RobotMap, commands, etc
  */
 public class Robot extends TimedRobot {
-  private DifferentialDrive m_myRobot_Front;
-  private DifferentialDrive m_myRobot_Back;
-  private Joystick m_leftStick;
-  private Joystick m_rightStick;
 
-  double xSensitivity = 100; //try to stick within 0-100 range 100 being max sensitivity and 0 being no response at all
+  double timer; //for ultrasonic sensor
+  double refreshRate = 5; //for ultrasonic
 
   @Override
   public void robotInit() {
-    m_myRobot_Front = new DifferentialDrive(new PWMVictorSPX(3), new PWMVictorSPX(0));
-    m_myRobot_Back = new DifferentialDrive(new PWMVictorSPX(2), new PWMVictorSPX(1));
-    m_leftStick = new Joystick(0);
-    m_rightStick = new Joystick(1);
+    RobotMap.init();
+    timer = 0;
 
     /*UsbCamera mainCam = new UsbCamera("MainCamera", 0);
     mainCam.setFPS(15);
@@ -42,20 +40,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    //if the right joystick is moved in the x position we will move side to side
-    if(Math.abs(m_rightStick.getX()) > Math.abs(m_rightStick.getY()) && Math.abs(m_leftStick.getY()) < .2)
-    {
-      double inverseSensitivity = .01 * xSensitivity; //making sensitivity a decimal so that we can multiply it as a modifier to the x axis
-      double leftX = m_rightStick.getX() * inverseSensitivity; //set variable to x axis position of right stick divided by the x sensitivity
+    Scheduler.getInstance().run();
 
-      m_myRobot_Front.tankDrive(leftX, leftX * .9);
-      m_myRobot_Back.tankDrive(-leftX, -leftX * .9); //inverse the back wheels for the left to right movement to work
+    if(timer >= refreshRate)
+    {
+      Command range = new GetRange();
+      range.start();
+      timer = 0;
     }
     else
     {
-      //else we simply take the y axis values from each joystick and send them to the swervedrive
-      m_myRobot_Front.tankDrive(-m_leftStick.getY(), -m_rightStick.getY()); //all values are inverted to change which direction is front based on how the motors are wired
-      m_myRobot_Back.tankDrive(-m_leftStick.getY(), -m_rightStick.getY());
+      timer += .02; //since we are using TimedRobot(), every frame will be 20 milliseconds
     }
   }
+
+  @Override
+  public void autonomousPeriodic(){
+    Scheduler.getInstance().run();
+  }
+
 }
