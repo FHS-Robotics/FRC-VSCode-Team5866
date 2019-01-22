@@ -35,12 +35,10 @@ public class UltrasonicSensor extends Subsystem {
         channel = new AnalogInput(_channel);
         //default values
 		use_units = true;
-		min_voltage = .5;
-		voltage_range = 5.0 - min_voltage;
-		min_distance = 3.0;
-        distance_range = 60.0 - min_distance;
-        
-        setSubsystem("UltrasonicSensor");
+		min_voltage = .5;//default .5
+		voltage_range = 5.0 - min_voltage; //default 5
+		min_distance = 3.0; //default 3
+        distance_range = 60.0 - min_distance; //default 60
     }
 
     //constructor
@@ -55,7 +53,6 @@ public class UltrasonicSensor extends Subsystem {
             min_distance = _min_distance;
             distance_range = _max_distance - _min_distance;
         }
-        setSubsystem("UltrasonicSensor");
     }
 
     // Just get the voltage.
@@ -106,6 +103,18 @@ public class UltrasonicSensor extends Subsystem {
         range = (range * distance_range) + min_distance;
         //finally, convert to centimeters
         range *= IN_TO_CM_CONVERSION;
+        return range;
+    }
+
+    public double GetRangeInMM()
+    {
+        double range;
+        if(!use_units)
+        {
+            return -1.0;        
+        }
+        range = channel.getVoltage();
+        range = (5* range/(5.0/1024));
         return range;
     }
 }
