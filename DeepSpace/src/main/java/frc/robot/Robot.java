@@ -7,13 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.TimedRobot;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.ultrasonic.*;
-
-import java.sql.Time;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
@@ -23,35 +24,35 @@ import edu.wpi.first.cameraserver.*;
  */
 public class Robot extends TimedRobot {
 
-  double timer; //for ultrasonic sensor
-  double refreshRate = 5; //for ultrasonic
+  Timer timer; //for ultrasonic sensor
+  double refreshRate = .5; //for ultrasonic
+
+  public static UsbCamera main;
 
   @Override
   public void robotInit() {
     RobotMap.init();
-    timer = 0;
 
-    /*UsbCamera mainCam = new UsbCamera("MainCamera", 0);
-    mainCam.setFPS(15);
-    mainCam.setResolution(320, 240); //width and height
-    CameraServer.getInstance().startAutomaticCapture(mainCam); //start camera server*/
-    CameraServer.getInstance().startAutomaticCapture(); //start camera server
+    timer = new Timer(); //initialize timer for the ultrasonic reading
+    timer.start();
+
+    main = CameraServer.getInstance().startAutomaticCapture(); //start camera server
+    main.setResolution(620, 480); //set resolution of camera
   }
 
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
-
-    if(timer >= refreshRate)
+    //get range of ultrasonic sensor every x seconds
+    if(timer.get() > refreshRate)
     {
       Command range = new GetRange();
       range.start();
-      timer = 0;
+      timer.reset();
     }
-    else
-    {
-      timer += .02; //since we are using TimedRobot(), every frame will be 20 milliseconds
-    }
+    Command teleOp = new TeleOpDrive();
+    teleOp.start();
+
+    Scheduler.getInstance().run();
   }
 
   @Override

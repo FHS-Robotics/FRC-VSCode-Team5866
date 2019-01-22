@@ -9,12 +9,13 @@ package frc.robot.commands.ultrasonic;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.subsystems.UltrasonicSensor;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.RobotMap;
 
 public class GetRange extends Command {
-  
   
   public GetRange() {
     requires(RobotMap.ultraSonicFront);
@@ -27,7 +28,17 @@ public class GetRange extends Command {
   @Override
   protected void execute() {
     double range = RobotMap.ultraSonicFront.GetRangeInInches();
-    System.out.println(range); //print the range
+    if(range != -2)
+    {
+      System.out.println(range); //print the range
+      SmartDashboard.putString("Front Ultrasonic", Double.toString(range) + " cm"); //put the ultrasonic data to the shuffleboard
+    }
+    //else it will be -2
+    else
+    {
+      System.out.println("Front ultrasonic sensor is not connected");
+      SmartDashboard.putString("Front Ultrasonic", "Disconnected");
+    }
   }
 
   @Override
