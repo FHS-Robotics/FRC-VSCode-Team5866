@@ -27,7 +27,7 @@ public class GetRange extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double range = RobotMap.ultraSonicFront.GetRangeInInches();
+    double range = RobotMap.ultraSonicFront.GetRangeInCM();
     if(range != -2)
     {
       System.out.println(range); //print the range
