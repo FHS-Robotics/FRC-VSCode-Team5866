@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     timer.start();
 
     main = CameraServer.getInstance().startAutomaticCapture(); //start camera server
-    main.setResolution(620, 480); //set resolution of camera
+    main.setResolution(310, 240); //set resolution of camera
   }
 
   @Override

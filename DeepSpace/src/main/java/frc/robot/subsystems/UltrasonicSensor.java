@@ -3,6 +3,7 @@
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
+/*https://www.chiefdelphi.com/t/java-maxbotix-ultrasonic-sensor-code/102578   
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
@@ -35,10 +36,10 @@ public class UltrasonicSensor extends Subsystem {
         channel = new AnalogInput(_channel);
         //default values
 		use_units = true;
-		min_voltage = .5;//default .5
-		voltage_range = 5.0 - min_voltage; //default 5
-		min_distance = 3.0; //default 3
-        distance_range = 60.0 - min_distance; //default 60
+		min_voltage = .1;//default .5, but that is for a diferent sensor
+		voltage_range = 5.0 - min_voltage; //default 5, we are using 5 volts
+		min_distance = 20.0; //default 3, but we are using centimeters
+        distance_range = 570.0 - min_distance; //default 60, but the maxbotix 1200 has a max of 5.7 meters
     }
 
     //constructor
@@ -60,28 +61,6 @@ public class UltrasonicSensor extends Subsystem {
         return channel.getVoltage();
     }
 
-    /* GetRangeInInches
-     * Returns the range in inches
-     * Returns -1.0 if units are not being used
-     * Returns -2.0 if the voltage is below the minimum voltage
-     */
-    public double GetRangeInInches() {
-        double range;
-        //if we're not using units, return -1, a range that will most likely never be returned
-        if (!use_units) {
-            return -1.0;
-        }
-        range = channel.getVoltage();
-        if (range < min_voltage) {
-            return -2.0;
-        }
-        //first, normalize the voltage
-        range = (range - min_voltage) / voltage_range;
-        //next, denormalize to the unit range
-        range = (range * distance_range) + min_distance;
-        return range;
-    }
-
     /* GetRangeInCM
      * Returns the range in centimeters
      * Returns -1.0 if units are not being used
@@ -89,6 +68,7 @@ public class UltrasonicSensor extends Subsystem {
      */
     public double GetRangeInCM() {
         double range;
+        range = channel.getVoltage();
         //if we're not using units, return -1, a range that will most likely never be returned
         if (!use_units) {
             return -1.0;
@@ -97,24 +77,7 @@ public class UltrasonicSensor extends Subsystem {
         if (range < min_voltage) {
             return -2.0;
         }
-        //first, normalize the voltage
-        range = (range - min_voltage) / voltage_range;
-        //next, denormalize to the unit range
-        range = (range * distance_range) + min_distance;
-        //finally, convert to centimeters
-        range *= IN_TO_CM_CONVERSION;
-        return range;
-    }
-
-    public double GetRangeInMM()
-    {
-        double range;
-        if(!use_units)
-        {
-            return -1.0;        
-        }
-        range = channel.getVoltage();
-        range = (5* range/(5.0/1024));
+        range = range/(5.0/1024); //conversion to centimeters assuming 5v input
         return range;
     }
 }
