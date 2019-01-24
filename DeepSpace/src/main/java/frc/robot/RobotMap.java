@@ -2,17 +2,13 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import frc.robot.subsystems.UltrasonicSensor;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.*;
 
-import edu.wpi.first.wpilibj.MotorSafety;
+import frc.robot.subsystems.UltrasonicSensor;
+
+import frc.robot.subsystems.LEDStrip;
 
 /**
  * This class contains all of the objects for the robot and a map of where they go
@@ -34,6 +30,8 @@ public class RobotMap {
     
     public static UltrasonicSensor ultraSonicFront;
 
+    public static LEDStrip ledStrip;
+
     public static void init()
     {
         m_frontLeft = new PWMVictorSPX(3);
@@ -47,5 +45,7 @@ public class RobotMap {
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
 
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
+
+        ledStrip = new LEDStrip(4, 5, 6);
     }
 }

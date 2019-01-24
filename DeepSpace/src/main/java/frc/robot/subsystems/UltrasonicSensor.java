@@ -68,12 +68,11 @@ public class UltrasonicSensor extends Subsystem {
      */
     public double GetRangeInCM() {
         double range;
-        range = channel.getVoltage();
         //if we're not using units, return -1, a range that will most likely never be returned
         if (!use_units) {
             return -1.0;
         }
-        range = channel.getVoltage();
+        range = channel.getAverageVoltage();
         if (range < min_voltage) {
             return -2.0;
         }

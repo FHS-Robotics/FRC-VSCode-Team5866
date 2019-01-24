@@ -14,7 +14,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.commands.TeleOpDrive;
+
+import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.ultrasonic.*;
+
+import frc.robot.RobotMap;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
@@ -38,6 +42,9 @@ public class Robot extends TimedRobot {
 
     main = CameraServer.getInstance().startAutomaticCapture(); //start camera server
     main.setResolution(310, 240); //set resolution of camera
+
+    Command setColor = new SetLEDColor(255, 0, 0); //set color of LED to red
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -45,7 +52,7 @@ public class Robot extends TimedRobot {
     //get range of ultrasonic sensor every x seconds
     if(timer.get() > refreshRate)
     {
-      Command range = new GetRange();
+      Command range = new GetRange(RobotMap.ultraSonicFront);
       range.start();
       timer.reset();
     }

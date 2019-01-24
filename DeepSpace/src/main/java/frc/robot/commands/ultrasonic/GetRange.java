@@ -17,8 +17,12 @@ import frc.robot.RobotMap;
 
 public class GetRange extends Command {
   
-  public GetRange() {
-    requires(RobotMap.ultraSonicFront);
+  UltrasonicSensor uSensor;
+
+  public GetRange(UltrasonicSensor u) 
+  {
+    uSensor = u;
+    requires(uSensor);
   }
 
   @Override
@@ -27,7 +31,7 @@ public class GetRange extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double range = RobotMap.ultraSonicFront.GetRangeInCM();
+    double range = uSensor.GetRangeInCM();
     if(range != -2)
     {
       System.out.println(range); //print the range
