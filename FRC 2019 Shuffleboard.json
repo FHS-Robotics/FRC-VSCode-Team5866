@@ -63,6 +63,39 @@
               "_source0": "network_table:///SmartDashboard/Joystick Sensitivity",
               "_title": "Joystick Sensitivity"
             }
+          },
+          "0,4": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/NavX X Pos: ",
+              "_title": "NavX X Pos: "
+            }
+          },
+          "3,4": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/NavX Y Pos: ",
+              "_title": "NavX Y Pos: "
+            }
+          },
+          "21,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/NavX Z Pos: ",
+              "_title": "NavX Z Pos: "
+            }
           }
         }
       }
@@ -142,9 +175,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -5.0,
-    "y": 15.0,
-    "width": 1933.0,
-    "height": 745.0
+    "x": -4.666666507720947,
+    "y": 15.333333015441895,
+    "width": 1724.0,
+    "height": 745.3333129882812
   }
 }

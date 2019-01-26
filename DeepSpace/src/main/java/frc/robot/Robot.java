@@ -20,6 +20,10 @@ import frc.robot.commands.ultrasonic.*;
 
 import frc.robot.RobotMap;
 
+import java.text.DecimalFormat;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
 
@@ -31,30 +35,47 @@ public class Robot extends TimedRobot {
   Timer timer; //for ultrasonic sensor
   double refreshRate = .5; //for ultrasonic
 
+  OI m_oi;
+
   public static UsbCamera main;
 
   @Override
-  public void robotInit() {
+  public void robotInit() 
+  {
     RobotMap.init();
-
+    m_oi = new OI();
     timer = new Timer(); //initialize timer for the ultrasonic reading
     timer.start();
+
+    //make sure the navX sensor is reset
+    RobotMap.navX.reset();
+    RobotMap.navX.resetDisplacement();
 
     main = CameraServer.getInstance().startAutomaticCapture(); //start camera server
     main.setResolution(310, 240); //set resolution of camera
   }
 
   @Override
-  public void teleopInit() {
+  public void teleopInit() 
+  {
     SmartDashboard.putNumber("Joystick Sensitivity", OI.sensitivity); //display current joystick sensitivity to the dashboard
   }
 
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() 
+  {
     //get range of ultrasonic sensor every x seconds
     if(timer.get() > refreshRate)
     {
       Command range = new GetRange(RobotMap.ultraSonicFront);
+      
+      //put the current position of the navX sensor to the dashboard
+      AHRS navX = RobotMap.navX;
+      DecimalFormat df = new DecimalFormat("###.###"); //set format layout
+      SmartDashboard.putString("Robot X Pos: ", df.format(navX.getDisplacementX()));
+      SmartDashboard.putString("Robot Y Pos: ", df.format(navX.getDisplacementY()));
+      
+      SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
       range.start();
       timer.reset();
     }
