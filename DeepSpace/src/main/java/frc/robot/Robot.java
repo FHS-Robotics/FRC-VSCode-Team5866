@@ -42,9 +42,11 @@ public class Robot extends TimedRobot {
 
     main = CameraServer.getInstance().startAutomaticCapture(); //start camera server
     main.setResolution(310, 240); //set resolution of camera
+  }
 
-    Command setColor = new SetLEDColor(255, 0, 0); //set color of LED to red
-    Scheduler.getInstance().run();
+  @Override
+  public void teleopInit() {
+    SmartDashboard.putNumber("Joystick Sensitivity", OI.sensitivity); //display current joystick sensitivity to the dashboard
   }
 
   @Override
