@@ -16,6 +16,9 @@ import frc.robot.OI;
  * This command controls the movement of the tank drive through the operator's joysticks
  */
 public class TeleOpDrive extends Command {
+
+  double sensitivity;
+
   public TeleOpDrive() {
   }
 
@@ -24,9 +27,13 @@ public class TeleOpDrive extends Command {
   }
 
   @Override
-  protected void execute() {
-      //take the y axis values from each joystick and send them to the swervedrive
-      RobotMap.driveBase.tankDrive(-OI.m_leftStick.getY(), -OI.m_rightStick.getY());
+  protected void execute() 
+  {
+    //the joystick values will be modified by the sensitivity of the Joysticks
+    sensitivity = OI.sensitivity / 5; //get sensitivity from OI and divide it by 5 to scale it down, so mode 10 will be 2x speed and mode 5 will be normal speed
+
+    //take the y axis values from each joystick and send them to the swervedrive
+    RobotMap.driveBase.tankDrive(-OI.m_leftStick.getY() * sensitivity, -OI.m_rightStick.getY() * sensitivity);
   }
 
 //#region Unused Methods
