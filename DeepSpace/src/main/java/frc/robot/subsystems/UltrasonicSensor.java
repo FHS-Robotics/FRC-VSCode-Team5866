@@ -76,7 +76,7 @@ public class UltrasonicSensor extends Subsystem {
         if (range < min_voltage) {
             return -2.0;
         }
-        range = range/(5.0/1024); //conversion to centimeters assuming 5v input
+        range = range/(5.0/512); //conversion to centimeters assuming 5v input
         return range;
     }
 }
