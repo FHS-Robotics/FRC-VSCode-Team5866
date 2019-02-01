@@ -2,6 +2,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -9,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.UltrasonicSensor;
-
+import frc.robot.subsystems.BoschMotor;
 import frc.robot.subsystems.LEDStrip;
 
 /**
@@ -29,6 +31,8 @@ public class RobotMap {
     private static PWMVictorSPX m_rearRight;
     private static SpeedControllerGroup m_right;
     //#endregion
+
+    public static BoschMotor boschMotor;
     
     //sensors
     public static AHRS navX;
@@ -48,9 +52,11 @@ public class RobotMap {
 
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
 
+        boschMotor = new BoschMotor(4, 0);
+
         navX = new AHRS(SPI.Port.kMXP); //establish NavX sensor on the MXP port (12 pins on the roborio)
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
 
-        ledStrip = new LEDStrip(4, 5, 6);
+        //ledStrip = new LEDStrip(4, 5, 6);
     }
 }

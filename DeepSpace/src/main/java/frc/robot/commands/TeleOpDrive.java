@@ -33,7 +33,7 @@ public class TeleOpDrive extends Command {
     sensitivity = OI.sensitivity / 5; //get sensitivity from OI and divide it by 5 to scale it down, so mode 10 will be 2x speed and mode 5 will be normal speed
 
     //take the y axis values from each joystick and send them to the swervedrive
-    RobotMap.driveBase.tankDrive(-OI.m_leftStick.getY() * sensitivity, -OI.m_rightStick.getY() * sensitivity);
+    RobotMap.driveBase.tankDrive(-OI.m_leftStick.getY() * sensitivity, -OI.m_rightStick.getY() * sensitivity, true);
   }
 
 //#region Unused Methods
