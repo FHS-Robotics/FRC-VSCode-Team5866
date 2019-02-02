@@ -2,12 +2,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.UltrasonicSensor;
-
+import frc.robot.subsystems.BoschMotor;
 import frc.robot.subsystems.LEDStrip;
 
 /**
@@ -34,7 +38,11 @@ public class RobotMap {
     private static DigitalInput limitSwitch;
 
     //#endregion
+
+    public static BoschMotor boschMotor;
     
+    //sensors
+    public static AHRS navX;
     public static UltrasonicSensor ultraSonicFront;
 
     public static LEDStrip ledStrip;
@@ -54,8 +62,11 @@ public class RobotMap {
         liftmotor = new TalonSRX(20);
         limitSwitch = new DigitalInput(1);
 
+        boschMotor = new BoschMotor(4, 0);
+
+        navX = new AHRS(SPI.Port.kMXP); //establish NavX sensor on the MXP port (12 pins on the roborio)
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
 
-        ledStrip = new LEDStrip(4, 5, 6);
+        //ledStrip = new LEDStrip(4, 5, 6);
     }
 }
