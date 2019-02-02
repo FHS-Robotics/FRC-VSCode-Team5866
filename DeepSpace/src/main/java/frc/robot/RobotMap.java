@@ -26,6 +26,13 @@ public class RobotMap {
     private static PWMVictorSPX m_frontRight;
     private static PWMVictorSPX m_rearRight;
     private static SpeedControllerGroup m_right;
+
+    //lift motor
+    private static TalonSRX liftmotor;
+
+    //limit switch for lift command
+    private static DigitalInput limitSwitch;
+
     //#endregion
     
     public static UltrasonicSensor ultraSonicFront;
@@ -43,6 +50,9 @@ public class RobotMap {
         m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
 
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
+        
+        liftmotor = new TalonSRX(20);
+        limitSwitch = new DigitalInput(1);
 
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
 
