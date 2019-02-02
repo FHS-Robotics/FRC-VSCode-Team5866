@@ -2,25 +2,44 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.LiftController;
-
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class LiftSystem extends Subsystem{
 
-    public LiftSystem(){
+    PWMTalonSRX liftMotor;
+    DigitalInput limitUpDI;
+    DigitalInput limitDownDI;
 
-    }
+    @Override
+    protected void initDefaultCommand() {}
 
-    public void initDefaultCommand(){
-        setDefaultCommand(new LiftController());
+    public LiftSystem(int channel, int _limitUpDI, int _limitDownDI)
+    {
+        liftMotor = new PWMTalonSRX(channel);
+        limitUpDI = new DigitalInput(_limitUpDI);
+        limitDownDI = new DigitalInput(_limitDownDI);
     }
 
     public void move(double speed){
-        RobotMap.liftMotor.set(ControlMode.PercentOutput, speed);
+        liftMotor.set(speed);
     }
 
-    public void move(){
-        RobotMap.liftMotor.setPercentModeOutput(-.7);
+    public boolean getLimitUp()
+    {
+        if(limitUpDI.get()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean getLimitDown()
+    {
+        if(limitDownDI.get()){
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.subsystems.BoschMotor;
 import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.LiftSystem;
 
 /**
  * This class contains all of the objects for the robot and a map of where they go
@@ -31,11 +33,8 @@ public class RobotMap {
     private static PWMVictorSPX m_rearRight;
     private static SpeedControllerGroup m_right;
 
-    //lift motor
-    private static TalonSRX liftmotor;
-
-    //limit switch for lift command
-    private static DigitalInput limitSwitch;
+    //lift system
+    public static LiftSystem liftSystem;
 
     //#endregion
 
@@ -58,9 +57,8 @@ public class RobotMap {
         m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
 
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
-        
-        liftmotor = new TalonSRX(20);
-        limitSwitch = new DigitalInput(1);
+
+        liftSystem = new LiftSystem(7, 4, 5);
 
         boschMotor = new BoschMotor(4, 0);
 
