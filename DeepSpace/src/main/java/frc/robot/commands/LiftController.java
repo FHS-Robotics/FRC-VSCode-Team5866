@@ -1,29 +1,28 @@
 package frc.robot.commands;
 
-import org.usfirst.frc.team5866.robot.OI;
-import org.usfirst.frc.team5866.robot.RobotMap;
+import frc.robot.OI;
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftController extends Command {
 
     public LiftController() {
-        requires(RobotMap.lift);
+        requires(RobotMap.liftSystem);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-		RobotMap.lift.move(OI.m_leftStick.getX());
+        //if the limit switches have been hit we can't go that direction anymore
+        if((OI.m_leftStick.getX() < 0 && !RobotMap.liftSystem.getLimitDown()) 
+        || (OI.m_leftStick.getX() > 0 && !RobotMap.liftSystem.getLimitUp()))
+            RobotMap.liftSystem.move(OI.m_leftStick.getX());
     }
 
     protected boolean isFinished() {
-        //limt switch will continually read if the arm has reached max height, then will return true when condition is met
-        while (limitSwitch.Get()) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     protected void end() {
