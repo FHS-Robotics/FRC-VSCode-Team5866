@@ -1,30 +1,34 @@
 package frc.robot.subsystems;
 
-import frc.robot.RobotMap;
-import frc.robot.commands.LiftController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class LiftSystem extends Subsystem{
 
-    PWMTalonSRX liftMotor;
-    DigitalInput limitUpDI;
-    DigitalInput limitDownDI;
+    public SpeedControllerGroup liftMotors;
+    public DigitalInput limitUpDI;
+    public DigitalInput limitDownDI;
 
     @Override
     protected void initDefaultCommand() {}
 
-    public LiftSystem(int channel, int _limitUpDI, int _limitDownDI)
+    public LiftSystem(int lift1, int lift2, int _limitUpDI, int _limitDownDI)
     {
-        liftMotor = new PWMTalonSRX(channel);
+        //initialize lift motors
+        PWMTalonSRX liftMotor1 = new PWMTalonSRX(lift1);
+        PWMTalonSRX liftMotor2 = new PWMTalonSRX(lift2);
+        liftMotors = new SpeedControllerGroup(liftMotor1, liftMotor2);
+
+
         limitUpDI = new DigitalInput(_limitUpDI);
         limitDownDI = new DigitalInput(_limitDownDI);
     }
 
     public void move(double speed){
-        liftMotor.set(speed);
+        liftMotors.set(speed);
     }
 
     public boolean getLimitUp()
