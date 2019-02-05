@@ -15,16 +15,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.boschmotor.BoschMotorContinuous;
+import frc.robot.commands.cargodelivery.FindTargets;
 import frc.robot.commands.LiftController;
 import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.ultrasonic.*;
-
+import frc.robot.vision.VisionManager;
 import frc.robot.RobotMap;
 
 import java.text.DecimalFormat;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
 
@@ -39,12 +41,15 @@ public class Robot extends TimedRobot {
   OI m_oi;
 
   public static UsbCamera main;
+  public static MjpegServer jpegMain;
 
   @Override
   public void robotInit() 
   {
     RobotMap.init();
     m_oi = new OI();
+    VisionManager.init();
+
     timer = new Timer(); //initialize timer for the ultrasonic reading
     timer.start();
 
@@ -64,6 +69,9 @@ public class Robot extends TimedRobot {
     //start lift command
     Command lift = new LiftController();
     lift.start();
+    //start finding targets
+    Command findTargets = new FindTargets();
+    findTargets.start();
     Scheduler.getInstance().run();
   }
 
