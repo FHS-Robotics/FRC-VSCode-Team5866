@@ -2,7 +2,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
@@ -14,6 +16,7 @@ import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.vision.VisionManager;
 import frc.robot.subsystems.BoschMotor;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.LiftSystem;
 
@@ -33,17 +36,25 @@ public class RobotMap {
     private static PWMVictorSPX m_frontRight;
     private static PWMVictorSPX m_rearRight;
     private static SpeedControllerGroup m_right;
+    //#endregion
+
 
     //lift system
     public static LiftSystem liftSystem;
 
-    //#endregion
+    //Claw and Pneumatics
+    public static Compressor mainC;
+    public static DoubleSolenoid clawPiston;
+    public static DoubleSolenoid ballPushPiston;
+    public static Claw m_claw;
     
+
     //sensors
     public static AHRS navX;
     public static UltrasonicSensor ultraSonicFront;
 
     public static LEDStrip ledStrip;
+
 
     public static void init()
     {
@@ -58,6 +69,11 @@ public class RobotMap {
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
 
         liftSystem = new LiftSystem(0, 5,  4, 5);
+
+        mainC = new Compressor(1);
+        clawPiston = new DoubleSolenoid(0, 1);
+        ballPushPiston = new DoubleSolenoid(2, 3);
+        m_claw = new Claw(clawPiston, ballPushPiston);
 
         navX = new AHRS(SPI.Port.kMXP); //establish NavX sensor on the MXP port (12 pins on the roborio)
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
