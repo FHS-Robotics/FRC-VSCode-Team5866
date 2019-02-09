@@ -17,10 +17,10 @@
     <grip:Step name="Resize Image">
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
-        <value>640</value>
+        <value>640.0</value>
       </grip:Input>
       <grip:Input step="0" socket="2">
-        <value>480</value>
+        <value>480.0</value>
       </grip:Input>
       <grip:Input step="0" socket="3">
         <value>CUBIC</value>
@@ -127,10 +127,10 @@
     <grip:Step name="Resize Image">
       <grip:Input step="6" socket="0"/>
       <grip:Input step="6" socket="1">
-        <value>640</value>
+        <value>640.0</value>
       </grip:Input>
       <grip:Input step="6" socket="2">
-        <value>480</value>
+        <value>480.0</value>
       </grip:Input>
       <grip:Input step="6" socket="3">
         <value>CUBIC</value>
@@ -140,8 +140,8 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="true"/>
-      <grip:Input step="2" socket="0"/>
+      <grip:Output step="3" socket="0" previewed="true"/>
+      <grip:Input step="4" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
@@ -152,18 +152,22 @@
       <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="3" socket="0" previewed="true"/>
-      <grip:Input step="4" socket="0"/>
+      <grip:Output source="1" socket="0" previewed="false"/>
+      <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="4" socket="0" previewed="true"/>
       <grip:Input step="5" socket="0"/>
     </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
   </connections>
   <settings>
-    <teamNumber>0</teamNumber>
-    <publishAddress>roboRIO-0-FRC.local</publishAddress>
-    <deployAddress>roboRIO-0-FRC.local</deployAddress>
+    <teamNumber>5866</teamNumber>
+    <publishAddress>roboRIO-5866-FRC.local</publishAddress>
+    <deployAddress>roboRIO-5866-FRC.local</deployAddress>
     <deployDir>/home/lvuser</deployDir>
     <deployUser>lvuser</deployUser>
     <deployJavaHome>/usr/local/frc/JRE/</deployJavaHome>

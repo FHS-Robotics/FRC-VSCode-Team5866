@@ -33,7 +33,7 @@ public class LiftSystem extends Subsystem{
 
     public boolean getLimitUp()
     {
-        if(limitUpDI.get()){
+        if(limitUpDI.get() == true){
             return true;
         }
         return false;
@@ -41,7 +41,7 @@ public class LiftSystem extends Subsystem{
 
     public boolean getLimitDown()
     {
-        if(limitDownDI.get()){
+        if(limitDownDI.get() == true){
             return true;
         }
         return false;
