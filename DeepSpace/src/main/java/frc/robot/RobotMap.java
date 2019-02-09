@@ -37,6 +37,9 @@ public class RobotMap {
     //lift system
     public static LiftSystem liftSystem;
 
+    //wrist system
+    public static WristSystem wristSystem;
+
     //#endregion
     
     //sensors
@@ -58,6 +61,8 @@ public class RobotMap {
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
 
         liftSystem = new LiftSystem(7, 8,  4, 5);
+
+        wristSystem = new WristSystem();
 
         navX = new AHRS(SPI.Port.kMXP); //establish NavX sensor on the MXP port (12 pins on the roborio)
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor

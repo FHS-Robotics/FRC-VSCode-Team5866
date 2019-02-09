@@ -15,7 +15,7 @@ public class WristController{
 
     protected void execute() {
         //64:1 small small numbers
-        RobotMap.WristSystem.move(.0000008);
+        RobotMap.WristSystem.move(OI.m_rightStick.getX());
     }
 
     protected boolean isFinished() {
