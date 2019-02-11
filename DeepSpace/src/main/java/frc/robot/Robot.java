@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.boschmotor.BoschMotorContinuous;
 import frc.robot.commands.cargodelivery.FindTargetsPeriodic;
-import frc.robot.commands.LiftController;
+import frc.robot.commands.TeleOpLift;
 import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.ultrasonic.*;
 import frc.robot.vision.VisionManager;
@@ -26,7 +26,6 @@ import java.text.DecimalFormat;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
 
@@ -41,7 +40,6 @@ public class Robot extends TimedRobot {
   OI m_oi;
 
   public static UsbCamera main;
-  public static MjpegServer jpegMain;
 
   @Override
   public void robotInit() 
@@ -57,7 +55,7 @@ public class Robot extends TimedRobot {
     RobotMap.navX.reset();
     RobotMap.navX.resetDisplacement();
 
-    main = CameraServer.getInstance().startAutomaticCapture(); //start camera server
+    main = CameraServer.getInstance().startAutomaticCapture(0); //start camera server
     main.setResolution(310, 240); //set resolution of camera
   }
 
@@ -67,7 +65,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Joystick Sensitivity", OI.sensitivity); //display current joystick sensitivity to the dashboard
 
     //start lift command
-    Command lift = new LiftController();
+    Command lift = new TeleOpLift();
     lift.start();
     //start finding targets
     Command findTargets = new FindTargetsPeriodic();
@@ -101,7 +99,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic(){
-    Scheduler.getInstance().run();
+    teleopPeriodic(); //just do the same stuff as teleopPeriodic
   }
 
 }

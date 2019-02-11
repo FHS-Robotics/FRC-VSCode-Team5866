@@ -40,6 +40,8 @@ public class RobotMap {
 
 
     //lift system
+    public static PWMVictorSPX liftMotor1;
+    public static PWMVictorSPX liftMotor2;
     public static LiftSystem liftSystem;
 
     //Claw and Pneumatics
@@ -68,9 +70,18 @@ public class RobotMap {
 
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
 
-        liftSystem = new LiftSystem(0, 5,  4, 5);
+        liftMotor1 = new PWMVictorSPX(0);
+        liftMotor2 = new PWMVictorSPX(5);
+        liftSystem = new LiftSystem(liftMotor1, liftMotor2,  4, 5);
 
         mainC = new Compressor(1);
+
+        try {
+        mainC.start();
+        } catch(Exception e) {
+            System.out.println("Error: Could not start compressor");
+            System.out.print(e);
+        }
         clawPiston = new DoubleSolenoid(0, 1);
         ballPushPiston = new DoubleSolenoid(2, 3);
         m_claw = new Claw(clawPiston, ballPushPiston);
