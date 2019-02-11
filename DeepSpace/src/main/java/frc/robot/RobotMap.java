@@ -50,17 +50,17 @@ public class RobotMap {
 
     public static void init()
     {
-        m_frontLeft = new PWMVictorSPX(3);
-        m_rearLeft = new PWMVictorSPX(2);
+        m_rearLeft = new PWMVictorSPX(3);
+        m_frontLeft = new PWMVictorSPX(4);
         m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
     
-        m_frontRight = new PWMVictorSPX(0);
         m_rearRight = new PWMVictorSPX(1);
+        m_frontRight = new PWMVictorSPX(2);
         m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
 
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
 
-        liftSystem = new LiftSystem(7, 8,  4, 5);
+        liftSystem = new LiftSystem(0, 5,  4, 5);
 
         wristSystem = new WristSystem();
 
