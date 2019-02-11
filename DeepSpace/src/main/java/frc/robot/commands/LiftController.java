@@ -18,7 +18,7 @@ public class LiftController extends Command {
         //if the limit switches have been hit we can't go that direction anymore
         if((OI.m_leftStick.getX() < 0 && !RobotMap.liftSystem.getLimitDown()) 
         || (OI.m_leftStick.getX() > 0 && !RobotMap.liftSystem.getLimitUp()))
-            RobotMap.liftSystem.move(OI.m_leftStick.getX());
+            RobotMap.liftSystem.move(OI.m_leftStick.getX() *.25);
     }
 
     protected boolean isFinished() {
