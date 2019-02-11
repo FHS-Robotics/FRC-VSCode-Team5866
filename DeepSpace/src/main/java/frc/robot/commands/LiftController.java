@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftController extends Command {
 
-    public double scaleFactor = 1;
+    public double scaleFactor = .25;
 
     public LiftController() {
         requires(RobotMap.liftSystem);
