@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
-import frc.robot.commands.LiftController;
+import frc.robot.commands.TeleOpLift;
 import frc.robot.subsystems.LiftSystem;
 import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.vision.VisionManager;

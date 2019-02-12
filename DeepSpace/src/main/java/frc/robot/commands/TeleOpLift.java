@@ -5,11 +5,11 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftController extends Command {
+public class TeleOpLift extends Command {
 
     public double scaleFactor = .25;
 
-    public LiftController() {
+    public TeleOpLift() {
         requires(RobotMap.liftSystem);
     }
 
@@ -25,7 +25,7 @@ public class LiftController extends Command {
             System.out.println("elevator moved");
         }*/
 
-        RobotMap.liftSystem.move(OI.m_leftStick.getX() * scaleFactor);
+        RobotMap.liftSystem.move(OI.secondaryController.getRawAxis(1) * scaleFactor);
     }
 
     protected boolean isFinished() {
