@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.UltrasonicSensor;
+import frc.robot.subsystems.WristSystem;
 import frc.robot.vision.VisionManager;
 import frc.robot.subsystems.BoschMotor;
 import frc.robot.subsystems.Claw;
@@ -49,6 +50,12 @@ public class RobotMap {
     public static DoubleSolenoid clawPiston;
     public static DoubleSolenoid ballPushPiston;
     public static Claw m_claw;
+
+    //wrist system
+    public static PWMVictorSPX wristMotor;
+    public static WristSystem wristSystem;
+
+    //#endregion
     
 
     //sensors
@@ -85,6 +92,9 @@ public class RobotMap {
         clawPiston = new DoubleSolenoid(0, 1);
         ballPushPiston = new DoubleSolenoid(2, 3);
         m_claw = new Claw(clawPiston, ballPushPiston);
+
+        wristMotor = new PWMVictorSPX(9);
+        wristSystem = new WristSystem(wristMotor);
 
         navX = new AHRS(SPI.Port.kMXP); //establish NavX sensor on the MXP port (12 pins on the roborio)
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
