@@ -7,14 +7,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.commands.TeleOpDrive;
-import frc.robot.commands.boschmotor.BoschMotorContinuous;
 import frc.robot.commands.cargodelivery.FindTargetsPeriodic;
 import frc.robot.commands.TeleOpLift;
 import frc.robot.commands.SetLEDModeAuto;
@@ -30,16 +28,17 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.*;
 
 /**
- * This class is at the highest level and initializes all of our subsystems, RobotMap, commands, etc
+ * This class is at the highest level and initializes all of our subsystems, RobotMap, OI, commands, etc
  */
 public class Robot extends TimedRobot {
 
-  Timer timer; //for ultrasonic sensor
-  double refreshRate = .5; //for ultrasonic
+   //for ultrasonic sensor and navX
+  private Timer timer;
+  private double refreshRate = .5;
 
-  OI m_oi;
-
+  public OI m_oi;
   public static UsbCamera main;
+
 
   @Override
   public void robotInit() 
@@ -61,14 +60,13 @@ public class Robot extends TimedRobot {
     //set our led color
     Command setAutoLED = new SetLEDModeAuto();
     setAutoLED.start();
+
     Scheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() 
   {
-    SmartDashboard.putNumber("Joystick Sensitivity", OI.sensitivity); //display current joystick sensitivity to the dashboard
-
     //start lift command
     Command lift = new TeleOpLift();
     lift.start();
@@ -86,21 +84,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() 
   {
-    //get range of ultrasonic sensor every x seconds
-    if(timer.get() > refreshRate)
+    //Display Sensors on a loop
+    if(timer.hasPeriodPassed(refreshRate))
     {
-      Command range = new GetRange(RobotMap.ultraSonicFront);
-      
-      //put the current position of the navX sensor to the dashboard
-      AHRS navX = RobotMap.navX;
-      DecimalFormat df = new DecimalFormat("###.###"); //set format layout
-      SmartDashboard.putString("Robot X Pos: ", df.format(navX.getDisplacementX()));
-      SmartDashboard.putString("Robot Y Pos: ", df.format(navX.getDisplacementY()));
-      
-      SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
-      range.start();
+      DisplaySensors();
       timer.reset();
     }
+
     Command teleOp = new TeleOpDrive();
     teleOp.start();
 
@@ -110,6 +100,24 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic(){
     teleopPeriodic(); //just do the same stuff as teleopPeriodic
+  }
+
+
+
+
+  //get range of ultrasonic sensor  and rotation of the navX every x seconds
+  private void DisplaySensors()
+  {
+    Command range = new GetRange(RobotMap.ultraSonicFront);
+      
+    //put the current position of the navX sensor to the dashboard
+    AHRS navX = RobotMap.navX;
+    DecimalFormat df = new DecimalFormat("###.###"); //set format layout
+    SmartDashboard.putString("Robot X Pos: ", df.format(navX.getDisplacementX()));
+    SmartDashboard.putString("Robot Y Pos: ", df.format(navX.getDisplacementY()));
+      
+    SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
+    range.start();
   }
 
 }

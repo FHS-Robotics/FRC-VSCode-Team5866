@@ -9,6 +9,7 @@ package frc.robot.commands.claw;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -31,6 +32,7 @@ public class CloseClaw extends Command {
   @Override
   protected boolean isFinished() {
     System.out.println(RobotMap.clawPistons.get());
+    SmartDashboard.putString("Claw State", "Closed"); //publish state to Shuffleboard
     return RobotMap.clawPistons.get().equals(DoubleSolenoid.Value.kReverse); //if it's reverse than it's being opened
   }
 

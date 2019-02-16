@@ -8,6 +8,7 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.SetLEDModeManual;
 import frc.robot.commands.SetSensitivity;
 import frc.robot.commands.claw.CloseClaw;
@@ -43,11 +44,18 @@ public class OI {
     {
         sensUp.whenPressed(new SetSensitivity(true));
         sensDown.whenPressed(new SetSensitivity(false));
+        SmartDashboard.putNumber("Joystick Sensitivity", sensitivity); //publish the sensitivity on the Shuffleboard
+
 
         clawOpen.whenPressed(new OpenClaw());
         clawClose.whenPressed(new CloseClaw());
         clawOpen.whenPressed(new RaiseClaw());
         clawClose.whenPressed(new LowerClaw());
+
+        //publish the starting positions of the wrist and claw to the Shuffleboard
+        SmartDashboard.putString("Claw State", "Closed");
+        SmartDashboard.putString("Wrist State", "Raised");
+
 
         setNeutral.whenPressed(new SetLEDModeManual(ColorMode.neutral));
         setNeutral.whenPressed(new SetLEDModeManual(ColorMode.showcase));

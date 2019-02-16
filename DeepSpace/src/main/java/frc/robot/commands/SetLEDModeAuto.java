@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.LEDInterface;
 import frc.robot.subsystems.LEDInterface.ColorMode;
 
 /**
