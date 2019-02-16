@@ -1,4 +1,4 @@
-#include <bitswap.h>
+ #include <bitswap.h>
 #include <chipsets.h>
 #include <color.h>
 #include <colorpalettes.h>
@@ -143,33 +143,41 @@ void loop()
     {
       mode = 0;
     }
-    if(digitalRead(bluePin) == HIGH)
+    else if(digitalRead(bluePin) == HIGH)
     {
       mode = 1;
     }
-    if(digitalRead(neutralPin) == HIGH)
-    {
-      mode = 2;
-    }
-    if(digitalRead(showCasePin) == HIGH)
+    else if(digitalRead(showCasePin) == HIGH)
     {
       mode = 3;
+    }
+   else
+    {
+      mode = 2;
     }
     switch(mode)
     {
       case 0:
-        cylon(CRGB::Red, 1, 1);
+        staticColor(CRGB::Red);
         break;
       case 1:
-        cylon(CRGB::Blue, 1, 1);
+        staticColor(CRGB::Blue);
         break;
       case 2:
-        cylon(CRGB::Yellow, 1, 1);
+        staticColor(CRGB::Yellow);
         break;
       case 3:
         rainbow(1);
         break;
     }
+}
+
+void staticColor(CRGB color)
+{
+      for(int n = 0; n < NUM_LEDS; n++)
+      {
+         leds[n] = color;
+      }
 }
 
 //These are the functions we have defined to do chase patterns. They are actually called inside the loop() above

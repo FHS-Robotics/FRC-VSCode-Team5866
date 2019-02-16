@@ -7,21 +7,31 @@
 
 package frc.robot.commands.claw;
 
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
 
 /**
  * Close the claw
  */
-public class CloseClaw extends InstantCommand {
+public class CloseClaw extends Command {
 
   public CloseClaw() {
     requires(RobotMap.m_claw);
   }
 
   @Override
-  protected void initialize() {
+  protected void initialize() {}
+
+  @Override
+  protected void execute() {
     RobotMap.m_claw.close();
+  }
+
+  @Override
+  protected boolean isFinished() {
+    System.out.println(RobotMap.clawPistons.get());
+    return RobotMap.clawPistons.get().equals(DoubleSolenoid.Value.kReverse); //if it's reverse than it's being opened
   }
 
 }

@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
 
 /**
- * Open the claw
+ * Raise the claw
  */
-public class OpenClaw extends Command {
+public class RaiseClaw extends Command {
 
-  public OpenClaw() {
+  public RaiseClaw() {
     requires(RobotMap.m_claw);
   }
 
@@ -25,12 +25,12 @@ public class OpenClaw extends Command {
 
   @Override
   protected void execute() {
-    RobotMap.m_claw.open();
+    RobotMap.m_claw.raise();
   }
 
   @Override
   protected boolean isFinished() {
-    System.out.println(RobotMap.clawPistons.get());
-    return RobotMap.clawPistons.get().equals(DoubleSolenoid.Value.kForward); //if it's forward than it's being closed
+    System.out.println(RobotMap.wristPiston.get());
+    return RobotMap.wristPiston.get().equals(DoubleSolenoid.Value.kReverse); //if it's forward than it's being lowered
   }
 }

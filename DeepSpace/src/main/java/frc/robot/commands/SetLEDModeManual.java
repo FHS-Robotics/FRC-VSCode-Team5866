@@ -8,37 +8,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.LEDInterface.ColorMode;
 
 /**
- * Add your docs here.
+ * Set LED Color Manually
  */
-public class SetLEDColor extends InstantCommand {
+public class SetLEDModeManual extends InstantCommand {
 
-  int red;
-  int green;
-  int blue;
+  ColorMode mode;
 
   /**
-   * Sets color of the LEDStrip
-   * @param r : Amount of red (0-255)
-   * @param g : Amount of green (0-255)
-   * @param b : Amount of blue (0-255)
+   * @param _mode : the mode(red, blue, neutral, showcase)
    */
-  public SetLEDColor(int r, int g, int b) {
+  public SetLEDModeManual(ColorMode _mode) {
     requires(RobotMap.ledStrip);
-
-    //Set all color values based on constructor input
-    red = r;
-    green = g;
-    blue = b;
+    mode = _mode;
   }
 
   // Called once when the command executes
   @Override
-  protected void initialize() 
-  {
-    RobotMap.ledStrip.SetColorOutput(red, green, blue);
+  protected void initialize() {
+    
+    RobotMap.ledStrip.setOutput(mode);
+    SmartDashboard.putString("LED Mode", mode.toString()); //print our mode
   }
 
 }

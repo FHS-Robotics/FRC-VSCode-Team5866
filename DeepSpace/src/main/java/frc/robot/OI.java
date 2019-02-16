@@ -8,10 +8,13 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
+import frc.robot.commands.SetLEDModeManual;
 import frc.robot.commands.SetSensitivity;
 import frc.robot.commands.claw.CloseClaw;
+import frc.robot.commands.claw.LowerClaw;
 import frc.robot.commands.claw.OpenClaw;
+import frc.robot.commands.claw.RaiseClaw;
+import frc.robot.subsystems.LEDInterface.ColorMode;
 
 /**
  * This class contains all of the objects for the operator interface
@@ -27,7 +30,13 @@ public class OI {
     public static int sensitivity = 5; //from 1-10
 
     public static JoystickButton clawOpen = new JoystickButton(secondaryController, 1);
-	public static JoystickButton clawClose = new JoystickButton(secondaryController, 2);
+    public static JoystickButton clawClose = new JoystickButton(secondaryController, 2);
+    public static JoystickButton clawRaise = new JoystickButton(secondaryController, 3);
+    public static JoystickButton clawLower = new JoystickButton(secondaryController, 4);
+    
+    //buttons for manually setting the led mode
+    public static JoystickButton setNeutral = new JoystickButton(m_leftStick, 12);
+    public static JoystickButton setShowcase = new JoystickButton(m_leftStick, 11);
 
 
     public OI()
@@ -37,6 +46,11 @@ public class OI {
 
         clawOpen.whenPressed(new OpenClaw());
         clawClose.whenPressed(new CloseClaw());
+        clawOpen.whenPressed(new RaiseClaw());
+        clawClose.whenPressed(new LowerClaw());
+
+        setNeutral.whenPressed(new SetLEDModeManual(ColorMode.neutral));
+        setNeutral.whenPressed(new SetLEDModeManual(ColorMode.showcase));
     }
 }
  

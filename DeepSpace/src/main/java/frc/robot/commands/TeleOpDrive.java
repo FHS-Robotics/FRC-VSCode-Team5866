@@ -19,12 +19,10 @@ public class TeleOpDrive extends Command {
 
   double sensitivity;
 
-  public TeleOpDrive() {
-  }
+  public TeleOpDrive() {}
 
   @Override
-  protected void initialize() {
-  }
+  protected void initialize() {}
 
   @Override
   protected void execute() 
@@ -46,7 +44,6 @@ public class TeleOpDrive extends Command {
   protected void end() {}
 
   @Override
-  protected void interrupted() {
-  }
+  protected void interrupted() {}
   //#endregion
 }

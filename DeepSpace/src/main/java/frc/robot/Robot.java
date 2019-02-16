@@ -17,7 +17,7 @@ import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.boschmotor.BoschMotorContinuous;
 import frc.robot.commands.cargodelivery.FindTargetsPeriodic;
 import frc.robot.commands.TeleOpLift;
-import frc.robot.commands.SetLEDColor;
+import frc.robot.commands.SetLEDModeAuto;
 import frc.robot.commands.ultrasonic.*;
 import frc.robot.vision.VisionManager;
 import frc.robot.RobotMap;
@@ -57,6 +57,11 @@ public class Robot extends TimedRobot {
 
     main = CameraServer.getInstance().startAutomaticCapture(0); //start camera server
     main.setResolution(310, 240); //set resolution of camera
+
+    //set our led color
+    Command setAutoLED = new SetLEDModeAuto();
+    setAutoLED.start();
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -67,6 +72,11 @@ public class Robot extends TimedRobot {
     //start lift command
     Command lift = new TeleOpLift();
     lift.start();
+
+    //set our led color
+    Command setAutoLED = new SetLEDModeAuto();
+    setAutoLED.start();
+
     //start finding targets
     Command findTargets = new FindTargetsPeriodic();
     findTargets.start();
