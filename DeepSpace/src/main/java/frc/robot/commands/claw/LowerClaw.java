@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
- * Close the claw
+ * Lower the claw
  */
-public class CloseClaw extends Command {
+public class LowerClaw extends Command {
 
-  public CloseClaw() {
+  public LowerClaw() {
     requires(RobotMap.m_claw);
   }
 
@@ -26,14 +26,13 @@ public class CloseClaw extends Command {
 
   @Override
   protected void execute() {
-    RobotMap.m_claw.close();
+    RobotMap.m_claw.lower();
   }
 
   @Override
   protected boolean isFinished() {
-    System.out.println(RobotMap.clawPistons.get());
-    SmartDashboard.putString("Claw State", "Closed"); //publish state to Shuffleboard
-    return RobotMap.clawPistons.get().equals(DoubleSolenoid.Value.kReverse); //if it's reverse than it's being opened
+    System.out.println(RobotMap.wristPiston.get());
+    SmartDashboard.putString("Wrist State", "Lowered"); //publish state to Shuffleboard
+    return RobotMap.wristPiston.get().equals(DoubleSolenoid.Value.kReverse); //if it's reverse than it's being raised
   }
-
 }

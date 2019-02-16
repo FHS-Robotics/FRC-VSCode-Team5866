@@ -15,23 +15,33 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Claw extends Subsystem {
 
-  public DoubleSolenoid clawPiston;
-  public DoubleSolenoid ballPushPiston;
+  public DoubleSolenoid clawPistons; //the solenoid connected to the claw pistons
+  public DoubleSolenoid wristPiston;
 
   @Override
   public void initDefaultCommand() {  }
 
-  public Claw(DoubleSolenoid _claw, DoubleSolenoid _ballPush)
+  public Claw(DoubleSolenoid _claw,  DoubleSolenoid _wrist)
   {
-    clawPiston = _claw;
-    ballPushPiston = _ballPush;
+    clawPistons = _claw;
+    wristPiston = _wrist;
+    clawPistons.set(DoubleSolenoid.Value.kOff);
+    wristPiston.set(DoubleSolenoid.Value.kOff);
+  }
+
+  public void open() {
+    clawPistons.set(DoubleSolenoid.Value.kReverse);
   }
   
   public void close() {
-    clawPiston.set(DoubleSolenoid.Value.kForward);
+    clawPistons.set(DoubleSolenoid.Value.kForward);
   }
-  
-  public void open() {
-    clawPiston.set(DoubleSolenoid.Value.kReverse);
+
+  public void raise(){
+    wristPiston.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  public void lower(){
+    wristPiston.set(DoubleSolenoid.Value.kForward);
   }
 }

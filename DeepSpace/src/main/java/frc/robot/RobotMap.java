@@ -3,10 +3,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PWMSpeedController;
-import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -14,11 +11,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.UltrasonicSensor;
-import frc.robot.subsystems.WristSystem;
-import frc.robot.vision.VisionManager;
-import frc.robot.subsystems.BoschMotor;
 import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.LEDInterface;
 import frc.robot.subsystems.LiftSystem;
 
 /**
@@ -47,13 +41,9 @@ public class RobotMap {
 
     //Claw and Pneumatics
     public static Compressor mainC;
-    public static DoubleSolenoid clawPiston;
-    public static DoubleSolenoid ballPushPiston;
+    public static DoubleSolenoid clawPistons;
+    public static DoubleSolenoid wristPiston;
     public static Claw m_claw;
-
-    //wrist system
-    public static PWMVictorSPX wristMotor;
-    public static WristSystem wristSystem;
 
     //#endregion
     
@@ -62,7 +52,7 @@ public class RobotMap {
     public static AHRS navX;
     public static UltrasonicSensor ultraSonicFront;
 
-    public static LEDStrip ledStrip;
+    public static LEDInterface ledStrip;
 
 
     public static void init()
@@ -83,22 +73,26 @@ public class RobotMap {
 
         mainC = new Compressor(1);
 
+
         try {
         mainC.start();
         } catch(Exception e) {
             System.out.println("Error: Could not start compressor");
             System.out.print(e);
         }
-        clawPiston = new DoubleSolenoid(0, 1);
-        ballPushPiston = new DoubleSolenoid(2, 3);
-        m_claw = new Claw(clawPiston, ballPushPiston);
+        clawPistons = new DoubleSolenoid(0, 1);
+        wristPiston = new DoubleSolenoid(2, 3);
+        m_claw = new Claw(clawPistons, wristPiston);
 
-        wristMotor = new PWMVictorSPX(9);
-        wristSystem = new WristSystem(wristMotor);
 
-        navX = new AHRS(SPI.Port.kMXP); //establish NavX sensor on the MXP port (12 pins on the roborio)
+        //establish NavX sensor on the MXP port (12 pins on the roborio)
+        navX = new AHRS(SPI.Port.kMXP);
+        navX.reset();
+        navX.resetDisplacement();
+
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
 
-        //ledStrip = new LEDStrip(4, 5, 6);
+
+        ledStrip = new LEDInterface(0, 1, 2, 3); //arduino pins are 0, 1, 3
     }
 }
