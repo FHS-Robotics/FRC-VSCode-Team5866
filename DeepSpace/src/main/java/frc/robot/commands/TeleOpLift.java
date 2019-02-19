@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleOpLift extends Command {
 
-    public double scaleFactorUp = .4; //scale factor for moving up
+    public double scaleFactorUp = 1; //scale factor for moving up
     public double scaleFactorDown = .25; //scale factor for moving down
 
     public TeleOpLift() {
@@ -25,7 +25,7 @@ public class TeleOpLift extends Command {
             System.out.println("elevator moved");
         }*/
 
-        double value = -OI.secondaryController.getRawAxis(1); //joystick values are negated
+        double value = OI.secondaryController.getRawAxis(1); //joystick values are negated
         value = (value > 0) ? (value * scaleFactorUp) : (value * scaleFactorDown);  //if moving up, multiply by scaleFactorUp; else multiply by scaleFactorDown; This code is a simplified if else statement
 
         //value = value * scaleFactorUp;

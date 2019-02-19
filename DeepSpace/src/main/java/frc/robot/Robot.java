@@ -75,10 +75,10 @@ public class Robot extends TimedRobot {
     Command setAutoLED = new SetLEDModeAuto();
     setAutoLED.start();
 
-    //start finding targets
+    /*start finding targets
     Command findTargets = new FindTargetsPeriodic();
     findTargets.start();
-    Scheduler.getInstance().run();
+    Scheduler.getInstance().run();*/
   }
 
   @Override

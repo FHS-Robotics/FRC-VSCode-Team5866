@@ -15,6 +15,7 @@ import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.LowerClaw;
 import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.claw.RaiseClaw;
+import frc.robot.commands.cargodelivery.DeliverCargo;
 import frc.robot.subsystems.LEDInterface.ColorMode;
 
 /**
@@ -34,6 +35,8 @@ public class OI {
     public static JoystickButton clawClose = new JoystickButton(secondaryController, 2);
     public static JoystickButton clawRaise = new JoystickButton(secondaryController, 3);
     public static JoystickButton clawLower = new JoystickButton(secondaryController, 4);
+
+    public static JoystickButton deliverCargo = new JoystickButton(secondaryController, 8);
     
     //buttons for manually setting the led mode
     public static JoystickButton setNeutral = new JoystickButton(m_leftStick, 12);
@@ -49,8 +52,10 @@ public class OI {
 
         clawOpen.whenPressed(new OpenClaw());
         clawClose.whenPressed(new CloseClaw());
-        clawOpen.whenPressed(new RaiseClaw());
-        clawClose.whenPressed(new LowerClaw());
+        clawRaise.whenPressed(new RaiseClaw());
+        clawLower.whenPressed(new LowerClaw());
+
+        deliverCargo.whenPressed(new DeliverCargo(true, 1));
 
         //publish the starting positions of the wrist and claw to the Shuffleboard
         SmartDashboard.putString("Claw State", "Closed");
@@ -58,7 +63,7 @@ public class OI {
 
 
         setNeutral.whenPressed(new SetLEDModeManual(ColorMode.neutral));
-        setNeutral.whenPressed(new SetLEDModeManual(ColorMode.showcase));
+        setShowcase.whenPressed(new SetLEDModeManual(ColorMode.showcase));
     }
 }
  

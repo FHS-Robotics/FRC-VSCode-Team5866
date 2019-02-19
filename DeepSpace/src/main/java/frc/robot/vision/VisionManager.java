@@ -1,6 +1,8 @@
 
 package frc.robot.vision;
 
+import java.util.ArrayList;
+
 //import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -10,7 +12,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public final class VisionManager {
 
     public static NetworkTable table;
-    public static TargetContour[] targets = new TargetContour[10]; //allocate for 10 targets just in case; this should just be 2 though
+    public static ArrayList<TargetContour> targets = new ArrayList<TargetContour>(); //allocate for 10 targets just in case; this should just be 2 though
 
     public static double[] defaultValue = new double[0];
 
@@ -71,7 +73,7 @@ public final class VisionManager {
             double[] widths = table.getNumberArray("width", defaultValue);
             double[] heights = table.getNumberArray("height", defaultValue);
 
-            TargetContour[] foundTargets = new TargetContour[10];
+            ArrayList<TargetContour> foundTargets = new ArrayList<TargetContour>();
 
             int i = 0;
             for(double area : areas)
@@ -91,7 +93,7 @@ public final class VisionManager {
                     && centerY < maxCenterYPos)
                     {
                         TargetContour newContour = new TargetContour(area, centerX, centerY, width, height);
-                        foundTargets[i] = newContour;
+                        foundTargets.add(newContour);
                     }
                 }
                 i++;
@@ -115,12 +117,13 @@ public final class VisionManager {
             xCenter += t.centerX;
             //yCenter += t.centerY;
         }
-        xCenter = xCenter / targets.length; //divide to find average x position; same for y 
-        //yCenter = yCenter / targets.length;
+        xCenter = xCenter / targets.size(); //divide to find average x position; same for y 
+        System.out.println("XCenter: " + xCenter);
 
         double heading = xCenter / headConRatio;
-        heading -= camPixWidth / 2; //converts into an angle to a positive or negative angle that we can then rotate towards
+        heading -= camPixWidth / 2.0; //converts into an angle to a positive or negative angle that we can then rotate towards
 
+        System.out.println("heading: " + heading);
         return heading;
     }
 }
