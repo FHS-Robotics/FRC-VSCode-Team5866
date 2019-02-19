@@ -34,11 +34,13 @@ public class FindTargetsPeriodic extends Command {
     {
       VisionManager.FindTargets();
       
-      if(VisionManager.targets[0] != null)
-        SmartDashboard.putString("Target 1: ", VisionManager.targets[0].toString());
-
-      if(VisionManager.targets[1] != null)
-      SmartDashboard.putString("Target 2: ", VisionManager.targets[1].toString());
+      try {
+        SmartDashboard.putString("Target 1: ", VisionManager.targets.get(0).toString());
+      } catch (Exception e) {}
+      try {
+        SmartDashboard.putString("Target 2: ", VisionManager.targets.get(1).toString());
+      } catch (Exception e) {}
+      
 
       timer.reset();
     }

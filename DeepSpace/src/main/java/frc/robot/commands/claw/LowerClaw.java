@@ -31,7 +31,6 @@ public class LowerClaw extends Command {
 
   @Override
   protected boolean isFinished() {
-    System.out.println(RobotMap.wristPiston.get());
     SmartDashboard.putString("Wrist State", "Lowered"); //publish state to Shuffleboard
     return RobotMap.wristPiston.get().equals(DoubleSolenoid.Value.kReverse); //if it's reverse than it's being raised
   }

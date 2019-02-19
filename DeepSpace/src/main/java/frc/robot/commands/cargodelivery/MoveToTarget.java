@@ -23,8 +23,10 @@ import frc.robot.vision.VisionManager;
 
 public class MoveToTarget extends Command implements PIDOutput{
 
-  public double period = 3000; //relock every 3 seconds
+  public double period = 2000; //relock every 3 seconds
   private Timer timer;
+
+  private double finalDistance = 20;
 
   //#region Navigation
   private AHRS navX;
@@ -58,6 +60,8 @@ public class MoveToTarget extends Command implements PIDOutput{
     navX = RobotMap.navX;
     ultrasonicFront = RobotMap.ultraSonicFront;
 
+    timer = new Timer();
+
     turnController = new PIDController(kP, kI, kD, kF, navX, this);
     turnController.setInputRange(-180.0f,  180.0f);
     turnController.setOutputRange(-1.0, 1.0);
@@ -84,6 +88,8 @@ public class MoveToTarget extends Command implements PIDOutput{
     VisionManager.FindTargets();
     targetHeading = VisionManager.FindHeading();
     turnController.setSetpoint(originalHeading + targetHeading);
+
+    System.out.println("Moving to target");
   }
 
   @Override
@@ -96,33 +102,27 @@ public class MoveToTarget extends Command implements PIDOutput{
       targetHeading = VisionManager.FindHeading();
       turnController.setSetpoint(originalHeading + targetHeading); //the rotation we want to get to is based on our original rotation
       timer.reset();
+
+      System.out.println("Relocating targets...");
     }
 
     turnController.enable();
     try {
 
       RobotMap.driveBase.arcadeDrive(1, rotateToAngleRate); //drive based on the rotation rate from the pid controler
-
-  } catch( RuntimeException ex ) {
+      System.out.println("Rotating...");
+      System.out.println("navx heading: " + navX.getYaw());
+    } catch( RuntimeException ex ) {
 
       DriverStation.reportError("Error communicating with drive system:  " + ex.getMessage(), true);
-  }
+      System.out.println("It didn't work :/");
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (ultrasonicFront.GetRangeInCM() <= 50);
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
+    System.out.println("Finished!");
+    return false; //(ultrasonicFront.GetRangeInCM() <= finalDistance);
   }
 }
