@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleOpLift extends Command {
 
-    public double scaleFactorUp = 1; //scale factor for moving up
-    public double scaleFactorDown = .25; //scale factor for moving down
+    public double scaleFactorUp = .5;
+     //scale factor for moving up
+    public double scaleFactorDown = .1 ; //scale factor for moving down
 
     public TeleOpLift() {
         requires(RobotMap.liftSystem);
@@ -17,20 +18,21 @@ public class TeleOpLift extends Command {
     protected void initialize() {}
 
     protected void execute() {
-        /*if the limit switches have been hit we can't go that direction anymore
-        if((OI.m_leftStick.getX() < 0 && RobotMap.liftSystem.getLimitDown() == false)
-        || (OI.m_leftStick.getX() > 0 && RobotMap.liftSystem.getLimitUp() == false ))
-        {    
-            RobotMap.liftSystem.move(OI.m_leftStick.getX());
-            System.out.println("elevator moved");
-        }*/
 
-        double value = OI.secondaryController.getRawAxis(1); //joystick values are negated
-        value = (value > 0) ? (value * scaleFactorUp) : (value * scaleFactorDown);  //if moving up, multiply by scaleFactorUp; else multiply by scaleFactorDown; This code is a simplified if else statement
-
-        //value = value * scaleFactorUp;
-        RobotMap.liftSystem.move(value); //finally plug in the new value into our lift system movement 😂 look emojis
-    }
+        //this if statement checks whether our control mode is in normal control or inverted control
+        double value = OI.mode? OI.secondaryController.getRawAxis(1) : OI.m_leftStick.getY();
+        if(Math.abs(value) > .1)
+        {
+            value = (value < 0) ? (value * scaleFactorUp) : (value * scaleFactorDown);  //if moving up, multiply by scaleFactorUp; else multiply by scaleFactorDown; This code is a simplified if else statement
+            //value += .5; //add .5 to hold elevator in current position
+ 
+            RobotMap.liftSystem.move(value); //finally plug in the new value into our lift system movement 😂 look emojis
+        }
+        else
+        {
+            RobotMap.liftSystem.move(0);
+        }
+    } 
 
     protected boolean isFinished() {
         return false;

@@ -21,10 +21,7 @@ public class RaiseClaw extends Command {
   public RaiseClaw() {
     requires(RobotMap.m_claw);
   }
-
-  @Override
-  protected void initialize() {}
-
+  
   @Override
   protected void execute() {
     RobotMap.m_claw.raise();

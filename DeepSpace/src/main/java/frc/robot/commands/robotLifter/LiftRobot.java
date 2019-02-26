@@ -5,30 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.claw;
+package frc.robot.commands.robotLifter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
-/**
- * Open the claw
- */
-public class OpenClaw extends Command {
-
-  public OpenClaw() {
-    requires(RobotMap.m_claw);
+public class LiftRobot extends Command {
+  
+  public LiftRobot() {
+    requires(RobotMap.robotLifter);
   }
 
   @Override
   protected void execute() {
-    RobotMap.m_claw.open();
+    RobotMap.robotLifter.lift();
   }
 
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    SmartDashboard.putString("Claw State", "Open"); //publish state to Shuffleboard
-    return RobotMap.clawPistons.get().equals(DoubleSolenoid.Value.kForward); //if it's forward than it's being closed
+    SmartDashboard.putString("Base Lift Pistons State", "Raised"); //publish state to Shuffleboard
+    return RobotMap.baseLiftPistons.get().equals(DoubleSolenoid.Value.kReverse); //if it's forward than it's being closed
   }
 }

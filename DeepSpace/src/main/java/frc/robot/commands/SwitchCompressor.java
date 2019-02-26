@@ -5,30 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.claw;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
-/**
- * Open the claw
- */
-public class OpenClaw extends Command {
+public class SwitchCompressor extends InstantCommand {
 
-  public OpenClaw() {
-    requires(RobotMap.m_claw);
-  }
+  public SwitchCompressor() {}
 
+  // Called just before this Command runs the first time
   @Override
-  protected void execute() {
-    RobotMap.m_claw.open();
+  protected void initialize() {
+    if(RobotMap.mainC.enabled())
+    {
+      RobotMap.mainC.stop();
+      SmartDashboard.putString("Compressor State:", "Off");
+    }
+    else
+    {
+      RobotMap.mainC.start();
+      SmartDashboard.putString("Compressor State:", "Off");
+    }
   }
 
-  @Override
-  protected boolean isFinished() {
-    SmartDashboard.putString("Claw State", "Open"); //publish state to Shuffleboard
-    return RobotMap.clawPistons.get().equals(DoubleSolenoid.Value.kForward); //if it's forward than it's being closed
-  }
+
 }

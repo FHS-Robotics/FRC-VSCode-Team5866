@@ -20,10 +20,7 @@ public class LowerClaw extends Command {
   public LowerClaw() {
     requires(RobotMap.m_claw);
   }
-
-  @Override
-  protected void initialize() {}
-
+  
   @Override
   protected void execute() {
     RobotMap.m_claw.lower();
