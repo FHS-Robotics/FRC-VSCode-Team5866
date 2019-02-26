@@ -22,9 +22,6 @@ public class CloseClaw extends Command {
   }
 
   @Override
-  protected void initialize() {}
-
-  @Override
   protected void execute() {
     RobotMap.m_claw.close();
   }

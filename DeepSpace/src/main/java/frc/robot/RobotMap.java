@@ -14,6 +14,7 @@ import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.LEDInterface;
 import frc.robot.subsystems.LiftSystem;
+import frc.robot.subsystems.RobotLifter;
 
 /**
  * This class contains all of the objects for the robot and a map of where they go
@@ -44,6 +45,10 @@ public class RobotMap {
     public static DoubleSolenoid clawPistons;
     public static DoubleSolenoid wristPiston;
     public static Claw m_claw;
+    
+    //Robot base lift system
+    public static DoubleSolenoid baseLiftPistons;
+    public static RobotLifter robotLifter;
 
     //#endregion
     
@@ -88,6 +93,10 @@ public class RobotMap {
         clawPistons = new DoubleSolenoid(0, 1);
         wristPiston = new DoubleSolenoid(2, 3);
         m_claw = new Claw(clawPistons, wristPiston);
+
+        //define lift system made of two pistons connected to one double solenoid
+        baseLiftPistons = new DoubleSolenoid(4, 5);
+        robotLifter = new RobotLifter(baseLiftPistons);
 
 
         //establish NavX sensor on the MXP port (12 pins on the roborio)
