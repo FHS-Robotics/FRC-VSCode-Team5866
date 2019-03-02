@@ -37,7 +37,7 @@ public class TeleOpDrive extends Command {
     }
     else
     {
-      RobotMap.driveBase.tankDrive(-OI.secondaryController.getRawAxis(1) * sensitivity, -OI.m_rightStick.getY() * sensitivity, true);
+      RobotMap.driveBase.tankDrive(-OI.secondaryController.getRawAxis(1) * sensitivity, -OI.secondaryController.getRawAxis(5) * sensitivity, true);
     }
   }
 

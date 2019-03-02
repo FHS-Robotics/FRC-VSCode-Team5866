@@ -19,7 +19,7 @@ public class SwitchCompressor extends InstantCommand {
   @Override
   protected void initialize() {
     if(RobotMap.mainC.enabled())
-    {
+    { 
       RobotMap.mainC.stop();
       SmartDashboard.putString("Compressor State:", "Off");
     }
@@ -28,6 +28,7 @@ public class SwitchCompressor extends InstantCommand {
       RobotMap.mainC.start();
       SmartDashboard.putString("Compressor State:", "Off");
     }
+    RobotMap.mainC.stop();
   }
 
 

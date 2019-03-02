@@ -171,6 +171,28 @@
               "_source0": "network_table:///SmartDashboard/Wrist State",
               "_title": "Wrist State"
             }
+          },
+          "7,6": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Base Lift Pistons State",
+              "_title": "Base Lift Pistons State"
+            }
+          },
+          "6,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Compressor State:",
+              "_title": "Compressor State:"
+            }
           }
         }
       }
@@ -299,6 +321,11 @@
                   "_title": "DigitalOutput[1]/Value",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[0,4]/Value",
+                  "_title": "DoubleSolenoid[0,4]/Value"
                 }
               ]
             }
@@ -353,6 +380,74 @@
               "_title": "LiftSystem",
               "Layout/Label position": "BOTTOM",
               "_children": []
+            }
+          },
+          "20,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/DriveSystem/RotateController/p",
+              "_title": "DriveSystem/RotateController/p"
+            }
+          },
+          "20,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/DriveSystem/RotateController/i",
+              "_title": "DriveSystem/RotateController/i"
+            }
+          },
+          "20,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/DriveSystem/RotateController/d",
+              "_title": "DriveSystem/RotateController/d"
+            }
+          },
+          "20,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/DriveSystem/RotateController/f",
+              "_title": "DriveSystem/RotateController/f"
+            }
+          },
+          "20,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/DriveSystem/RotateController/setpoint",
+              "_title": "DriveSystem/RotateController/setpoint"
+            }
+          },
+          "0,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/DriveSystem/RotateController/enabled",
+              "_title": "DriveSystem/RotateController/enabled",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }

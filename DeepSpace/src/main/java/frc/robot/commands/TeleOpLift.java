@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleOpLift extends Command {
 
-    public double scaleFactorUp = .5;
+    public double scaleFactorUp = 1;
      //scale factor for moving up
-    public double scaleFactorDown = .1 ; //scale factor for moving down
+    public double scaleFactorDown = 1 ; //scale factor for moving down
 
     public TeleOpLift() {
         requires(RobotMap.liftSystem);

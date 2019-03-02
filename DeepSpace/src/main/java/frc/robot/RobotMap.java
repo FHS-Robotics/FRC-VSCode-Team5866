@@ -97,7 +97,7 @@ public class RobotMap {
         //define lift system made of two pistons connected to one double solenoid
         baseLiftPistons = new DoubleSolenoid(4, 5);
         robotLifter = new RobotLifter(baseLiftPistons);
-
+        robotLifter.lower();
 
         //establish NavX sensor on the MXP port (12 pins on the roborio)
         navX = new AHRS(SPI.Port.kMXP);
