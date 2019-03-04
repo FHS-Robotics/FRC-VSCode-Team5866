@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
 
   public OI m_oi;
   public static UsbCamera main;
+  public static UsbCamera backCam;
 
 
   @Override
@@ -57,6 +58,9 @@ public class Robot extends TimedRobot {
     main = CameraServer.getInstance().startAutomaticCapture(0); //start camera server
     main.setResolution(310, 240); //set resolution of camera
 
+    backCam = CameraServer.getInstance().startAutomaticCapture(1); //start camera server
+    backCam.setResolution(310, 240); //set resolution of camera
+
     //set our led color
     Command setAutoLED = new SetLEDModeAuto();
     setAutoLED.start();
@@ -75,10 +79,13 @@ public class Robot extends TimedRobot {
     Command setAutoLED = new SetLEDModeAuto();
     setAutoLED.start();
 
+    Command teleOp = new TeleOpDrive();
+    teleOp.start();
+
     /*start finding targets
     Command findTargets = new FindTargetsPeriodic();
-    findTargets.start();
-    Scheduler.getInstance().run();*/
+    findTargets.start();*/
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -90,16 +97,18 @@ public class Robot extends TimedRobot {
       DisplaySensors();
       timer.reset();
     }
-
-    Command teleOp = new TeleOpDrive();
-    teleOp.start();
-
     Scheduler.getInstance().run();
   }
 
   @Override
   public void autonomousPeriodic(){
     teleopPeriodic(); //just do the same stuff as teleopPeriodic
+  }
+
+  @Override
+  public void autonomousInit()
+  {
+    teleopInit();
   }
 
 

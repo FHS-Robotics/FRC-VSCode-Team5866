@@ -81,8 +81,8 @@ public class RobotMap {
         liftMotor2 = new PWMVictorSPX(5);
         liftSystem = new LiftSystem(liftMotor1, liftMotor2,  4, 5);
 
+        
         mainC = new Compressor(1);
-
 
         try {
         mainC.start();
@@ -93,6 +93,7 @@ public class RobotMap {
         clawPistons = new DoubleSolenoid(0, 1);
         wristPiston = new DoubleSolenoid(2, 3);
         m_claw = new Claw(clawPistons, wristPiston);
+        m_claw.raise();
 
         //define lift system made of two pistons connected to one double solenoid
         baseLiftPistons = new DoubleSolenoid(4, 5);

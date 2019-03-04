@@ -37,9 +37,4 @@ public class TeleOpLift extends Command {
     protected boolean isFinished() {
         return false;
     }
-
-    protected void end() {}
-
-
-    protected void interrupted() {}
 }
