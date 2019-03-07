@@ -55,7 +55,7 @@
 #define COLOR_ORDER       GRB
 #define MAX_BRIGHTNESS    255
 //Tell it how many leds are in the strip. AndyMark's 2.5 meter strip has 150 leds
-#define NUM_LEDS          150
+#define NUM_LEDS          60
 
 // This is an array of leds. One item for each led in your strip
 CRGB leds[NUM_LEDS];
@@ -122,9 +122,9 @@ void loop()
    	FastLED.show();
    	delay(500);
    //CSK 3/20/2014 I added a rainbow function just for grins
-   	rainbow(10);
-   	cylon(CRGB::Red, 1, 1);
-    cylon(CRGB::Green, 1, 1);
+   	rainbow(10);*/
+   	//cylon(CRGB::Red, 1, 1);
+    /*cylon(CRGB::Green, 1, 1);
     cylon(CRGB::Blue, 1, 1);
     color_chase(CRGB::Red, 5);
     color_chase(CRGB::DarkOrange, 5);
@@ -159,12 +159,15 @@ void loop()
     {
       case 0:
         staticColor(CRGB::Red);
+        //cylon(CRGB::Red, 1, 1);
         break;
       case 1:
         staticColor(CRGB::Blue);
+        //cylon(CRGB::Blue, 1, 1);
         break;
       case 2:
         staticColor(CRGB::Yellow);
+        //cylon(CRGB::Yellow, 1, 1);
         break;
       case 3:
         rainbow(1);
@@ -174,9 +177,11 @@ void loop()
 
 void staticColor(CRGB color)
 {
+  FastLED.setBrightness(MAX_BRIGHTNESS);
       for(int n = 0; n < NUM_LEDS; n++)
       {
          leds[n] = color;
+         FastLED.show();
       }
 }
 

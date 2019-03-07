@@ -108,6 +108,6 @@ public class RobotMap {
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
 
 
-        ledStrip = new LEDInterface(0, 1, 2, 3); //arduino pins are 0, 1, 3
+        ledStrip = new LEDInterface(0, 1, 2, 3);
     }
 }
