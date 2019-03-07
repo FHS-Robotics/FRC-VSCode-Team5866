@@ -21,7 +21,7 @@ public class TeleOpDrive extends Command {
   public static double currDriveLeft; //current input being applied to the left motor
   public static double currDriveRight; //current input being applied to the right motor
 
-  public static final double accelThreshold = .025; //the threshold for the interpolation of the acceleration curve to cut out
+  public static final double accelTime = 1000; //the time in milliseconds to accelerate to full speed from a full stop
 
   public TeleOpDrive() {}
 
@@ -38,50 +38,66 @@ public class TeleOpDrive extends Command {
     //the joystick values will be modified by the sensitivity of the Joysticks
     sensitivity = (OI.sensitivity + 5) / 10.0; //get sensitivity from OI and divide it by 10 to scale it down, so mode 10 will be 2x speed and mode 5 will be normal speed
 
-    /*
-    if(OI.mode)
-    {
-      //take the y axis values from each joystick and send them to the swervedrive
-      RobotMap.driveBase.tankDrive(-OI.m_leftStick.getY() * sensitivity, -OI.m_rightStick.getY() * sensitivity, true);
-    }
-    else
-    {
-      RobotMap.driveBase.tankDrive(-OI.secondaryController.getRawAxis(1) * sensitivity, -OI.secondaryController.getRawAxis(5) * sensitivity, true);
-    }*/
-
-
     /**
      * This section of code uses the input of the joysticks and the input that is currently being applied
      * to the drive motors.  With both of these values, it interpolates between the two over time to make the
      * input for the motors equal to the input of the joysticks smoothly.  That way, instead of having immediate
      * jerking of the robot, it will ease into and out of movements
      */
+    double targetL;
+    double targetR;
     double valueL;
     double valueR;
 
     if(OI.mode)
     {
-      valueL = currDriveLeft + (((-OI.m_leftStick.getY() * sensitivity) + currDriveLeft) / Math.sqrt(Math.abs(OI.m_leftStick.getY()))); //interpolate between the current input and the new input
-      if(valueL > -OI.m_leftStick.getY())
-        valueL = -OI.m_leftStick.getY() * sensitivity;    
-
-      valueR = currDriveRight + (((-OI.m_rightStick.getY() * sensitivity) + currDriveRight) / Math.sqrt(Math.abs(OI.m_rightStick.getY()))); //interpolate between the current input and the new input
-      if(valueR >= -OI.m_rightStick.getY())
-        valueR = -OI.m_rightStick.getY() * sensitivity;  
+      //take the y axis values from each joystick and send them to the swervedrive
+      targetL = -OI.m_leftStick.getY() * sensitivity;
+      targetR = -OI.m_rightStick.getY() * sensitivity;
     }
     else
     {
-      valueL = currDriveLeft + (((-OI.secondaryController.getRawAxis(1) * sensitivity) + currDriveLeft) / Math.sqrt(Math.abs(-OI.secondaryController.getRawAxis(1)))); //interpolate between the current input and the new input
-      if(valueL > -OI.secondaryController.getRawAxis(1))
-        valueL = -OI.secondaryController.getRawAxis(1) * sensitivity;    
-  
-      valueR = currDriveRight + (((-OI.secondaryController.getRawAxis(5) * sensitivity) + currDriveRight) / Math.sqrt(Math.abs(-OI.secondaryController.getRawAxis(5)))); //interpolate between the current input and the new input
-      if(valueR >= -OI.secondaryController.getRawAxis(5))
-        valueR = -OI.secondaryController.getRawAxis(5) * sensitivity;  
+      targetL = -OI.secondaryController.getRawAxis(1) * sensitivity;
+      targetR = -OI.secondaryController.getRawAxis(5) * sensitivity;
     }
 
+     
+      //bring valueR and valueL closer together
+      double l = targetL;
+      double r = targetR;
+      double average = (l+r)/2;
+      double scale = 4; //higher scale is, the less averaging
+
+      targetL += (average - l) / scale; //this code brings our joystick values closer together
+      targetR += (average - r) / scale;
+
+
+    if(targetL > currDriveLeft)
+      valueL = currDriveLeft + (1 * sensitivity)/(accelTime/20); //20 represents the milliseconds it takes to complete a frame
+    else
+      valueL = currDriveLeft - (1 * sensitivity)/(accelTime/20); //The 1 and -1 represent our limit speeds, which should be 1 and -1 factored by the sensitivity
+
+
+    if(targetR > currDriveRight)
+      valueR = currDriveRight + (1 * sensitivity)/(accelTime/20); //20 represents the milliseconds it takes to complete a frame
+    else
+      valueR = currDriveRight - (1 * sensitivity)/(accelTime/20); //The 1 and -1 represent our limit speeds, which should be 1 and -1
+
+
+      //if we have gone to far then clamp our value to where we want to be
+      if(currDriveLeft <= targetL && valueL >= targetL || currDriveLeft >= targetL && valueL <= targetL)
+      {
+        valueL = targetL;
+      }
+      if(currDriveRight <= targetR && valueR >= targetR || currDriveRight >= targetR && valueR <= targetR)
+      {
+        valueR = targetR;
+      }
+
     //take the y axis values from each joystick and send them to the swervedrive
-    RobotMap.driveBase.tankDrive(valueL, valueR, true);
+    RobotMap.driveBase.tankDrive(valueL, valueR, false);
+    currDriveLeft = valueL;
+    currDriveRight = valueR;
   }
 
 //#region Unused Methods

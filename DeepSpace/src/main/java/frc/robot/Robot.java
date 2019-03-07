@@ -16,7 +16,9 @@ import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.cargodelivery.FindTargetsPeriodic;
 import frc.robot.commands.TeleOpLift;
 import frc.robot.commands.SetLEDModeAuto;
+import frc.robot.commands.SetLEDModeManual;
 import frc.robot.commands.ultrasonic.*;
+import frc.robot.subsystems.LEDInterface.ColorMode;
 import frc.robot.vision.VisionManager;
 import frc.robot.RobotMap;
 
@@ -112,7 +114,12 @@ public class Robot extends TimedRobot {
   }
 
 
-
+  @Override
+  public void disabledInit() {
+    Command led = new SetLEDModeManual(ColorMode.neutral);
+    led.start();
+    Scheduler.getInstance().run();
+  }
 
   //get range of ultrasonic sensor  and rotation of the navX every x seconds
   private void DisplaySensors()
