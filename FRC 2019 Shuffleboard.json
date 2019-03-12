@@ -62,7 +62,7 @@
               "_title": "Robot Y Pos: "
             }
           },
-          "0,8": {
+          "1,9": {
             "size": [
               1,
               1
@@ -73,7 +73,7 @@
               "_title": "DB/String 8"
             }
           },
-          "1,8": {
+          "2,9": {
             "size": [
               1,
               1
@@ -84,7 +84,7 @@
               "_title": "DB/String 5"
             }
           },
-          "2,8": {
+          "3,9": {
             "size": [
               1,
               1
@@ -192,6 +192,166 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Compressor State:",
               "_title": "Compressor State:"
+            }
+          },
+          "11,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/Slider 1",
+              "_title": "DB/Slider 1"
+            }
+          },
+          "13,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/Slider 3",
+              "_title": "DB/Slider 3"
+            }
+          },
+          "12,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/Slider 0",
+              "_title": "DB/Slider 0"
+            }
+          },
+          "14,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/Slider 2",
+              "_title": "DB/Slider 2"
+            }
+          },
+          "15,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/DB/Button 0",
+              "_title": "DB/Button 0",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "16,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/DB/Button 2",
+              "_title": "DB/Button 2",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/DB/Button 3",
+              "_title": "DB/Button 3",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 0",
+              "_title": "DB/String 0"
+            }
+          },
+          "8,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 1",
+              "_title": "DB/String 1"
+            }
+          },
+          "9,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 2",
+              "_title": "DB/String 2"
+            }
+          },
+          "0,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 3",
+              "_title": "DB/String 3"
+            }
+          },
+          "4,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 4",
+              "_title": "DB/String 4"
+            }
+          },
+          "6,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 6",
+              "_title": "DB/String 6"
+            }
+          },
+          "10,9": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DB/String 9",
+              "_title": "DB/String 9"
             }
           }
         }

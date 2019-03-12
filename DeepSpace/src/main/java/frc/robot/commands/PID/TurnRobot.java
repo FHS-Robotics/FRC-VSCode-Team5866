@@ -5,40 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.cargodelivery;
+package frc.robot.commands.PID;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.RobotMap;
 
-public class PlaceBall extends Command {
-  public PlaceBall(int level) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+/**
+ * This command turns our robot to a specified point using a PID loop with the NavX sensor
+ */
+public class TurnRobot extends Command {
+ 
+  public double angle;
+
+  public TurnRobot(double _angle) {
+    requires(RobotMap.pidDriveBase);
+    angle = _angle;
   }
 
-  // Called just before this Command runs the first time
-  @Override
   protected void initialize() {
+
+    RobotMap.pidDriveBase.enable();
+    RobotMap.pidDriveBase.setSetpoint(-angle);
   }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
+  protected void execute() {}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
   protected boolean isFinished() {
-    return false;
-  }
+    return RobotMap.pidDriveBase.onTarget();
+  } 
 
-  // Called once after isFinished returns true
-  @Override
   protected void end() {
+    RobotMap.pidDriveBase.disable();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
   protected void interrupted() {
+    end();
   }
+
 }

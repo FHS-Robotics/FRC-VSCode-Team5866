@@ -12,14 +12,13 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.SetLEDModeManual;
 import frc.robot.commands.SetSensitivity;
-import frc.robot.commands.SwitchCompressor;
 import frc.robot.commands.SwitchControlMode;
+import frc.robot.commands.PID.TurnRobot;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.LowerClaw;
 import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.claw.RaiseClaw;
 import frc.robot.commands.robotLifter.LiftRobot;
-import frc.robot.commands.robotLifter.LowerRobot;
 import frc.robot.commands.robotLifter.LowerRobot;
 import frc.robot.commands.cargodelivery.DeliverCargo;
 import frc.robot.subsystems.LEDInterface.ColorMode;
@@ -37,7 +36,12 @@ public class OI {
 
     public static JoystickButton sensUp = new JoystickButton(m_rightStick, 5);
     public static JoystickButton sensDown = new JoystickButton(m_rightStick, 3);
-    public static int sensitivity = 3; //from 0-10
+    public static int sensitivity = 7; //from 0-10
+
+    public static POVButton turnRight = new POVButton(m_rightStick, 90);
+    public static POVButton turnLeft = new POVButton(m_rightStick, 270);
+    public static POVButton turnForward = new POVButton(m_rightStick, 0);
+    public static POVButton turnBackward = new POVButton(m_rightStick, 180);
 
     public static JoystickButton clawOpen = new JoystickButton(secondaryController, 1);
     public static JoystickButton clawClose = new JoystickButton(secondaryController, 2);
@@ -49,9 +53,6 @@ public class OI {
 
 
     public static JoystickButton deliverCargo = new JoystickButton(secondaryController, 8);
-
-
-    public static JoystickButton compressorSwitch = new JoystickButton(secondaryController, 7);
     
     //buttons for manually setting the led mode
     public static JoystickButton setNeutral = new JoystickButton(m_leftStick, 12);
@@ -69,6 +70,11 @@ public class OI {
         sensDown.whenPressed(new SetSensitivity(false));
         SmartDashboard.putNumber("Joystick Sensitivity", sensitivity); //publish the sensitivity on the Shuffleboard
 
+        //turn based on the direction of the POV buttons
+        turnRight.whenPressed(new TurnRobot(90));
+        turnLeft.whenPressed(new TurnRobot(-90));
+        turnForward.whenPressed(new TurnRobot(0));
+        turnBackward.whenPressed(new TurnRobot(180));
 
         clawOpen.whenPressed(new OpenClaw());
         clawClose.whenPressed(new CloseClaw());
@@ -77,8 +83,6 @@ public class OI {
 
         baseRaise.whenPressed(new LiftRobot());
         baseLower.whenPressed(new LowerRobot());
-
-        compressorSwitch.whenPressed(new SwitchCompressor());
 
         deliverCargo.whenPressed(new DeliverCargo(true, 1));
 

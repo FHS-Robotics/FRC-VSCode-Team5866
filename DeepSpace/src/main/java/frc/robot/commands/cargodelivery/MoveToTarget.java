@@ -86,7 +86,8 @@ public class MoveToTarget extends Command implements PIDOutput{
     timer.start();
     originalHeading = navX.getYaw();
     VisionManager.FindTargets();
-    targetHeading = VisionManager.FindHeading();
+    //targetHeading = VisionManager.FindHeading();
+    targetHeading = -90; //testing this out
     turnController.setSetpoint(originalHeading + targetHeading);
 
     System.out.println("Moving to target");

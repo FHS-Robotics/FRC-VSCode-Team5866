@@ -10,10 +10,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.commands.TeleOpDrive;
-import frc.robot.commands.cargodelivery.FindTargetsPeriodic;
 import frc.robot.commands.TeleOpLift;
 import frc.robot.commands.SetLEDModeAuto;
 import frc.robot.commands.SetLEDModeManual;
@@ -58,10 +59,18 @@ public class Robot extends TimedRobot {
     RobotMap.navX.resetDisplacement();
 
     main = CameraServer.getInstance().startAutomaticCapture(0); //start camera server
-    main.setResolution(310, 240); //set resolution of camera
+    try {
+      main.setResolution(310, 240); //set resolution of camera
+    } catch (Exception e) {
+      System.out.println("Warning: Camera(Main) is not available and setResolution() was not run!");
+    }
 
     backCam = CameraServer.getInstance().startAutomaticCapture(1); //start camera server
-    backCam.setResolution(310, 240); //set resolution of camera
+    try {
+      backCam.setResolution(310, 240); //set resolution of camera
+    } catch (Exception e) {
+      System.out.println("Warning: Camera(backCam) is not available and setResolution() was not run!");
+    }
 
     //set our led color
     Command setAutoLED = new SetLEDModeAuto();
@@ -132,7 +141,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Robot X Pos: ", df.format(navX.getDisplacementX()));
     SmartDashboard.putString("Robot Y Pos: ", df.format(navX.getDisplacementY()));
       
-    SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
+    //SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
+    Shuffleboard.getTab("SmartDashboard")
+    .add("NavX", RobotMap.navX.getYaw())
+    .withWidget(BuiltInWidgets.kGyro) // specify the widget here
+    .getEntry();
     range.start();
   }
 

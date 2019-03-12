@@ -14,6 +14,7 @@ import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.LEDInterface;
 import frc.robot.subsystems.LiftSystem;
+import frc.robot.subsystems.PIDDriveBase;
 import frc.robot.subsystems.RobotLifter;
 
 /**
@@ -32,6 +33,9 @@ public class RobotMap {
     private static PWMVictorSPX m_frontRight;
     private static PWMVictorSPX m_rearRight;
     private static SpeedControllerGroup m_right;
+
+
+    public static PIDDriveBase pidDriveBase;
     //#endregion
 
 
@@ -106,6 +110,11 @@ public class RobotMap {
         navX.resetDisplacement();
 
         ultraSonicFront = new UltrasonicSensor(0); //pass in analog pin for the sensor
+
+
+        pidDriveBase = new PIDDriveBase(); //create a new PIDDrive base for set turning
+        pidDriveBase.setSpeedControllers(m_left, m_right); //set the speed controllers for the drive base
+        pidDriveBase.setGyro(navX); //set the gyro for the drive base
 
 
         ledStrip = new LEDInterface(0, 1, 2, 3);

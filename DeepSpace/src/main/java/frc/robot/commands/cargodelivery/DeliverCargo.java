@@ -19,16 +19,5 @@ public class DeliverCargo extends CommandGroup {
   public DeliverCargo(Boolean hatch, int level) {
 
     addSequential(new MoveToTarget());
-    //Are we delivering the ball or the hatch?
-    if(hatch)
-    {
-      addSequential(new PlaceHatch(level));
-      System.out.println("Placing Hatch");
-    }
-    else
-    {
-      addSequential(new PlaceBall(level));
-      System.out.println("Placing Hatch");
-    }
   }
 }

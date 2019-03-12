@@ -34,7 +34,6 @@ public class GetRange extends Command {
     double range = uSensor.GetRangeInCM();
     if(range != -2)
     {
-      System.out.println(range); //print the range
       SmartDashboard.putString("Front Ultrasonic", Double.toString(range) + " cm"); //put the ultrasonic data to the shuffleboard
     }
     //else it will be -2

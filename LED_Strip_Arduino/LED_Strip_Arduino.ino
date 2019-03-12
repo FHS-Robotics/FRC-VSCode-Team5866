@@ -147,13 +147,13 @@ void loop()
     {
       mode = 1;
     }
-    else if(digitalRead(showCasePin) == HIGH)
+    else if(digitalRead(neutralPin) == HIGH)
     {
-      mode = 3;
+      mode = 2;
     }
    else
     {
-      mode = 2;
+      mode = 3;
     }
     switch(mode)
     {
@@ -170,7 +170,7 @@ void loop()
         //cylon(CRGB::Yellow, 1, 1);
         break;
       case 3:
-        rainbow(1);
+        rainbow(10);
         break;
     }
 }

@@ -21,7 +21,7 @@ public class TeleOpDrive extends Command {
   public static double currDriveLeft; //current input being applied to the left motor
   public static double currDriveRight; //current input being applied to the right motor
 
-  public static final double accelTime = 1000; //the time in milliseconds to accelerate to full speed from a full stop
+  public static final double accelTime = 500; //the time in milliseconds to accelerate to full speed from a full stop
 
   public TeleOpDrive() {}
 

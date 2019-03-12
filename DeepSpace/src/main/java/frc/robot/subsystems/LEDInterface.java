@@ -28,8 +28,8 @@ public class LEDInterface extends Subsystem {
   public LEDInterface(int r, int b, int n, int s)
   {
     red = new DigitalOutput(r);
-    neutral = new DigitalOutput(n);
     blue = new DigitalOutput(b);
+    neutral = new DigitalOutput(n);
     showcase = new DigitalOutput(s);
     red.set(false);
     blue.set(false);
