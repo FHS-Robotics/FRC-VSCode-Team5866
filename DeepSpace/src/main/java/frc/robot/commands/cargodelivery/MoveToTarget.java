@@ -21,6 +21,14 @@ import frc.robot.subsystems.LiftSystem;
 import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.vision.VisionManager;
 
+/**
+ * Designed to use the vision processing received by the VisionManager over
+ * the network tables from the computer-side to find the vision tape on the rocket,
+ * move until the ultrasonic sensor reads a specified distance, and then finishes
+ * <br/>
+ * <br/>
+ * (Was not used during the 2019 season due to it being nonfunctional somehow)
+ */
 public class MoveToTarget extends Command implements PIDOutput{
 
   public double period = 2000; //relock every 3 seconds
@@ -86,7 +94,8 @@ public class MoveToTarget extends Command implements PIDOutput{
     timer.start();
     originalHeading = navX.getYaw();
     VisionManager.FindTargets();
-    targetHeading = VisionManager.FindHeading();
+    //targetHeading = VisionManager.FindHeading();
+    targetHeading = -90; //testing this out
     turnController.setSetpoint(originalHeading + targetHeading);
 
     System.out.println("Moving to target");

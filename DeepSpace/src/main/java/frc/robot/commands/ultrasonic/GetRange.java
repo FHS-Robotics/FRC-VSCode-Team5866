@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.RobotMap;
 
+/**
+ * Returns the range that the maxbotix ultrasonic sensor reads
+ * (Not used for the 2019 season)
+ */
 public class GetRange extends Command {
   
   UltrasonicSensor uSensor;
@@ -34,7 +38,6 @@ public class GetRange extends Command {
     double range = uSensor.GetRangeInCM();
     if(range != -2)
     {
-      System.out.println(range); //print the range
       SmartDashboard.putString("Front Ultrasonic", Double.toString(range) + " cm"); //put the ultrasonic data to the shuffleboard
     }
     //else it will be -2

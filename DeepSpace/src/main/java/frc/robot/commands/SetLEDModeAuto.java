@@ -19,9 +19,6 @@ import frc.robot.subsystems.LEDInterface.ColorMode;
  */
 public class SetLEDModeAuto extends InstantCommand {
 
-  /**
-   * Add your docs here.
-   */
   public SetLEDModeAuto() {
     requires(RobotMap.ledStrip);
   }
@@ -29,7 +26,9 @@ public class SetLEDModeAuto extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
+
     Alliance alliance = DriverStation.getInstance().getAlliance();
+    
     if(alliance == Alliance.Red)
       RobotMap.ledStrip.setOutput(ColorMode.red);
     else if(alliance == Alliance.Blue)

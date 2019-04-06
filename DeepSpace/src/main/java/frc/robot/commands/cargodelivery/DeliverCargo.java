@@ -9,6 +9,11 @@ package frc.robot.commands.cargodelivery;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/** Line up to the cargo opening on the rocket and deliver the cargo
+ * <br/>
+ * <br/>
+ * (Was not implemented during the 2019 season because it is unfinished)
+ */
 public class DeliverCargo extends CommandGroup {
 
   /**
@@ -19,16 +24,5 @@ public class DeliverCargo extends CommandGroup {
   public DeliverCargo(Boolean hatch, int level) {
 
     addSequential(new MoveToTarget());
-    //Are we delivering the ball or the hatch?
-    if(hatch)
-    {
-      addSequential(new PlaceHatch(level));
-      System.out.println("Placing Hatch");
-    }
-    else
-    {
-      addSequential(new PlaceBall(level));
-      System.out.println("Placing Hatch");
-    }
   }
 }

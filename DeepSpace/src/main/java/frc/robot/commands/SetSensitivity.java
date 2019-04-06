@@ -41,6 +41,7 @@ public class SetSensitivity extends InstantCommand {
     {
         sensitivity--;
     }
+    
     OI.sensitivity = sensitivity; //set OI sensitivity to the new value
     System.out.println("Changed sensitivity of joysitcks: " + sensitivity); //print the sensitivity change
     SmartDashboard.putNumber("Joystick Sensitivity", sensitivity); //update the sensitivity on the shuffleboard

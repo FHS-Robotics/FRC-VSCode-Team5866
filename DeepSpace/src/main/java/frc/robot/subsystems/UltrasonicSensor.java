@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * This sensor is designed to use the maxbotix sensor
+ * This sensor class is designed to use the maxbotix sensor
+ * This code was found on a tutorial, but most of it is disregarded.  Just see GetRangeInCM()
  */
 public class UltrasonicSensor extends Subsystem {
 

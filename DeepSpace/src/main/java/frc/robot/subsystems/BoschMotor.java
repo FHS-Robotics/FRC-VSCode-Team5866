@@ -15,6 +15,9 @@ import frc.robot.commands.boschmotor.BoschMotorContinuous;
 
 /**
  * Bosch Seat Motor
+ * <br/>
+ * <br/>
+ * (Not a motor used during the 2019 season)
  */
 public class BoschMotor extends Subsystem {
 
