@@ -30,41 +30,62 @@ public class OI {
 
     public static boolean mode = true;
 
-    public static Joystick m_leftStick = new Joystick(0);
-    public static Joystick m_rightStick = new Joystick(1);
-    public static Joystick secondaryController = new Joystick(2);
+    public static boolean pidDriving = false;
 
-    public static JoystickButton sensUp = new JoystickButton(m_rightStick, 5);
-    public static JoystickButton sensDown = new JoystickButton(m_rightStick, 3);
+    //all methods using the left and right joysticks will be commented out since we are using two xbox controllers now
+    ////public static Joystick m_leftStick = new Joystick(0);
+    ////public static Joystick m_rightStick = new Joystick(1);
+    public static Joystick driverController = new Joystick(3); //white
+    public static Joystick secondaryController = new Joystick(2); //blue
+
+    ////public static JoystickButton sensUp = new JoystickButton(m_rightStick, 5);
+    ////public static JoystickButton sensDown = new JoystickButton(m_rightStick, 3);
+    public static JoystickButton sensUp = new JoystickButton(driverController, 6);
+    public static JoystickButton sensDown = new JoystickButton(driverController, 5);
+
     public static int sensitivity = 7; //from 0-10
 
-    public static POVButton turnRight = new POVButton(m_rightStick, 90);
-    public static POVButton turnLeft = new POVButton(m_rightStick, 270);
-    public static POVButton turnForward = new POVButton(m_rightStick, 0);
-    public static POVButton turnBackward = new POVButton(m_rightStick, 180);
+    ////public static POVButton turnRight = new POVButton(m_rightStick, 90);
+    ////public static POVButton turnLeft = new POVButton(m_rightStick, 270);
+    ////public static POVButton turnForward = new POVButton(m_rightStick, 0);
+    ////public static POVButton turnBackward = new POVButton(m_rightStick, 180);
+    public static POVButton turnRight = new POVButton(driverController, 90);
+    public static POVButton turnLeft = new POVButton(driverController, 270);
+    public static POVButton turnForward = new POVButton(driverController, 0);
+    public static POVButton turnBackward = new POVButton(driverController, 180);
 
     public static JoystickButton clawOpen = new JoystickButton(secondaryController, 1);
     public static JoystickButton clawClose = new JoystickButton(secondaryController, 2);
     public static JoystickButton clawRaise = new JoystickButton(secondaryController, 4);
     public static JoystickButton clawLower = new JoystickButton(secondaryController, 3);
 
+    public static JoystickButton driverClawOpen = new JoystickButton(driverController, 1);
+    public static JoystickButton driverClawClose = new JoystickButton(driverController, 2);
+    public static JoystickButton driverClawRaise = new JoystickButton(driverController, 4);
+    public static JoystickButton driverClawLower = new JoystickButton(driverController, 3);
+
+
     public static POVButton baseRaise = new POVButton(secondaryController, 90);
     public static POVButton baseLower = new POVButton(secondaryController, 270);
+
+    public static JoystickButton driverBaseRaise = new JoystickButton(driverController, 7);
+    public static JoystickButton driverBaseLower = new JoystickButton(driverController, 8);
 
 
     public static JoystickButton deliverCargo = new JoystickButton(secondaryController, 8);
     
     //buttons for manually setting the led mode
-    public static JoystickButton setNeutral = new JoystickButton(m_leftStick, 12);
-    public static JoystickButton setShowcase = new JoystickButton(m_leftStick, 11);
+    ////public static JoystickButton setNeutral = new JoystickButton(m_leftStick, 12);
+    ////public static JoystickButton setShowcase = new JoystickButton(m_leftStick, 11);
 
-    public static JoystickButton switchMode = new JoystickButton(m_rightStick, 8);
+    ////public static JoystickButton switchMode = new JoystickButton(m_rightStick, 8);
 
 
     public OI()
     {
         mode = true;
-        switchMode.whenPressed(new SwitchControlMode());
+        pidDriving = false;
+        ////switchMode.whenPressed(new SwitchControlMode());
 
         sensUp.whenPressed(new SetSensitivity(true));
         sensDown.whenPressed(new SetSensitivity(false));
@@ -81,8 +102,16 @@ public class OI {
         clawRaise.whenPressed(new RaiseClaw());
         clawLower.whenPressed(new LowerClaw());
 
+        driverClawOpen.whenPressed(new OpenClaw());
+        driverClawClose.whenPressed(new CloseClaw());
+        driverClawRaise.whenPressed(new RaiseClaw());
+        driverClawLower.whenPressed(new LowerClaw());
+
         baseRaise.whenPressed(new LiftRobot());
         baseLower.whenPressed(new LowerRobot());
+        
+        driverBaseRaise.whenPressed(new LiftRobot());
+        driverBaseLower.whenPressed(new LowerRobot());
 
         deliverCargo.whenPressed(new DeliverCargo(true, 1));
 
@@ -90,9 +119,26 @@ public class OI {
         SmartDashboard.putString("Claw State", "Closed");
         SmartDashboard.putString("Wrist State", "Raised");
 
+        SmartDashboard.putBoolean("PID Driving", false);
 
-        setNeutral.whenPressed(new SetLEDModeManual(ColorMode.neutral));
-        setShowcase.whenPressed(new SetLEDModeManual(ColorMode.showcase));
+
+        ////setNeutral.whenPressed(new SetLEDModeManual(ColorMode.neutral));
+        ////setShowcase.whenPressed(new SetLEDModeManual(ColorMode.showcase));
+
+
+        /*Start the iron dashboard for keyboard control
+        ironDashboard = new IronDashboardWASD();
+        try {
+            ironDashboard.run();
+        } catch (Exception e) {
+            System.out.println("Iron Dashboard connection not started");
+            System.out.print(e);
+        }*/
+    }
+
+    public static void setPIDActive(boolean state)
+    {
+        pidDriving = state;
     }
 }
  

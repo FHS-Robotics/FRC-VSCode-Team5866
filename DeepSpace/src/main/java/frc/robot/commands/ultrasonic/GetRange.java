@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.RobotMap;
 
+/**
+ * Returns the range that the maxbotix ultrasonic sensor reads
+ * (Not used for the 2019 season)
+ */
 public class GetRange extends Command {
   
   UltrasonicSensor uSensor;

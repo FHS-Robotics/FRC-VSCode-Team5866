@@ -20,7 +20,7 @@ public class TeleOpLift extends Command {
     protected void execute() {
 
         //this if statement checks whether our control mode is in normal control or inverted control
-        double value = OI.mode? OI.secondaryController.getRawAxis(1) : OI.m_leftStick.getY();
+        double value = OI.mode? OI.secondaryController.getRawAxis(1) : OI.driverController.getRawAxis(1);
         if(Math.abs(value) > .1)
         {
             value = (value < 0) ? (value * scaleFactorUp) : (value * scaleFactorDown);  //if moving up, multiply by scaleFactorUp; else multiply by scaleFactorDown; This code is a simplified if else statement
@@ -30,7 +30,7 @@ public class TeleOpLift extends Command {
         }
         else
         {
-            RobotMap.liftSystem.move(0);
+            RobotMap.liftSystem.move(0); //if we aren't greater than .1 then don't move at all
         }
     } 
 

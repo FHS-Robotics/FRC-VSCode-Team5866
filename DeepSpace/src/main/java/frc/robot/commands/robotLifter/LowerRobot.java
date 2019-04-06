@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
+/**
+ * Lower the robot's back end off the ground via lift piston(s)
+ */
 public class LowerRobot extends Command {
 
   public LowerRobot() {

@@ -5,7 +5,10 @@ import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-
+/**
+ * The lift system consists of 1-2 motors that run synchronously
+ * to raise and lower the elevator for the robot
+ */
 public class LiftSystem extends Subsystem{
 
     public SpeedControllerGroup liftMotors;

@@ -7,7 +7,10 @@
 
 package frc.robot.commands.PID;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.RobotMap;
 
 /**
@@ -16,6 +19,9 @@ import frc.robot.RobotMap;
 public class TurnRobot extends Command {
  
   public double angle;
+  private Timer t;
+
+  private double timeToEnd = 3; //time in seconds before the command should just end (this is a safeguard in case the pid fails)
 
   public TurnRobot(double _angle) {
     requires(RobotMap.pidDriveBase);
@@ -25,16 +31,28 @@ public class TurnRobot extends Command {
   protected void initialize() {
 
     RobotMap.pidDriveBase.enable();
-    RobotMap.pidDriveBase.setSetpoint(-angle);
+    RobotMap.pidDriveBase.setSetpoint(angle);
+    OI.setPIDActive(true);
+    SmartDashboard.putBoolean("PID Driving", true);
+
+    t = new Timer();
+    t.reset();
+    t.start();
   }
 
   protected void execute() {}
 
   protected boolean isFinished() {
-    return RobotMap.pidDriveBase.onTarget();
+    if(RobotMap.pidDriveBase.onTarget() || t.hasPeriodPassed(timeToEnd))
+      return true;
+    return false;
   } 
 
   protected void end() {
+    OI.setPIDActive(false);
+    SmartDashboard.putBoolean("PID Driving", false);
+
+    t.stop();
     RobotMap.pidDriveBase.disable();
   }
 

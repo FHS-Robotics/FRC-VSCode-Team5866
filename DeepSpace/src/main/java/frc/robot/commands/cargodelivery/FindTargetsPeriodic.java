@@ -12,6 +12,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.vision.VisionManager;
 
+/**
+ * Checks the targets received by the VisionManager and prints them
+ * <br/>
+ * <br/>
+ * (Works when running processing via GRIP, but was not used during 2019 season practically)
+ */
 public class FindTargetsPeriodic extends Command {
 
   Timer timer;

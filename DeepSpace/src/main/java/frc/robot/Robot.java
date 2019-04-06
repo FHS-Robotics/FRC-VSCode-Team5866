@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -51,6 +52,13 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     VisionManager.init();
 
+    try {
+      IronDashboardWASD.run();
+      } catch (Exception e) {
+      System.out.println("Iron Dashboard connection not started");
+      System.out.print(e);
+  }
+
     timer = new Timer(); //initialize timer for the ultrasonic reading
     timer.start();
 
@@ -58,15 +66,16 @@ public class Robot extends TimedRobot {
     RobotMap.navX.reset();
     RobotMap.navX.resetDisplacement();
 
-    main = CameraServer.getInstance().startAutomaticCapture(0); //start camera server
+  
     try {
+      main = CameraServer.getInstance().startAutomaticCapture(0); //start camera server
       main.setResolution(310, 240); //set resolution of camera
     } catch (Exception e) {
       System.out.println("Warning: Camera(Main) is not available and setResolution() was not run!");
     }
 
-    backCam = CameraServer.getInstance().startAutomaticCapture(1); //start camera server
     try {
+      backCam = CameraServer.getInstance().startAutomaticCapture(1); //start camera server
       backCam.setResolution(310, 240); //set resolution of camera
     } catch (Exception e) {
       System.out.println("Warning: Camera(backCam) is not available and setResolution() was not run!");
@@ -77,6 +86,19 @@ public class Robot extends TimedRobot {
     setAutoLED.start();
 
     Scheduler.getInstance().run();
+
+    /*Thread t = new Thread(){
+      public void run()
+      {
+        while(true)
+        try {
+          System.out.println(OI.ironDashboard.getMessage());
+        } catch (Exception e) { 
+          System.out.println("not connected");}
+      }
+    };
+
+    t.start();*/
   }
 
   @Override
@@ -141,11 +163,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Robot X Pos: ", df.format(navX.getDisplacementX()));
     SmartDashboard.putString("Robot Y Pos: ", df.format(navX.getDisplacementY()));
       
-    //SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
-    Shuffleboard.getTab("SmartDashboard")
+    SmartDashboard.putNumber("Robot Yaw: ", navX.getYaw());
+    /*Shuffleboard.getTab("SmartDashboard")
     .add("NavX", RobotMap.navX.getYaw())
     .withWidget(BuiltInWidgets.kGyro) // specify the widget here
-    .getEntry();
+    .getEntry();*/
+    SmartDashboard.putNumber("NavX", RobotMap.navX.getYaw());
     range.start();
   }
 

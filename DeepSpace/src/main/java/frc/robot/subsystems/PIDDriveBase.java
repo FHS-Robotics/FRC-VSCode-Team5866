@@ -12,9 +12,12 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * This drive base class is for the automatic turning of the drive
+ * base to a specified angle using closed-control feedback with the
+ * gyro sensor
  */
 public class PIDDriveBase extends PIDSubsystem {
 
@@ -22,16 +25,18 @@ public class PIDDriveBase extends PIDSubsystem {
   SpeedControllerGroup left;
   AHRS gyro;
 
-  public double kP = 0.5;
-  public double kI = 0.0;
-  public double kD = 0.0;
+  //The proportional, integral, and differential values (not tuned)
+  //Static because it is the same throughout all instances (though there should only be one instance)
+  public static double kP = 0.01; //default .5
+  public static double kI = 0.002; //default 0
+  public static double kD = 0.0; //default 0
   
   public PIDDriveBase() {
-    super("PIDDriveBase", 0.5, 0.0, 0.0);
-    setAbsoluteTolerance(3.0);
+    super("PIDDriveBase", kP, kI, kD);
+    setAbsoluteTolerance(1.0); //the angle of tolerance which the controller can read on target if it reaches
     getPIDController().setInputRange(-180.0f,  180.0f);
     getPIDController().setOutputRange(-1, 1); //since it is controlling the wheels, it is from -1 to 1
-    getPIDController().setContinuous(true);
+    getPIDController().setContinuous(true); //false because we do not continuously add or subtract yaw, just stay between -180 and 180
     LiveWindow.addActuator("PIDDriveBase", "PIDSubsystem Controller", getPIDController());
   }
 
@@ -66,6 +71,8 @@ public class PIDDriveBase extends PIDSubsystem {
   protected void usePIDOutput(double output) {
       // Use output to drive your system, like a motor
       // e.g. yourMotor.set(output);
+      //left.pidWrite(output);
+      //right.pidWrite(output);
       left.pidWrite(output);
       right.pidWrite(output);
   }

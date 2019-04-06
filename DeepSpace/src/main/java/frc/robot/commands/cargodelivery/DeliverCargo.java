@@ -9,6 +9,11 @@ package frc.robot.commands.cargodelivery;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/** Line up to the cargo opening on the rocket and deliver the cargo
+ * <br/>
+ * <br/>
+ * (Was not implemented during the 2019 season because it is unfinished)
+ */
 public class DeliverCargo extends CommandGroup {
 
   /**

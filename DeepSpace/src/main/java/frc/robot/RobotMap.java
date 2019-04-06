@@ -68,18 +68,18 @@ public class RobotMap {
     {
         m_rearLeft = new PWMVictorSPX(3);
         m_frontLeft = new PWMVictorSPX(4);
+        //m_rearLeft.setSafetyEnabled(false);
+        //m_frontLeft.setSafetyEnabled(false);
         m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
     
         m_rearRight = new PWMVictorSPX(1);
         m_frontRight = new PWMVictorSPX(2);
+        //m_rearRight.setSafetyEnabled(false);
+        //m_rearRight.setSafetyEnabled(false);
         m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
 
-        m_rearLeft.setSafetyEnabled(false);
-        m_frontLeft.setSafetyEnabled(false);
-        m_rearRight.setSafetyEnabled(false);
-        m_rearRight.setSafetyEnabled(false);
-
         driveBase = new DifferentialDrive(m_left, m_right); //create differential drive using the two speed controller groups
+        driveBase.setSafetyEnabled(false);
 
         liftMotor1 = new PWMVictorSPX(0);
         liftMotor2 = new PWMVictorSPX(5);
