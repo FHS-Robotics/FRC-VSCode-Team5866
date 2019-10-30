@@ -15,7 +15,9 @@ public class TeleOpDrive extends Command {
     }
 
     protected void execute() {
-    	RobotMap.swerve.drive(OI.rightDriveStick.getRawAxis(0), OI.rightDriveStick.getRawAxis(1), OI.leftDriveStick.getRawAxis(2));
+        //RobotMap.swerve.drive(OI.rightDriveStick.getRawAxis(0), OI.rightDriveStick.getRawAxis(1), OI.leftDriveStick.getRawAxis(2));
+        RobotMap.swerve.drive(OI.driverController.getRawAxis(0), OI.driverController.getRawAxis(1), OI.driverController.getRawAxis(4));
+
     }
 
     protected boolean isFinished() {

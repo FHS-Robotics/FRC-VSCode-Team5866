@@ -1,4 +1,4 @@
- #include <bitswap.h>
+  #include <bitswap.h>
 #include <chipsets.h>
 #include <color.h>
 #include <colorpalettes.h>
@@ -306,4 +306,3 @@ void rainbow(uint8_t wait)
    }
    return;
 }
-

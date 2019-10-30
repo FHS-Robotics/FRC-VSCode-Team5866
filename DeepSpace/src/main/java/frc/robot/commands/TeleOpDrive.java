@@ -54,7 +54,7 @@ public class TeleOpDrive extends Command {
     if(OI.mode)
     {
       targetL = -OI.driverController.getRawAxis(1);
-      targetR = OI.driverController.getRawAxis(4);
+      targetR = OI.driverController.getRawAxis(4); //default 4, but if using just one controller to operate the entire bot use 0
     }
     else
     {

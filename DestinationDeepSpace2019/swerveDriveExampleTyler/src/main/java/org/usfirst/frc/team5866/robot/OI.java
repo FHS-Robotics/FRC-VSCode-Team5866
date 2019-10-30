@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 
-	public static Joystick rightDriveStick = new Joystick(0);
-	public static Joystick leftDriveStick = new Joystick(1);
+	//public static Joystick rightDriveStick = new Joystick(0);
+	//public static Joystick leftDriveStick = new Joystick(1);
+	public static Joystick driverController = new Joystick(0);
 	public static Joystick secondaryController = new Joystick(2);	
 	
 	public static JoystickButton clawOpen = new JoystickButton(secondaryController, 1);

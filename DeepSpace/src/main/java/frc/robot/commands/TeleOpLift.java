@@ -20,7 +20,8 @@ public class TeleOpLift extends Command {
     protected void execute() {
 
         //this if statement checks whether our control mode is in normal control or inverted control
-        double value = OI.mode? OI.secondaryController.getRawAxis(1) : OI.driverController.getRawAxis(1);
+        //double value = OI.mode? OI.secondaryController.getRawAxis(1) : OI.driverController.getRawAxis(1);
+        double value = OI.driverController.getRawAxis(5); //if wanting to use just one controller
         if(Math.abs(value) > .1)
         {
             value = (value < 0) ? (value * scaleFactorUp) : (value * scaleFactorDown);  //if moving up, multiply by scaleFactorUp; else multiply by scaleFactorDown; This code is a simplified if else statement

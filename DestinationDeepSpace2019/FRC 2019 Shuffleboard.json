@@ -353,6 +353,54 @@
               "_source0": "network_table:///SmartDashboard/DB/String 9",
               "_title": "DB/String 9"
             }
+          },
+          "8,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/PID Driving",
+              "_title": "PID Driving",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/NavX",
+              "_title": "NavX"
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Selector",
+              "_title": "Auto Selector"
+            }
+          },
+          "5,2": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/DB/Button 1",
+              "_title": "DB/Button 1",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
           }
         }
       }
@@ -542,9 +590,9 @@
               "_children": []
             }
           },
-          "20,0": {
+          "14,7": {
             "size": [
-              1,
+              3,
               1
             ],
             "content": {
@@ -553,9 +601,9 @@
               "_title": "DriveSystem/RotateController/p"
             }
           },
-          "20,1": {
+          "14,8": {
             "size": [
-              1,
+              3,
               1
             ],
             "content": {
@@ -564,9 +612,9 @@
               "_title": "DriveSystem/RotateController/i"
             }
           },
-          "20,2": {
+          "14,9": {
             "size": [
-              1,
+              3,
               1
             ],
             "content": {
@@ -575,9 +623,9 @@
               "_title": "DriveSystem/RotateController/d"
             }
           },
-          "20,3": {
+          "17,7": {
             "size": [
-              1,
+              3,
               1
             ],
             "content": {
@@ -586,9 +634,9 @@
               "_title": "DriveSystem/RotateController/f"
             }
           },
-          "20,4": {
+          "17,8": {
             "size": [
-              1,
+              4,
               1
             ],
             "content": {
@@ -608,6 +656,74 @@
               "_title": "DriveSystem/RotateController/enabled",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,9": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PIDDriveBase/PIDSubsystem Controller/d",
+              "_title": "PIDDriveBase/PIDSubsystem Controller/d"
+            }
+          },
+          "3,9": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PIDDriveBase/PIDSubsystem Controller/f",
+              "_title": "PIDDriveBase/PIDSubsystem Controller/f"
+            }
+          },
+          "7,8": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PIDDriveBase/PIDSubsystem Controller/i",
+              "_title": "PIDDriveBase/PIDSubsystem Controller/i"
+            }
+          },
+          "7,7": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PIDDriveBase/PIDSubsystem Controller/p",
+              "_title": "PIDDriveBase/PIDSubsystem Controller/p"
+            }
+          },
+          "3,7": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/PIDDriveBase/PIDSubsystem Controller/enabled",
+              "_title": "PIDDriveBase/PIDSubsystem Controller/enabled",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,7": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PIDDriveBase/PIDSubsystem Controller/setpoint",
+              "_title": "PIDDriveBase/PIDSubsystem Controller/setpoint"
             }
           }
         }
@@ -636,12 +752,63 @@
           }
         }
       }
+    },
+    {
+      "title": "JustCameras",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 64.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              11,
+              8
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 0",
+              "_title": "USB Camera 0",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": 0,
+              "imageHeight": 0
+            }
+          },
+          "11,0": {
+            "size": [
+              10,
+              8
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 1",
+              "_title": "USB Camera 1",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
     "x": -15.333333015441895,
     "y": 0.0,
-    "width": 1724.0,
-    "height": 753.3333129882812
+    "width": 1720.0,
+    "height": 926.6666870117188
   }
 }

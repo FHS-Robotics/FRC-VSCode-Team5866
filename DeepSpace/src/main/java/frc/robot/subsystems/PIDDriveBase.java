@@ -27,15 +27,18 @@ public class PIDDriveBase extends PIDSubsystem {
 
   //The proportional, integral, and differential values (not tuned)
   //Static because it is the same throughout all instances (though there should only be one instance)
-  public static double kP = 0.01; //default .5
-  public static double kI = 0.002; //default 0
+  //public static double kP = 0.01; //default .5
+  //public static double kI = 0.002; //default 0
+  //public static double kD = 0.0; //default 0
+  public static double kP = 0.5; //default .5
+  public static double kI = 0.0; //default 0
   public static double kD = 0.0; //default 0
   
   public PIDDriveBase() {
     super("PIDDriveBase", kP, kI, kD);
-    setAbsoluteTolerance(1.0); //the angle of tolerance which the controller can read on target if it reaches
+    setAbsoluteTolerance(2.0f); //the angle of tolerance which the controller can read on target if it reaches
     getPIDController().setInputRange(-180.0f,  180.0f);
-    getPIDController().setOutputRange(-1, 1); //since it is controlling the wheels, it is from -1 to 1
+    getPIDController().setOutputRange(-1.0, 1.0); //since it is controlling the wheels, it is from -1 to 1
     getPIDController().setContinuous(true); //false because we do not continuously add or subtract yaw, just stay between -180 and 180
     LiveWindow.addActuator("PIDDriveBase", "PIDSubsystem Controller", getPIDController());
   }
