@@ -35,8 +35,8 @@ public class OI {
     //all methods using the left and right joysticks will be commented out since we are using two xbox controllers now
     ////public static Joystick m_leftStick = new Joystick(0);
     ////public static Joystick m_rightStick = new Joystick(1);
-    public static Joystick driverController = new Joystick(3); //white
-    public static Joystick secondaryController = new Joystick(2); //blue
+    public static Joystick driverController = new Joystick(0); //white
+    public static Joystick secondaryController = new Joystick(1); //blue
 
     ////public static JoystickButton sensUp = new JoystickButton(m_rightStick, 5);
     ////public static JoystickButton sensDown = new JoystickButton(m_rightStick, 3);

@@ -79,7 +79,7 @@ public class MoveToTarget extends Command implements PIDOutput{
     /* Add the PID Controller to the Test-mode dashboard, allowing manual  */
       /* tuning of the Turn Controller's P, I and D coefficients.            */
       /* Typically, only the P value needs to be modified.                   */
-      LiveWindow.addActuator("DriveSystem", "RotateController", turnController);
+      //LiveWindow.addActuator("DriveSystem", "RotateController", turnController);
   }
 
   @Override

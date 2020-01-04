@@ -40,7 +40,7 @@ public class PIDDriveBase extends PIDSubsystem {
     getPIDController().setInputRange(-180.0f,  180.0f);
     getPIDController().setOutputRange(-1.0, 1.0); //since it is controlling the wheels, it is from -1 to 1
     getPIDController().setContinuous(true); //false because we do not continuously add or subtract yaw, just stay between -180 and 180
-    LiveWindow.addActuator("PIDDriveBase", "PIDSubsystem Controller", getPIDController());
+    //LiveWindow.addActuator("PIDDriveBase", "PIDSubsystem Controller", getPIDController());
   }
 
   public void setSpeedControllers(SpeedControllerGroup l, SpeedControllerGroup r)
