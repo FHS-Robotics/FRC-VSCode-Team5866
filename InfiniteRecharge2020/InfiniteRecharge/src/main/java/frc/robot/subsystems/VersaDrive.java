@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase; //currently unable to import on my computer?
+import edu.wpi.first.wpilibj2.command.SubsystemBase; //currently not importing
+import frc.robot.commands.TeleOpDrive;
 
 public class VersaDrive extends SubsystemBase {
 
-  private MecanumDrive m_swiftDrive;
-  private DifferentialDrive m_powerDrive;
+  public MecanumDrive m_swiftDrive;
+  public DifferentialDrive m_powerDrive;
 
   private Solenoid act_frontLeft;
   private Solenoid act_backLeft;
@@ -47,6 +48,12 @@ public class VersaDrive extends SubsystemBase {
     //set the default mode to the mecanum
     mode = DriveState.swift;
   }
+
+  @Override
+  /**
+   * The default command for this subsystem will be TeleopDrive
+   */
+  protected void initDefaultCommand() {}
 
   public void setState(DriveState _mode) {
     mode = _mode;
