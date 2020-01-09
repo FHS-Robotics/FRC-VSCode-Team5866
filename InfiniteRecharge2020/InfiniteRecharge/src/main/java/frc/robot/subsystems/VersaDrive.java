@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase; //currently unable to import on my computer?
+import edu.wpi.first.wpilibj2.command.SubsystemBase; //currently not importing
 
 public class VersaDrive extends SubsystemBase {
 
-  private MecanumDrive m_swiftDrive;
-  private DifferentialDrive m_powerDrive;
+  public MecanumDrive m_swiftDrive;
+  public DifferentialDrive m_powerDrive;
 
   private Solenoid act_frontLeft;
   private Solenoid act_backLeft;
@@ -46,13 +46,35 @@ public class VersaDrive extends SubsystemBase {
 
     //set the default mode to the mecanum
     mode = DriveState.swift;
+    setSolenoids();
   }
 
   public void setState(DriveState _mode) {
     mode = _mode;
+    setSolenoids();
   }
 
   public void switchState() {
     mode = mode == DriveState.swift ? DriveState.power : DriveState.swift; //really fancy notation that says if the mode is swift, change to power, and vice versa (haha Versa)
+    setSolenoids();
+  }
+
+  /**
+   * Refreshes the solenoids based on the current drive mode
+   */
+  public void setSolenoids() {
+
+    if(mode == DriveState.swift) {
+      act_backLeft.set(true);
+      act_frontLeft.set(true);
+      act_backRight.set(true);
+      act_frontRight.set(true);
+    }
+    else {
+      act_backLeft.set(false);
+      act_frontLeft.set(false);
+      act_backRight.set(false);
+      act_frontRight.set(false);
+    }
   }
 }
