@@ -2,9 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.subsystems.VersaDrive;
 
 /**
@@ -30,11 +27,16 @@ public class RobotMap {
 
     public static void init() {
 
-        m_frontLeft = new PWMTalonSRX(0); //*
+        m_frontLeft = new PWMTalonSRX(0); //*Not real number yet
         m_backLeft = new PWMTalonSRX(1); //*
 
         m_frontRight = new PWMTalonSRX(2); //*
         m_backRight = new PWMTalonSRX(3); //*
+
+        act_frontLeft = new Solenoid(0); //*
+        act_backLeft = new Solenoid(1); //*
+        act_frontRight = new Solenoid(2); //*
+        act_backRight = new Solenoid(3); //*
 
         m_drive = new VersaDrive(act_frontLeft, act_backLeft, act_frontRight, act_backRight, m_frontLeft, m_backLeft, m_frontRight, m_backRight);
     }

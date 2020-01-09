@@ -8,10 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.TeleOpDrive;
 
 /**
@@ -23,12 +23,16 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  OI m_oi;
 
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kBallAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    RobotMap.init();
+    m_oi = new OI();
   }
 
 
@@ -42,6 +46,8 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+
+    CommandScheduler.getInstance().run();
   }
 
 
@@ -55,16 +61,16 @@ public class Robot extends TimedRobot {
       default:
         // Put default auto code here
         break;
-
-        
     }
+
+    CommandScheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() {
-    Command teleOpDrive = new TeleOpDrive();
-    TeleOpDrive.start();
-    Scheduler.getInstance().run();
+    CommandBase teleOpDrive = new TeleOpDrive();
+    teleOpDrive.schedule();
+    CommandScheduler.getInstance().run();
   }
 
   /**
@@ -73,7 +79,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 
   /**

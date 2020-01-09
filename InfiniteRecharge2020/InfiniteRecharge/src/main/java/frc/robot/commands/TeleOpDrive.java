@@ -34,7 +34,7 @@ public class TeleOpDrive extends CommandBase {
   public void execute() {
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
-      double xSpeed = OI.m_driverControl.getRawAxis(0);
+      double xSpeed = OI.m_driverControl.getRawAxis(0); 
       double ySpeed = OI.m_driverControl.getRawAxis(1);
       double zRotation = OI.m_driverControl.getRawAxis(4);
       m_drive.m_swiftDrive.driveCartesian(ySpeed, xSpeed, zRotation);
