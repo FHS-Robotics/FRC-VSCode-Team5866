@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+ 
 
 public class Intake extends SubsystemBase {
   
@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
   /**
    * Creates a new Intake.
    */
-  public Intake(int port, double speed) {
+  public Intake(final int port, final double speed) {
     m_intakeMotor = new PWMTalonSRX(port);
     intakeSpeed = speed;
   }
