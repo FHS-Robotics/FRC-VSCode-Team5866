@@ -8,6 +8,8 @@ import frc.robot.subsystems.VersaDrive;
  * RobotMap
  */
 public class RobotMap {
+    //intake motor?
+    public static Intake m_intake;
 
     //#region DriveBase
     public static PWMTalonSRX m_frontLeft;
@@ -32,6 +34,8 @@ public class RobotMap {
 
         m_frontRight = new PWMTalonSRX(2); //*
         m_backRight = new PWMTalonSRX(3); //*
+
+        m_intake = new Intake(4); //*
 
         act_frontLeft = new Solenoid(0); //*
         act_backLeft = new Solenoid(1); //*
