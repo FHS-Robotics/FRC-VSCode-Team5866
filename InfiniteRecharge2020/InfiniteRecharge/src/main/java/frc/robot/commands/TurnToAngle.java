@@ -7,19 +7,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase; //currently not importing
-import frc.robot.OI;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.VersaDrive;
 
-public class TeleOpDrive extends CommandBase {
+public class TurnToAngle extends CommandBase {
 
-  VersaDrive m_drive;
+  VersaDrive drive;
+  PIDDrive pidDrive;
 
   /**
-   * Creates a new TeleOpDrive.1
+   * Creates a new TurnToAngle.
    */
-  public TeleOpDrive() {
+  public TurnToAngle() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotMap.m_drive);
   }
@@ -27,23 +28,12 @@ public class TeleOpDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive = RobotMap.m_drive;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double xSpeed = OI.m_driverControl.getRawAxis(0); 
-    double ySpeed = OI.m_driverControl.getRawAxis(1);
-    double zRotation = OI.m_driverControl.getRawAxis(4);
-
-    if(m_drive.mode == VersaDrive.DriveState.swift) {
-      m_drive.m_swiftDrive.driveCartesian(ySpeed, xSpeed, zRotation);
-    }
-    else {
-      m_drive.m_powerDrive.arcadeDrive(ySpeed, zRotation);
-    }
+    RobotMap.m_drive.m_powerDrive.arcadeDrive(0, pidDrive.speed);
   }
 
   // Called once the command ends or is interrupted.
