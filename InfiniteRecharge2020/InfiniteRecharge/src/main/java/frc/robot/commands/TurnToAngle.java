@@ -33,7 +33,7 @@ public class TurnToAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotMap.m_drive.m_powerDrive.arcadeDrive(0, pidDrive.speed);
+    RobotMap.m_drive.m_powerDrive.tankDrive(pidDrive.speed, -pidDrive.speed);
   }
 
   // Called once the command ends or is interrupted.
