@@ -2,12 +2,16 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.subsystems.TeleHook;
 import frc.robot.subsystems.VersaDrive;
 
 /**
  * RobotMap
  */
 public class RobotMap {
+    //both teleHook motor
+    public static TeleHook m_TeleHooks;
+    public static TeleHook m_TeleCables;
 
     //#region DriveBase
     public static PWMTalonSRX m_frontLeft;
@@ -26,6 +30,9 @@ public class RobotMap {
     //#endregion
 
     public static void init() {
+
+        m_TeleHooks = new TeleHook(144 ,0, 0.0 , 0.0);
+        m_TeleCables = new TeleHook(9 ,0, 0.0 , 0.0 );
 
         m_frontLeft = new PWMTalonSRX(0); //*Not real number yet
         m_backLeft = new PWMTalonSRX(1); //*
