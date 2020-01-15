@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.PWMTalonSRX;
 
 public class TeleHook extends SubsystemBase {
 
-  PWMTalonSRX  m_TeleCables;
+PWMTalonSRX  m_TeleCables;
 PWMTalonSRX m_TeleHooks;
 double teleState;
 double cablePull;
