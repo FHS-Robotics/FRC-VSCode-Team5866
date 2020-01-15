@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.subsystems.VersaDrive;
@@ -16,6 +18,8 @@ public class RobotMap {
     public static PWMTalonSRX m_backLeft;
     public static PWMTalonSRX m_frontRight;
     public static PWMTalonSRX m_backRight;
+
+    public static AHRS gyro;
 
     //Solenoids connected to the wheel actuation pistons
     public static Solenoid act_frontLeft;
@@ -43,5 +47,7 @@ public class RobotMap {
         act_backRight = new Solenoid(3); //*
 
         m_drive = new VersaDrive(act_frontLeft, act_backLeft, act_frontRight, act_backRight, m_frontLeft, m_backLeft, m_frontRight, m_backRight);
+
+        gyro = new AHRS();
     }
 }
