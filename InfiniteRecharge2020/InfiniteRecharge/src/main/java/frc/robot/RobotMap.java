@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.VersaDrive;
 
 /**
@@ -35,7 +36,7 @@ public class RobotMap {
         m_frontRight = new PWMTalonSRX(2); //*
         m_backRight = new PWMTalonSRX(3); //*
 
-        m_intake = new Intake(4); //*
+        m_intake = new Intake(4,0); //*
 
         act_frontLeft = new Solenoid(0); //*
         act_backLeft = new Solenoid(1); //*
