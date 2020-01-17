@@ -5,13 +5,15 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LimeLight;
+import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.VersaDrive;
 
 /**
  * RobotMap
  */
 public class RobotMap {
-    //intake motor?
+    //intake motor
     public static Intake m_intake;
 
     //#region DriveBase
@@ -30,7 +32,10 @@ public class RobotMap {
 
     //the system will utilize a dual drive system to deal with defenders while being agile
     public static VersaDrive m_drive;
+    public static PIDDrive m_pidDrive;
     //#endregion
+
+    public static LimeLight limeLight;
 
     public static void init() {
 
@@ -48,7 +53,9 @@ public class RobotMap {
         act_backRight = new Solenoid(3); //*
 
         m_drive = new VersaDrive(act_frontLeft, act_backLeft, act_frontRight, act_backRight, m_frontLeft, m_backLeft, m_frontRight, m_backRight);
+        m_pidDrive = new PIDDrive();
 
         gyro = new AHRS();
+        limeLight = new LimeLight();
     }
 }

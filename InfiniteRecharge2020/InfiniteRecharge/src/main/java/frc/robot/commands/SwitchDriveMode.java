@@ -9,41 +9,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.PIDDrive;
-import frc.robot.subsystems.VersaDrive;
 
-public class TurnToAngle extends CommandBase {
+/**
+ * Command to switch the VersaDrive between tank and mecanum drive
+ */
+public class SwitchDriveMode extends CommandBase {
 
-  VersaDrive drive;
-  PIDDrive pidDrive;
 
-  /**
-   * Creates a new TurnToAngle.
-   */
-  public TurnToAngle() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotMap.m_drive);
-  }
+  public SwitchDriveMode() {}
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    RobotMap.m_drive.m_powerDrive.tankDrive(pidDrive.speed, -pidDrive.speed);
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
+    RobotMap.m_drive.switchState();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true; //end after first frame
   }
 }
