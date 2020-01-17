@@ -8,15 +8,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase; //currently not importing
+import frc.robot.commands.TeleOpDrive;
 
 public class VersaDrive extends SubsystemBase {
 
   public MecanumDrive m_swiftDrive;
-  public DifferentialDrive m_powerDrive;
 
   private Solenoid act_frontLeft;
   private Solenoid act_backLeft;
@@ -31,18 +29,15 @@ public class VersaDrive extends SubsystemBase {
    */
   public VersaDrive(Solenoid _actFrontLeft, Solenoid _actBackLeft, Solenoid _actFrontRight, Solenoid _actBackRight, 
                     PWMSpeedController _frontLeft, PWMSpeedController _backLeft, PWMSpeedController _frontRight, PWMSpeedController _backRight) {
+
+    setDefaultCommand(new TeleOpDrive()); //when no command is running, TeleOpDrive() will
     act_frontLeft = _actFrontLeft;
     act_backLeft = _actBackLeft;
     act_frontRight = _actFrontRight;
     act_backRight = _actBackRight;
 
-    //create speed controllers for each side of the bot
-    SpeedControllerGroup m_left = new SpeedControllerGroup(_frontLeft, _backLeft);
-    SpeedControllerGroup m_right = new SpeedControllerGroup(_frontRight, _backRight);
-
     //pass in motors to the constructors of our swift and power drives
     m_swiftDrive = new MecanumDrive(_frontLeft, _backLeft, _frontRight, _backRight);
-    m_powerDrive = new DifferentialDrive(m_left, m_right);
 
     //set the default mode to the mecanum
     mode = DriveState.swift;
@@ -51,12 +46,10 @@ public class VersaDrive extends SubsystemBase {
 
   public void setState(DriveState _mode) {
     mode = _mode;
-    setSolenoids();
   }
 
   public void switchState() {
     mode = mode == DriveState.swift ? DriveState.power : DriveState.swift; //really fancy notation that says if the mode is swift, change to power, and vice versa (haha Versa)
-    setSolenoids();
   }
 
   /**
@@ -76,5 +69,10 @@ public class VersaDrive extends SubsystemBase {
       act_backRight.set(false);
       act_frontRight.set(false);
     }
+  }
+
+  @Override
+  public void periodic() {
+    setSolenoids();
   }
 }
