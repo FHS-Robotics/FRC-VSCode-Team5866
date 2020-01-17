@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.subsystems.TeleHook;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.VersaDrive;
 
@@ -11,6 +12,11 @@ import frc.robot.subsystems.VersaDrive;
  * RobotMap
  */
 public class RobotMap {
+
+    //both teleHook motor
+    public static TeleHook m_TeleHooks;
+    public static TeleHook m_TeleCables;
+  
     //intake motor?
     public static Intake m_intake;
 
@@ -33,6 +39,9 @@ public class RobotMap {
     //#endregion
 
     public static void init() {
+
+        m_TeleHooks = new TeleHook(144 ,0, 0.0 , 0.0);
+        m_TeleCables = new TeleHook(9 ,0, 0.0 , 0.0 );
 
         m_frontLeft = new PWMTalonSRX(0); //*Not real number yet
         m_backLeft = new PWMTalonSRX(1); //*
