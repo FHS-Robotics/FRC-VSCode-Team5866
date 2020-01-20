@@ -8,18 +8,29 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotMap;
 
 public class HookSystem extends CommandBase {
   /**
    * Creates a new HookSystem.
    */
-  public HookSystem() {
+  TeleHook m_TeleHooks;
+
+  public HookSystem(boolean extend) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotMap.m_TeleHooks);
+    if(extend){
+      m_TeleHooks.extend();
+    }
+    else{
+      m_TeleHooks.retract();
+    }
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_TeleHooks = RobotMap.m_TeleHooks;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,6 +41,7 @@ public class HookSystem extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_TeleHooks.releaseHook();
   }
 
   // Returns true when the command should end.
