@@ -6,9 +6,11 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMSpeedController;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase; //currently not importing
 import frc.robot.commands.TeleOpDrive;
 
@@ -16,10 +18,7 @@ public class VersaDrive extends SubsystemBase {
 
   public MecanumDrive m_swiftDrive;
 
-  private Solenoid act_frontLeft;
-  private Solenoid act_backLeft;
-  private Solenoid act_frontRight;
-  private Solenoid act_backRight;
+  private DoubleSolenoid act_solenoid;
 
   public enum DriveState { swift, power};
   public DriveState mode;
@@ -27,14 +26,10 @@ public class VersaDrive extends SubsystemBase {
   /**
    * The Versa drive base is a dual mode drive base for switching between agile mecanum and powerful friction wheels
    */
-  public VersaDrive(Solenoid _actFrontLeft, Solenoid _actBackLeft, Solenoid _actFrontRight, Solenoid _actBackRight, 
-                    PWMSpeedController _frontLeft, PWMSpeedController _backLeft, PWMSpeedController _frontRight, PWMSpeedController _backRight) {
+  public VersaDrive(DoubleSolenoid _actSolenoid, PWMSpeedController _frontLeft, PWMSpeedController _backLeft, PWMSpeedController _frontRight, PWMSpeedController _backRight) {
 
-    setDefaultCommand(new TeleOpDrive()); //when no command is running, TeleOpDrive() will
-    act_frontLeft = _actFrontLeft;
-    act_backLeft = _actBackLeft;
-    act_frontRight = _actFrontRight;
-    act_backRight = _actBackRight;
+    //setDefaultCommand(new TeleOpDrive()); //when no command is running, TeleOpDrive() will
+    act_solenoid = _actSolenoid;
 
     //pass in motors to the constructors of our swift and power drives
     m_swiftDrive = new MecanumDrive(_frontLeft, _backLeft, _frontRight, _backRight);
@@ -58,21 +53,16 @@ public class VersaDrive extends SubsystemBase {
   public void setSolenoids() {
 
     if(mode == DriveState.swift) {
-      act_backLeft.set(true);
-      act_frontLeft.set(true);
-      act_backRight.set(true);
-      act_frontRight.set(true);
+      act_solenoid.set(Value.kForward);
     }
     else {
-      act_backLeft.set(false);
-      act_frontLeft.set(false);
-      act_backRight.set(false);
-      act_frontRight.set(false);
+      act_solenoid.set(Value.kReverse);
     }
   }
 
   @Override
   public void periodic() {
     setSolenoids();
+    SmartDashboard.putString("DriveMode", mode.toString());
   }
 }

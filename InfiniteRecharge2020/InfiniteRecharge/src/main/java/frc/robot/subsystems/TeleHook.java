@@ -29,13 +29,10 @@ double cablePull;
 
   }
 
-
-
-
 public void extend(){
   m_TeleHooks.set(1);
 }
-public void retracte(){
+public void retract(){
   m_TeleHooks.set(-1);
 }
 

@@ -9,7 +9,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
-
+/**
+ * Set an angle from -180 : 180
+ */
 public class SetDriveAngle extends CommandBase {
 
   float angle;
@@ -25,6 +27,7 @@ public class SetDriveAngle extends CommandBase {
   @Override
   public void initialize() {
     RobotMap.m_pidDrive.setSetpoint(angle);
+    System.out.println("it works");
   }
 
 
