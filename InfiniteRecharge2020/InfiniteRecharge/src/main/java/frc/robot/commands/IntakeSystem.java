@@ -11,17 +11,26 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Intake;
 
+
 public class IntakeSystem extends CommandBase {
   /**
    * Creates a new IntakeSystem.
    */
   Intake m_intake;
-  public IntakeSystem() {
+  public IntakeSystem(boolean forward) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotMap.m_intake);
+    if(forward){
+      m_intake.setForward();
+    }
+    else{
+      m_intake.setReverse();
+    }
   }
 
-  // Called when the command is initially scheduled.
+  
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_intake = RobotMap.m_intake;
