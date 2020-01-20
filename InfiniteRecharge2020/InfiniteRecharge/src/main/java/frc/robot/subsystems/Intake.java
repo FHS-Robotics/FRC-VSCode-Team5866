@@ -28,6 +28,9 @@ public class Intake extends SubsystemBase {
   public void setReverse(){
     m_intakeMotor.set(-intakeSpeed);
   }
+  public void release(){
+    m_intakeMotor.set(0);
+  }
   
 
 
