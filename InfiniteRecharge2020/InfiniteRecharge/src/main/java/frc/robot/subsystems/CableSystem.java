@@ -5,18 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.TeleHook;;
 
-public class TeleHookSystem extends CommandBase {
+public class CableSystem extends CommandBase {
   /**
-   * Creates a new TeleHookSystem.
+   * Creates a new CableSystem.
    */
-  
-  public TeleHookSystem() {
+  public CableSystem() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
