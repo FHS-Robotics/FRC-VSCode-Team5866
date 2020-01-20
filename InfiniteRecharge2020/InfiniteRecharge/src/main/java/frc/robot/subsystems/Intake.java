@@ -18,16 +18,18 @@ public class Intake extends SubsystemBase {
   /**
    * Creates a new Intake.
    */
-  public Intake(final int port, final double speed) {
+  public Intake(int port, double speed) {
     m_intakeMotor = new PWMTalonSRX(port);
     intakeSpeed = speed;
   }
-  public void forward(){
+  public void setForward(){
     m_intakeMotor.set(intakeSpeed);
   }
-  public void reverse(){
+  public void setReverse(){
     m_intakeMotor.set(-intakeSpeed);
   }
+  
+
 
   @Override
   public void periodic() {
