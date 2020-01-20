@@ -16,11 +16,20 @@ public class OI {
     public static JoystickButton switchDrive;
     public static JoystickButton intakeForward;
     public static JoystickButton intakeBackward;
+    public static JoystickButton teleHookUp;
+    public static JoystickButton teleHookDown;
+    public static JoystickButton raise;
+    public static JoystickButton lower;
 
     public OI() {
         switchDrive = new JoystickButton(m_driverControl, 0);
         intakeForward = new JoystickButton(m_gunnerControl, 1);
         intakeBackward = new JoystickButton(m_gunnerControl, 2);
+        teleHookUp = new JoystickButton(m_driverControl, 6);//*TBD
+        teleHookDown = new JoystickButton(m_driverControl, 7);//*
+        raise = new JoystickButton(m_driverControl, 5);//*
+        lower = new JoystickButton(m_driverControl, 4);//*
+
         intakeForward.whenHeld(new IntakeSystem(true));
         intakeBackward.whenHeld(new IntakeSystem(false));
     }
