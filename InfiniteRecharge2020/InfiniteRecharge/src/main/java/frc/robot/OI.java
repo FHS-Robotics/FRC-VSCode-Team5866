@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.IntakeSystem;
-
+import frc.robot.commands.SwitchDriveMode;
 /**
  * OI
  */
@@ -23,5 +23,7 @@ public class OI {
         intakeBackward = new JoystickButton(m_gunnerControl, 2);
         intakeForward.whenHeld(new IntakeSystem(true));
         intakeBackward.whenHeld(new IntakeSystem(false));
+
+        switchDrive.whenPressed(new SwitchDriveMode()); //switch drive mode when this button is pressed
     }
 }

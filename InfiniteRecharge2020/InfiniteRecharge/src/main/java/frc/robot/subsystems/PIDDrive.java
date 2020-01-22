@@ -18,7 +18,7 @@ public class PIDDrive extends PIDSubsystem {
   public PIDDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0, 0, 0));  
+        new PIDController(0, 0, 0));
       }
 
   @Override
@@ -29,5 +29,9 @@ public class PIDDrive extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     return RobotMap.gyro.getYaw();
+  }
+
+  public double getSetpoint() {
+    return m_controller.getSetpoint();
   }
 }
