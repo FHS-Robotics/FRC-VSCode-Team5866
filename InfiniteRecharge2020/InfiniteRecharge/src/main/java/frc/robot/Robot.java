@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +25,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  public static UsbCamera cam1;
+
   OI m_oi;
 
   @Override
@@ -31,13 +35,21 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kBallAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
+    //init our robot map and oi classes
     RobotMap.init();
     m_oi = new OI();
+
+    //start the camera and set its resolution
+    cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+    cam1.setFPS(30);
+    cam1.setResolution(310, 240);
+    CameraServer.getInstance().startAutomaticCapture(cam1);
   }
 
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Gyro Yaw", RobotMap.gyro.getYaw());
   }
 
 
@@ -46,7 +58,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-
+    
     CommandScheduler.getInstance().run();
   }
 
