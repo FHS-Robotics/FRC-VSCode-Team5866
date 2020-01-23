@@ -14,8 +14,6 @@ public class TeleHook extends SubsystemBase {
 
   PWMTalonSRX m_TeleCables;
   PWMTalonSRX m_TeleHooks;
-  PWMTalonSRX  m_TeleCables;
-  PWMTalonSRX m_TeleHooks;
   double teleState;
   double cablePull;
 
@@ -38,30 +36,13 @@ public void retract(){
 public void releaseHook(){
   m_TeleHooks.set(0);
 }
-  public TeleHook(final int portUno,final int portDos , final double state,final double pull ) {
-    m_TeleCables = new PWMTalonSRX(portUno);
-    m_TeleHooks = new PWMTalonSRX(portDos); 
-    cablePull = pull;
-    teleState = state;
-
-  }
-
-
-
-
-public void extend(){
-  m_TeleHooks.set(1);
-}
-public void retracte(){
-  m_TeleHooks.set(-1);
-}
 
 public void up(){
   m_TeleCables.set(1);
 }
 public void down(){
   m_TeleCables.set(-1);
-  
+}
 public void releaseCable(){
   m_TeleCables.set(0);
 }
