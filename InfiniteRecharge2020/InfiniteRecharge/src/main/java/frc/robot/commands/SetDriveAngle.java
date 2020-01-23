@@ -19,6 +19,17 @@ public class SetDriveAngle extends CommandBase {
    */
   public SetDriveAngle(float _angle) {
     angle = _angle;
+
+  TeleHook m_TeleCables;
+  public CableSystem(boolean up) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotMap.m_TeleCables);
+    if(up){
+      m_TeleCables.up();
+    }
+    else{
+      m_TeleCables.down();
+    }
   }
 
   // Called when the command is initially scheduled.
