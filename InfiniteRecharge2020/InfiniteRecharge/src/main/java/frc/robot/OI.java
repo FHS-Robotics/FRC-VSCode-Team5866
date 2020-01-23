@@ -2,9 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.CableSystem;
+import frc.robot.commands.HookSystem;
 import frc.robot.commands.IntakeSystem;
-import frc.robot.subsystems.CableSystem;
-import frc.robot.subsystems.HookSystem;
 import frc.robot.commands.SwitchDriveMode;
 /**
  * OI
