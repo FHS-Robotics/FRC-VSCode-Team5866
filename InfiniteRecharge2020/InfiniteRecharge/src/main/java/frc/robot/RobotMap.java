@@ -45,10 +45,8 @@ public class RobotMap {
 
     public static void init() {
 
-        m_TeleHooks = new TeleHook(0 ,0);//*Not real number yet
-        m_TeleCables = new TeleHook(1 ,0);//*
-
-        m_frontLeft = new PWMTalonSRX(0); //*
+        m_TeleHooks = new TeleHook(144 ,0, 0.0 , 0.0);
+        m_TeleCables = new TeleHook(9 ,0, 0.0 , 0.0 );
 
         m_frontLeft = new PWMTalonSRX(0); //*Not real number yet
         m_backLeft = new PWMTalonSRX(1); //*

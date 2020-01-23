@@ -19,6 +19,7 @@ public class SetDriveAngle extends CommandBase {
    */
   public SetDriveAngle(float _angle) {
     angle = _angle;
+  }
 
   // Called when the command is initially scheduled.
   @Override
