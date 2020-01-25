@@ -21,7 +21,7 @@ public class RobotMap {
     public static TeleHook m_leftTeleHook;
     public static TeleHook m_rightTeleHook;
   
-    //intake motor
+    //intake motor?
     public static Intake m_intake;
 
     //#region DriveBase
@@ -49,11 +49,15 @@ public class RobotMap {
 
     public static void init() {
 
-        m_leftTeleHook = new TeleHook(3,4, 0.0 , 0.0);
-        m_rightTeleHook = new TeleHook(5,6, 0.0 , 0.0 );
+        m_leftTeleHook = new TeleHook(3,4);
+        m_rightTeleHook = new TeleHook(5,6);
 
         /*m_frontLeft = new Spark(8); //*
         m_backLeft = new Spark(9); //*
+        m_TeleHooks = new TeleHook(0 ,0);//*Not real number yet
+        m_TeleCables = new TeleHook(1 ,0);//*
+
+        m_frontLeft = new PWMTalonSRX(0); //*
 
         m_frontRight = new Spark(1); //*
         m_backRight = new Spark(0); //**/
@@ -63,7 +67,7 @@ public class RobotMap {
         m_frontRight = new PWMVictorSPX(1); //*
         m_backRight = new PWMVictorSPX(0);
 
-        m_intake = new Intake(7,0); //*
+        m_intake = new Intake(7,1); //*
 
         act_solenoid = new DoubleSolenoid(1, 0); //*
 
