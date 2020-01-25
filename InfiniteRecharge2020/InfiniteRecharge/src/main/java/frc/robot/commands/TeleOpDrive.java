@@ -18,6 +18,8 @@ public class TeleOpDrive extends CommandBase {
   VersaDrive m_drive;
   PIDDrive m_pidDrive;
 
+  public double magnifier = 5;
+
   /**
    * Creates a new TeleOpDrive.1
    */
@@ -46,22 +48,49 @@ public class TeleOpDrive extends CommandBase {
     ySpeed = Math.abs(ySpeed) > 0.1 ? ySpeed : 0;
     zRotation = Math.abs(zRotation) > 0.1 ? zRotation : 0;
 
-    System.out.println(xSpeed);
-    System.out.println(ySpeed);
-    System.out.println(zRotation);
 
-    //set the angle of the z rotation to the position the controller
-    m_pidDrive.setSetpoint(m_pidDrive.getSetpoint() + zRotation);
+    double rotation;
+
+    //snap to points if POV buttons are pressed
+    if(OI.turnForward.get()) {
+      rotation = 0;
+      m_pidDrive.setSetpoint(rotation);
+    }
+    else if(OI.turnRight.get()) {
+      rotation = 90;
+      m_pidDrive.setSetpoint(rotation);
+    }
+    else if(OI.turnBack.get()) {
+      rotation = 180;
+      m_pidDrive.setSetpoint(rotation);
+    }
+    else if(OI.turnLeft.get()) {
+      rotation = -90;
+      m_pidDrive.setSetpoint(rotation);
+    }
+    else {
+      //set the angle of the z rotation to the position the controller
+      m_pidDrive.addToSetpoint(zRotation * magnifier); //remap the zRptation value to a number between -180 : 180
+    }
+
+    //System.out.println(xSpeed);
+    //System.out.println(ySpeed);
+    //System.out.println(zRotation);
 
     //move based on the pid setpoint
-    double rotation = m_pidDrive.speed;
+    rotation = m_pidDrive.speed;
+
+    System.out.println(m_pidDrive.getSetpoint());
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
-      m_drive.m_swiftDrive.driveCartesian(ySpeed, xSpeed, rotation);
+      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation);
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation);
+
     }
     else {
       //basically arcade drive with the mecanum
-      m_drive.m_swiftDrive.driveCartesian(ySpeed, 0, rotation);
+      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation);
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation);
     }
   }
 

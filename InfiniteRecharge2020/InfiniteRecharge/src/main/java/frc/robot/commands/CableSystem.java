@@ -15,23 +15,28 @@ public class CableSystem extends CommandBase {
   /**
    * Creates a new HookSystem.
    */
-  TeleHook m_Telecables;
+  TeleHook m_leftTeleCable;
+  TeleHook m_rightTeleCable;
 
   public CableSystem(boolean extend) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotMap.m_TeleHooks);
+    addRequirements(RobotMap.m_leftTeleHook);
+    addRequirements(RobotMap.m_rightTeleHook);
     if(extend){
-      m_Telecables.extend();
+      m_leftTeleCable.extend();
+      m_rightTeleCable.extend();
     }
     else{
-      m_Telecables.retract();
+      m_leftTeleCable.retract();
+      m_rightTeleCable.retract();
     }
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Telecables = RobotMap.m_TeleCables;
+    m_leftTeleCable = RobotMap.m_leftTeleHook;
+    m_leftTeleCable = RobotMap.m_rightTeleHook;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +47,7 @@ public class CableSystem extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Telecables.releaseHook();
+    m_leftTeleCable.releaseHook();
   }
 
   // Returns true when the command should end.

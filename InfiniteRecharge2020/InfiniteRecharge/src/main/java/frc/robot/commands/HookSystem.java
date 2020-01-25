@@ -15,23 +15,27 @@ public class HookSystem extends CommandBase {
   /**
    * Creates a new HookSystem.
    */
-  TeleHook m_TeleHooks;
+  TeleHook m_leftTeleHook;
+  TeleHook m_rightTeleHook;
+
 
   public HookSystem(boolean extend) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotMap.m_TeleHooks);
+    addRequirements(RobotMap.m_leftTeleHook);
+    addRequirements(RobotMap.m_rightTeleHook);
     if(extend){
-      m_TeleHooks.extend();
+      m_leftTeleHook.extend();
     }
     else{
-      m_TeleHooks.retract();
+      m_leftTeleHook.retract();
     }
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_TeleHooks = RobotMap.m_TeleHooks;
+    m_leftTeleHook = RobotMap.m_leftTeleHook;
+    m_rightTeleHook = RobotMap.m_rightTeleHook;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +46,8 @@ public class HookSystem extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_TeleHooks.releaseHook();
+    m_leftTeleHook.releaseHook();
+    m_rightTeleHook.releaseHook();
   }
 
   // Returns true when the command should end.

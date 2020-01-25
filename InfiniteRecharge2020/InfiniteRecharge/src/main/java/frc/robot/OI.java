@@ -2,6 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.SwitchDriveMode;
+import frc.robot.commands.SetDriveAngle;
 import frc.robot.commands.CableSystem;
 import frc.robot.commands.HookSystem;
 import frc.robot.commands.IntakeSystem;
@@ -16,6 +19,11 @@ public class OI {
     public static Joystick m_gunnerControl = new Joystick(1);
     
     public static JoystickButton switchDrive;
+
+    public static POVButton turnLeft;
+    public static POVButton turnForward;
+    public static POVButton turnRight;
+    public static POVButton turnBack;
     public static JoystickButton intakeForward;
     public static JoystickButton intakeBackward;
     public static JoystickButton hookExtend;
@@ -40,5 +48,15 @@ public class OI {
         lower.whenHeld(new CableSystem(false));
 
         switchDrive.whenPressed(new SwitchDriveMode()); //switch drive mode when this button is pressed
+
+        turnLeft = new POVButton(m_driverControl, 270);
+        turnForward = new POVButton(m_driverControl, 0);
+        turnRight = new POVButton(m_driverControl, 90);
+        turnBack = new POVButton(m_driverControl, 180);
+
+        /*turnLeft.whenPressed(new SetDriveAngle(-90));
+        turnForward.whenPressed(new SetDriveAngle(0));
+        turnRight.whenPressed(new SetDriveAngle(90));
+        turnBack.whenPressed(new SetDriveAngle(180));*/
     }
 }
