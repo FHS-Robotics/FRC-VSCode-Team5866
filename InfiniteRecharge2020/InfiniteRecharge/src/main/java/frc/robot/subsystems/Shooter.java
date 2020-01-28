@@ -7,14 +7,19 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
+  PWMTalonSRX m_ShooterMotor;
   /**
    * Creates a new Shooter.
    */
-  public Shooter() {
-
+  public Shooter(int port) {
+    m_ShooterMotor = new PWMTalonSRX(port);
+  }
+  public void ShooterSpeed(int speed) {
+    m_ShooterMotor.set(speed);
   }
 
   @Override

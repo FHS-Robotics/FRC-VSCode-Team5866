@@ -8,6 +8,7 @@ import frc.robot.subsystems.TeleHook;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VersaDrive;
 
 /**
@@ -18,6 +19,9 @@ public class RobotMap {
     //both teleHook motor
     public static TeleHook m_TeleHooks;
     public static TeleHook m_TeleCables;
+
+    //shooter motor
+    public static Shooter m_shooter;
   
     //intake motor?
     public static Intake m_intake;
@@ -47,6 +51,8 @@ public class RobotMap {
 
         m_TeleHooks = new TeleHook(0 ,0);//*Not real number yet
         m_TeleCables = new TeleHook(1 ,0);//*
+
+        m_shooter = new Shooter(0);//*
 
         m_frontLeft = new PWMTalonSRX(0); //*
 
