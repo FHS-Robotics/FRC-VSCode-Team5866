@@ -12,16 +12,29 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.TeleHook;
 
 public class CableSystem extends CommandBase {
-  /**
-   * Creates a new HookSystem.
-   */
+  
   TeleHook m_leftTeleCable;
   TeleHook m_rightTeleCable;
 
-  public CableSystem(boolean extend) {
+  boolean extend;
+
+  /**
+   * Creates a new HookSystem.
+   */
+  public CableSystem(boolean _extend) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotMap.m_leftTeleHook);
     addRequirements(RobotMap.m_rightTeleHook);
+    
+    m_leftTeleCable = RobotMap.m_leftTeleHook;
+    m_leftTeleCable = RobotMap.m_rightTeleHook;
+    
+    extend = _extend;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
     if(extend){
       m_leftTeleCable.extend();
       m_rightTeleCable.extend();
@@ -30,13 +43,6 @@ public class CableSystem extends CommandBase {
       m_leftTeleCable.retract();
       m_rightTeleCable.retract();
     }
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_leftTeleCable = RobotMap.m_leftTeleHook;
-    m_leftTeleCable = RobotMap.m_rightTeleHook;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

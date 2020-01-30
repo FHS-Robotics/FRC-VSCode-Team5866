@@ -83,14 +83,14 @@ public class TeleOpDrive extends CommandBase {
     System.out.println(m_pidDrive.getSetpoint());
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
-      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation);
-      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation);
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation);
+      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation);
 
     }
     else {
       //basically arcade drive with the mecanum
-      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation);
-      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation);
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation);
+      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation);
     }
   }
 
