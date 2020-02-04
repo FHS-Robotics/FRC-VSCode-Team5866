@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.subsystems.TeleHook;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.VersaDrive;
@@ -46,6 +47,9 @@ public class RobotMap {
 
     public static LimeLight limeLight;
 
+    public static LEDStrip m_ledStrip;
+    public static LEDStrip m_ledStrip2;
+
     public static void init() {
 
         m_leftTeleHook = new TeleHook(3,4);
@@ -72,5 +76,8 @@ public class RobotMap {
 
         gyro = new AHRS();
         limeLight = new LimeLight();
+
+        m_ledStrip = new LEDStrip(2, 150);
+        m_ledStrip.setRGB(255, 255, 255);
     }
 }
