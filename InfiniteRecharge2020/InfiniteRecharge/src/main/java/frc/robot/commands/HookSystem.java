@@ -18,24 +18,27 @@ public class HookSystem extends CommandBase {
   TeleHook m_leftTeleHook;
   TeleHook m_rightTeleHook;
 
+  boolean extend;
 
-  public HookSystem(boolean extend) {
+  public HookSystem(boolean _extend) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotMap.m_leftTeleHook);
     addRequirements(RobotMap.m_rightTeleHook);
+    m_leftTeleHook = RobotMap.m_leftTeleHook;
+    m_rightTeleHook = RobotMap.m_rightTeleHook;
+
+    extend = _extend;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
     if(extend){
       m_leftTeleHook.extend();
     }
     else{
       m_leftTeleHook.retract();
     }
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_leftTeleHook = RobotMap.m_leftTeleHook;
-    m_rightTeleHook = RobotMap.m_rightTeleHook;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

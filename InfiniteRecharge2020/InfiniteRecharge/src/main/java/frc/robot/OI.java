@@ -32,7 +32,7 @@ public class OI {
     public static JoystickButton lower;
 
     public OI() {
-        switchDrive = new JoystickButton(m_driverControl, 0);
+        switchDrive = new JoystickButton(m_driverControl, 1);
         intakeForward = new JoystickButton(m_gunnerControl, 1);
         intakeBackward = new JoystickButton(m_gunnerControl, 2);
         hookExtend = new JoystickButton(m_driverControl, 6);//*TBD

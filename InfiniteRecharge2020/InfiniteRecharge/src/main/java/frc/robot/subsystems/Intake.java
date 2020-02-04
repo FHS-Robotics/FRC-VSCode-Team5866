@@ -8,18 +8,19 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
  
 
 public class Intake extends SubsystemBase {
   
-  PWMTalonSRX m_intakeMotor;
+  Spark m_intakeMotor;
   double intakeSpeed;
   /**
    * Creates a new Intake.
    */
   public Intake(int port, double speed) {
-    m_intakeMotor = new PWMTalonSRX(port);
+    m_intakeMotor = new Spark(port);
     intakeSpeed = speed;
   }
   public void setForward(){
@@ -27,7 +28,7 @@ public class Intake extends SubsystemBase {
   }
   public void setReverse(){
     m_intakeMotor.set(-intakeSpeed);
-  }
+  } 
   public void release(){
     m_intakeMotor.set(0);
   }

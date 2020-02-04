@@ -13,33 +13,34 @@ import frc.robot.subsystems.Intake;
 
 
 public class IntakeSystem extends CommandBase {
+  
+  boolean forward;
+
+
+  Intake m_intake;
+
   /**
    * Creates a new IntakeSystem.
    */
-  Intake m_intake;
-  public IntakeSystem(boolean forward) {
+  public IntakeSystem(boolean _forward) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotMap.m_intake);
-    if(forward){
-      m_intake.setForward();
-    }
-    else{
-      m_intake.setReverse();
-    }
-  }
+    forward = _forward;
+
+    m_intake = RobotMap.m_intake;
+}
 
   
 
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake = RobotMap.m_intake;
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    
+    if(forward){
+      m_intake.setForward();
+    }
+    else{
+      m_intake.setReverse();
+    }
   }
 
   // Called once the command ends or is interrupted.
