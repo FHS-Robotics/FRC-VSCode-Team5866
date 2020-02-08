@@ -18,6 +18,12 @@ public class TeleOpDrive extends CommandBase {
   VersaDrive m_drive;
   PIDDrive m_pidDrive;
 
+  private double currentXSpeed = 0;
+  private double currentYSpeed = 0;
+  private double currentZSpeed = 0;
+
+
+
   public double magnifier = 5;
 
   /**
@@ -33,6 +39,12 @@ public class TeleOpDrive extends CommandBase {
   public void initialize() {
     m_drive = RobotMap.m_drive;
     m_pidDrive = RobotMap.m_pidDrive;
+
+    m_pidDrive.enable();
+    currentXSpeed = 0;
+    currentYSpeed = 0;
+    currentZSpeed = 0;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,11 +54,13 @@ public class TeleOpDrive extends CommandBase {
     double xSpeed = OI.m_driverControl.getRawAxis(0); 
     double ySpeed = OI.m_driverControl.getRawAxis(1);
     double zRotation = OI.m_driverControl.getRawAxis(4);
-    
+    //double zRotation = 180; //for testing a 180 degree turn
+
+
     //dead spot
     xSpeed = Math.abs(xSpeed) > 0.1 ? xSpeed : 0;
     ySpeed = Math.abs(ySpeed) > 0.1 ? ySpeed : 0;
-    zRotation = Math.abs(zRotation) > 0.1 ? zRotation : 0;
+    zRotation = Math.abs(zRotation) > 0.2 ? zRotation : 0;
 
 
     double rotation;
@@ -80,23 +94,42 @@ public class TeleOpDrive extends CommandBase {
     //move based on the pid setpoint
     rotation = m_pidDrive.speed;
 
-    System.out.println(m_pidDrive.getSetpoint());
+    System.out.println(rotation);
+
+    /*make all of our values safe for the motors.  If we are going full speed
+      in one direction and all of a sudden try to completely reverse the speed, the
+      motors will die.  Instead, we'll zero them first
+    */
+    if(Math.abs(xSpeed - currentXSpeed) > 1) {
+      xSpeed = 0;
+    }
+    if(Math.abs(ySpeed - currentYSpeed) > 1) {
+      ySpeed = 0;
+    }
+    if(Math.abs(rotation - currentZSpeed) > 1) {
+      rotation = 0;
+    }
+
+    currentXSpeed = xSpeed;
+    currentYSpeed = ySpeed;
+    currentZSpeed = rotation;
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
-      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation);
-      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation);
-
+      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation); //for driving using the gyro
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation); //for driving without the gyro
     }
     else {
       //basically arcade drive with the mecanum
-      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation);
-      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation);
+      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation); //for driving using the gyro
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation); //for driving without the gyro
+      currentXSpeed = 0;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_pidDrive.disable();
   }
 
   // Returns true when the command should end.

@@ -23,6 +23,7 @@ public class LimeLight extends SubsystemBase {
   public NetworkTableEntry tx;
   public NetworkTableEntry ty;
   public NetworkTableEntry ta;
+  public NetworkTableEntry ledMode;
 
   /**
    * Creates a new LimeLight.
@@ -32,6 +33,15 @@ public class LimeLight extends SubsystemBase {
      tx = table.getEntry("tx");
      ty = table.getEntry("ty");
      ta = table.getEntry("ta");
+     ledMode = table.getEntry("ledMode");
+  }
+
+  public void ledOn() {
+    ledMode.setNumber(3.0);
+  }
+
+  public void ledOff() {
+    ledMode.setNumber(1.0);
   }
 
   /**
