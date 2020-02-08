@@ -7,32 +7,36 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMTalonFX;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Shooter extends PIDSubsystem {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Shooter extends SubsystemBase {
 
   //FalconFX falconMotor;
+  private CANSparkMax m_motor;
+  private CANPIDController m_pidController;
 
-  public Shooter() {
-    super(
-        // The PIDController used by the subsystem
-        new PIDController(0, 0, 0));
+  public Shooter(int deviceID, double p, double i, double d) {
+
+    m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
+    m_pidController = m_motor.getPIDController();
+    m_pidController.setP(p);
+    m_pidController.setI(i);
+    m_pidController.setD(d);
+    m_pidController.setOutputRange(-1, 1);
+
+    this.setRPM(0);
   }
 
-  public void shoot(double distance) {
-    //falconMotor.set(ControlMode.)
-  }
-
-  @Override
-  public void useOutput(double output, double setpoint) {
-    // Use the output here
-  }
-
-  @Override
-  public double getMeasurement() {
-    // Return the process variable measurement here
-    return 0;
+  /**
+   * Max value 5676 at 0 torque load
+   * @param speed
+   */
+  public void setRPM(double speed) {
+    m_pidController.setReference(speed, ControlType.kVelocity);
   }
 }

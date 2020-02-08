@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
     //init our robot map and oi classes
     RobotMap.init();
     m_oi = new OI();
+    OI.SetDefaultCommands(); //set all default commands for subsystems
 
     //start the camera and set its resolution
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
@@ -51,6 +52,11 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Gyro Yaw", RobotMap.gyro.getYaw());
     RobotMap.m_ledStrip.rainbow();
+
+    if(OI.resetGyro.getBoolean(true)) {
+      OI.resetGyro.setBoolean(false);
+      RobotMap.gyro.reset();
+    }
   }
 
 
@@ -81,9 +87,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    CommandBase teleOpDrive = new TeleOpDrive();
+    /*CommandBase teleOpDrive = new TeleOpDrive();
     teleOpDrive.schedule();
-    CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().run();*/
   }
 
   /**

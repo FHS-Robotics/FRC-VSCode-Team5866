@@ -28,7 +28,6 @@ public class VersaDrive extends SubsystemBase {
    */
   public VersaDrive(DoubleSolenoid _actSolenoid, PWMSpeedController _frontLeft, PWMSpeedController _backLeft, PWMSpeedController _frontRight, PWMSpeedController _backRight) {
 
-    //setDefaultCommand(new TeleOpDrive()); //when no command is running, TeleOpDrive() will
     act_solenoid = _actSolenoid;
 
     //pass in motors to the constructors of our swift and power drives

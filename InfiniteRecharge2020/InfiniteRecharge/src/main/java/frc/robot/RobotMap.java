@@ -11,6 +11,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.PIDVisionDrive;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VersaDrive;
 /**
  * RobotMap
@@ -23,6 +25,8 @@ public class RobotMap {
   
     //intake motor?
     public static Intake m_intake;
+
+    public static Shooter m_shooter;
 
     //#region DriveBase
     public static Spark m_frontLeft;
@@ -43,9 +47,12 @@ public class RobotMap {
     //the system will utilize a dual drive system to deal with defenders while being agile
     public static VersaDrive m_drive;
     public static PIDDrive m_pidDrive;
+    public static PIDVisionDrive m_visionDrive;
     //#endregion
 
     public static LimeLight limeLight;
+
+    public static Spark shootTemp;
 
     public static LEDStrip m_ledStrip;
     public static LEDStrip m_ledStrip2;
@@ -67,17 +74,21 @@ public class RobotMap {
         m_backRight = new PWMVictorSPX(0);
 */
         m_intake = new Intake(7,1); //*
+        m_shooter = new Shooter(1, 1, 0, 0);
+        shootTemp = new Spark(2);
 
         act_solenoid = new DoubleSolenoid(1, 0); //*
 
         m_drive = new VersaDrive(act_solenoid, m_frontLeft, m_backLeft, m_frontRight, m_backRight);
         m_pidDrive = new PIDDrive();
-        m_pidDrive.enable();
 
+        m_visionDrive = new PIDVisionDrive();
+        
         gyro = new AHRS();
         limeLight = new LimeLight();
+        limeLight.ledOff();
 
-        m_ledStrip = new LEDStrip(2, 150);
+        //m_ledStrip = new LEDStrip(2, 150);
         m_ledStrip.setRGB(255, 255, 255);
     }
 }
