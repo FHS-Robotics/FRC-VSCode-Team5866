@@ -89,6 +89,6 @@ public class RobotMap {
         limeLight.ledOff();
 
         //m_ledStrip = new LEDStrip(2, 150);
-        m_ledStrip.setRGB(255, 255, 255);
+        //m_ledStrip.setRGB(255, 255, 255);
     }
 }
