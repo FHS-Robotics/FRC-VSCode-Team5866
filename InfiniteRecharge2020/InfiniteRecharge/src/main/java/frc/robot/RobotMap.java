@@ -75,7 +75,7 @@ public class RobotMap {
 */
         m_intake = new Intake(7,1); //*
         m_shooter = new Shooter(1, 1, 0, 0);
-        shootTemp = new Spark(2);
+        //shootTemp = new Spark(2);
 
         act_solenoid = new DoubleSolenoid(1, 0); //*
 
@@ -88,7 +88,6 @@ public class RobotMap {
         limeLight = new LimeLight();
         limeLight.ledOff();
 
-        //m_ledStrip = new LEDStrip(2, 150);
-        //m_ledStrip.setRGB(255, 255, 255);
+        m_ledStrip = new LEDStrip(2, 150);
     }
 } 
