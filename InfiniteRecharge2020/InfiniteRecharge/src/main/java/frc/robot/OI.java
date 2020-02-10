@@ -4,21 +4,18 @@ import java.util.Map;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwitchDriveMode;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.VisionAlignHorizontal;
-import frc.robot.commands.SetDriveAngle;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.CableSystem;
 import frc.robot.commands.HookSystem;
-import frc.robot.commands.IntakeSystem;
-import frc.robot.commands.SwitchDriveMode;
-/**
+import frc.robot.commands.IntakeSystem;/**
  * OI
  */
 public class OI {
@@ -70,15 +67,15 @@ public class OI {
         lower.whenHeld(new CableSystem(false));
 
         switchDrive.whenPressed(new SwitchDriveMode()); //switch drive mode when this button is pressed
-        alignTarget.whenPressed(new VisionAlignHorizontal()); //align to target when this button is pressed
+        alignTarget.whenHeld(new VisionAlignHorizontal()); //align to target when this button is pressed
 
         turnLeft = new POVButton(m_driverControl, 270);
         turnForward = new POVButton(m_driverControl, 0);
         turnRight = new POVButton(m_driverControl, 90);
         turnBack = new POVButton(m_driverControl, 180);
 
-        resetGyro = Shuffleboard.getTab("SmartDashboard").add("Reset Gyro", false)
-                                    .withWidget("Toggle Button")
+        resetGyro = Shuffleboard.getTab("Gyro").add("Reset Gyro", false)
+                                    .withWidget(BuiltInWidgets.kToggleSwitch)
                                     .withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "maroon"))
                                     .getEntry();
         //deprecated and moved to TeleOpDrive();

@@ -19,14 +19,16 @@ public class PIDVisionDrive extends PIDSubsystem {
   public PIDVisionDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(1, 0, 0));
+        new PIDController(0.1, 0, 0.001));
+
+    getController().setTolerance(errorThreshold);
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
-    speed = output;
     speed = speed > 1 ? 1 : speed;
     speed = speed < -1 ? -1 : speed;
+    speed = output;
   }
 
   @Override
