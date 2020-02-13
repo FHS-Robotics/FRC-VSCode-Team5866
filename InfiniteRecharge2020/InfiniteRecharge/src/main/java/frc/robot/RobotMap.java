@@ -5,8 +5,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.subsystems.TeleHook;
+import frc.robot.subsystems.Actuator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.LimeLight;
@@ -22,6 +24,8 @@ public class RobotMap {
     //both teleHook motor
     public static TeleHook m_leftTeleHook;
     public static TeleHook m_rightTeleHook;
+
+    public static Actuator m_actuator;
   
     //intake motor?
     public static Intake m_intake;
@@ -62,6 +66,8 @@ public class RobotMap {
         m_leftTeleHook = new TeleHook(3,4);
         m_rightTeleHook = new TeleHook(5,6);
 
+        m_actuator = new Actuator(2);
+
         m_frontLeft = new Spark(8); //*
         m_backLeft = new Spark(9); //*
 
@@ -74,8 +80,8 @@ public class RobotMap {
         m_backRight = new PWMVictorSPX(0);
 */
         m_intake = new Intake(7,1); //*
-        m_shooter = new Shooter(1, 1, 0, 0);
-        shootTemp = new Spark(2);
+        //m_shooter = new Shooter(1, 1, 0, 0);
+        //shootTemp = new Spark(2);
 
         act_solenoid = new DoubleSolenoid(1, 0); //*
 
