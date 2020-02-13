@@ -29,6 +29,8 @@ public class PIDDrive extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
+    speed = speed > 1 ? 1 : speed;
+    speed = speed < -1 ? -1 : speed;
     speed = output; //remap value from -1 : 1
   }
 

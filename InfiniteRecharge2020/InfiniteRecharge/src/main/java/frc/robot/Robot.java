@@ -12,9 +12,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.TeleOpDrive;
 
 /**
  * The Robot class is the master class of the entire project
@@ -50,18 +48,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Gyro Yaw", RobotMap.gyro.getYaw());
-    RobotMap.m_ledStrip.rainbow();
-
-    if(OI.resetGyro.getBoolean(true)) {
-      OI.resetGyro.setBoolean(false);
-      RobotMap.gyro.reset();
-    }
+    OI.PublishData();
   }
 
 
   @Override
   public void autonomousInit() {
+    RobotMap.limeLight.ledOff();
+
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -87,6 +81,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    RobotMap.limeLight.ledOff();
     /*CommandBase teleOpDrive = new TeleOpDrive();
     teleOpDrive.schedule();
     CommandScheduler.getInstance().run();*/

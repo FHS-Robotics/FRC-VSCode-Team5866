@@ -36,10 +36,16 @@ public class LimeLight extends SubsystemBase {
      ledMode = table.getEntry("ledMode");
   }
 
+  /**
+   * Turns the green LED on
+   */
   public void ledOn() {
     ledMode.setNumber(3.0);
   }
 
+  /**
+   * Turns the green LED off
+   */
   public void ledOff() {
     ledMode.setNumber(1.0);
   }
@@ -69,10 +75,5 @@ public class LimeLight extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    //post to smart dashboard periodically
-    SmartDashboard.putNumber("LimelightX", getX());
-    SmartDashboard.putNumber("LimelightY", getY());
-    SmartDashboard.putNumber("LimelightArea", getArea());
-  }
+  public void periodic() {}
 }

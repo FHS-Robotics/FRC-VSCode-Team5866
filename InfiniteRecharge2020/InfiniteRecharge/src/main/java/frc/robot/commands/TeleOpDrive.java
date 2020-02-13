@@ -40,6 +40,7 @@ public class TeleOpDrive extends CommandBase {
     m_drive = RobotMap.m_drive;
     m_pidDrive = RobotMap.m_pidDrive;
 
+    m_pidDrive.setSetpoint(RobotMap.gyro.getYaw()); //set yaw to the current yaw to start
     m_pidDrive.enable();
     currentXSpeed = 0;
     currentYSpeed = 0;
@@ -93,8 +94,6 @@ public class TeleOpDrive extends CommandBase {
 
     //move based on the pid setpoint
     rotation = m_pidDrive.speed;
-
-    System.out.println(rotation);
 
     /*make all of our values safe for the motors.  If we are going full speed
       in one direction and all of a sudden try to completely reverse the speed, the
