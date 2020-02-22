@@ -7,47 +7,44 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.OI;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.PIDVisionDrive;
 
-public class Shoot extends CommandBase {
+public class VisionAlignRotational extends CommandBase {
 
-  Shooter shooter;
-  Timer timer = new Timer();
+  private PIDVisionDrive m_visionDrive;
 
-  double cleartime = 0.5; //time to run backward to clear the balls
-
-  public Shoot() {
-    shooter = RobotMap.m_shooter;
+  public VisionAlignRotational() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotMap.m_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
+    m_visionDrive = RobotMap.m_visionDrive;
+    m_visionDrive.setSetpoint(0);
+    
+    RobotMap.limeLight.ledOn();
+
+    //enable PID system
+    m_visionDrive.enable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if(timer.get() < cleartime) {
-      RobotMap.shootTemp.set(-0.25);
-    }
-    else {
-      //shooter.setRPM(5500); //set to
-      RobotMap.shootTemp.set(1);
-    }
+    double xSpeed = -OI.m_driverControl.getRawAxis(0); //move left and right using the joysticks
+
+    RobotMap.m_drive.m_swiftDrive.driveCartesian(xSpeed, 0, m_visionDrive.speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.shootTemp.set(0);
-    timer.stop();
   }
 
   // Returns true when the command should end.

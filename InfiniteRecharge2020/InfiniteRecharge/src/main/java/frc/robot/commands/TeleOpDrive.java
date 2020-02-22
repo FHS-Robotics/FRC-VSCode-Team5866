@@ -45,23 +45,22 @@ public class TeleOpDrive extends CommandBase {
     currentXSpeed = 0;
     currentYSpeed = 0;
     currentZSpeed = 0;
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double xSpeed = OI.m_driverControl.getRawAxis(0); 
+    double xSpeed = -OI.m_driverControl.getRawAxis(0); 
     double ySpeed = OI.m_driverControl.getRawAxis(1);
-    double zRotation = OI.m_driverControl.getRawAxis(4);
+    double zRotation = -OI.m_driverControl.getRawAxis(4) / 2;
     //double zRotation = 180; //for testing a 180 degree turn
 
 
     //dead spot
     xSpeed = Math.abs(xSpeed) > 0.1 ? xSpeed : 0;
     ySpeed = Math.abs(ySpeed) > 0.1 ? ySpeed : 0;
-    zRotation = Math.abs(zRotation) > 0.2 ? zRotation : 0;
+    zRotation = Math.abs(zRotation) > 0.05 ? zRotation : 0;
 
 
     double rotation;
@@ -115,12 +114,12 @@ public class TeleOpDrive extends CommandBase {
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
       //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation); //for driving using the gyro
-      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -zRotation); //for driving without the gyro
+      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation); //for driving without the gyro
     }
     else {
       //basically arcade drive with the mecanum
       //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation); //for driving using the gyro
-      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -zRotation); //for driving without the gyro
+      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation); //for driving without the gyro
       currentXSpeed = 0;
     }
   }

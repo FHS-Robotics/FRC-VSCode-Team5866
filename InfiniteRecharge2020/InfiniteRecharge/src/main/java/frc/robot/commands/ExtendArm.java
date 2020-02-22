@@ -24,10 +24,6 @@ public class ExtendArm extends CommandBase {
   @Override
   public void initialize() {
     climber = RobotMap.m_climber;
-  }
-
-  @Override
-  public void execute() {
     if(foldOrUnfold) {
       climber.fold();
     }
@@ -35,6 +31,9 @@ public class ExtendArm extends CommandBase {
       climber.unfold();
     }
   }
+
+  @Override
+  public void execute() {}
 
   @Override
   public void end(boolean interrupted) {

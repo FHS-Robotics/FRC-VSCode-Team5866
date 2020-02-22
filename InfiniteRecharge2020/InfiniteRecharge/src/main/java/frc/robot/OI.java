@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwitchDriveMode;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.VisionAlignHorizontal;
+import frc.robot.commands.VisionAlignRotational;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.SpinColorWheel;
 import frc.robot.commands.ExtendArm;
 import frc.robot.commands.ExtendColorWheel;
 import frc.robot.commands.ActivateHooks;
@@ -29,6 +31,7 @@ public class OI {
     
     public static JoystickButton switchDrive;
     public static JoystickButton alignTarget;
+    public static JoystickButton alignRotate;
 
     public static POVButton turnLeft;
     public static POVButton turnForward;
@@ -44,6 +47,8 @@ public class OI {
     public static JoystickButton foldArm;
     public static JoystickButton activateHook;
 
+    public static JoystickButton colorWheelSpin;
+
     public static JoystickButton colorWheelRise;
     public static JoystickButton colorWheelDrop;
 
@@ -55,15 +60,18 @@ public class OI {
     public OI() {
         switchDrive = new JoystickButton(m_driverControl, 1);
         alignTarget = new JoystickButton(m_driverControl, 8);
+        alignRotate = new JoystickButton(m_driverControl, 7);
 
         intakeForward = new JoystickButton(m_gunnerControl, 1);
         intakeBackward = new JoystickButton(m_gunnerControl, 2);
         shooterForward = new JoystickButton(m_gunnerControl, 3);
         shootAll = new JoystickButton(m_gunnerControl, 4);
 
-        unfoldArm = new JoystickButton(m_driverControl, 3);
-        foldArm = new JoystickButton(m_driverControl, 4);
+        unfoldArm = new JoystickButton(m_driverControl, 4);
+        foldArm = new JoystickButton(m_driverControl, 3);
         activateHook = new JoystickButton(m_driverControl, 2);
+
+        colorWheelSpin = new JoystickButton(m_gunnerControl, 6);
 
         colorWheelRise = new JoystickButton(m_driverControl, 1);//*
         colorWheelDrop = new JoystickButton(m_driverControl, 2);
@@ -76,12 +84,15 @@ public class OI {
         foldArm.whenHeld(new ExtendArm(false));
         activateHook.whenHeld(new ActivateHooks());
         
-        //servo and color wheel stuff
+        //servo and color wheel stuffC 
         colorWheelRise.whenPressed(new ExtendColorWheel(true));
         colorWheelDrop.whenPressed(new ExtendColorWheel(false));
 
+        colorWheelSpin.whenHeld(new SpinColorWheel(true));
+
         switchDrive.whenPressed(new SwitchDriveMode()); //switch drive mode when this button is pressed
         alignTarget.whenHeld(new VisionAlignHorizontal()); //align to target when this button is pressed
+        alignTarget.whenHeld(new VisionAlignRotational()); //align to target rotation when this button is pressed
 
         turnLeft = new POVButton(m_driverControl, 270);
         turnForward = new POVButton(m_driverControl, 0);

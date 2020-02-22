@@ -22,6 +22,7 @@ public class ActivateHooks extends CommandBase {
 
   @Override
   public void initialize() {
+    climber = RobotMap.m_climber;
     climber.switchExtention();
   }
 

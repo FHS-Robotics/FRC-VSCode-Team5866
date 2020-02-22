@@ -7,47 +7,35 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ColorWheel;
 
-public class Shoot extends CommandBase {
+public class SpinColorWheel extends CommandBase {
 
-  Shooter shooter;
-  Timer timer = new Timer();
+  ColorWheel m_colorWheel;
+  boolean direction;
 
-  double cleartime = 0.5; //time to run backward to clear the balls
-
-  public Shoot() {
-    shooter = RobotMap.m_shooter;
+  public SpinColorWheel(boolean _direction) {
+    direction = _direction;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
+    m_colorWheel = RobotMap.m_ColorWheel;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    if(timer.get() < cleartime) {
-      RobotMap.shootTemp.set(-0.25);
-    }
-    else {
-      //shooter.setRPM(5500); //set to
-      RobotMap.shootTemp.set(1);
-    }
+    m_colorWheel.spin(direction);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.shootTemp.set(0);
-    timer.stop();
+    m_colorWheel.release();
   }
 
   // Returns true when the command should end.

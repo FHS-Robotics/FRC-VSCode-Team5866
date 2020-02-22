@@ -7,17 +7,22 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.music.Orchestra;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.PlayMusic;
 
 /**
  * The Robot class is the master class of the entire project
  */
 public class Robot extends TimedRobot {
+
   private static final String kDefaultAuto = "Default Cross Line";
   private static final String kBallAuto = "Shoot 3 balls";
   private String m_autoSelected;
@@ -54,6 +59,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    PlayMusic music = new PlayMusic();
+    music.schedule();
+    
     RobotMap.limeLight.ledOff();
 
     m_autoSelected = m_chooser.getSelected();
@@ -81,6 +89,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    System.out.println(RobotMap.orchestra.play());
     RobotMap.limeLight.ledOff();
     /*CommandBase teleOpDrive = new TeleOpDrive();
     teleOpDrive.schedule();
@@ -101,5 +110,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  @Override
+  public void disabledPeriodic() {
+    RobotMap.limeLight.ledOff();
   }
 }

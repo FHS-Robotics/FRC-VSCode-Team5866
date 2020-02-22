@@ -43,9 +43,10 @@ public class VersaDrive extends SubsystemBase {
 
   public MecanumDrive m_swiftDrive;
 
-  private DoubleSolenoid act_solenoid;
+  private DoubleSolenoid act_solenoidLeft;
+  private DoubleSolenoid act_solenoidRight;
 
-  double maxVelocityY = 10.969; //speed of strafe
+  double maxVelocityY = 10.969; //spede of strafe
   double maxVelocityX = 10.969; //forward speed
 
   //MecanumDriveKinematics kinematics = new MecanumDriveKinematics(new Translation2d(0.3683, 0.2286), new Translation2d(0.3683, 0.2286), new Translation2d(0.3683, 0.2286), new Translation2d(0.3683, 0.2286)); //x=14.5in; y=9in
@@ -56,9 +57,10 @@ public class VersaDrive extends SubsystemBase {
   /**
    * The Versa drive base is a dual mode drive base for switching between agile mecanum and powerful friction wheels
    */
-  public VersaDrive(DoubleSolenoid _actSolenoid, WPI_TalonFX _frontLeft, WPI_TalonFX _backLeft, WPI_TalonFX _frontRight, WPI_TalonFX _backRight) {
+  public VersaDrive(DoubleSolenoid _actSolenoidLeft, DoubleSolenoid _actSolenoidRight, WPI_TalonFX _frontLeft, WPI_TalonFX _backLeft, WPI_TalonFX _frontRight, WPI_TalonFX _backRight) {
 
-    act_solenoid = _actSolenoid;
+    act_solenoidLeft = _actSolenoidLeft;
+    act_solenoidRight = _actSolenoidRight;
 
     //pass in motors to the constructors of our swift and power drives
     m_swiftDrive = new MecanumDrive(_frontLeft, _backLeft, _frontRight, _backRight);
@@ -82,10 +84,12 @@ public class VersaDrive extends SubsystemBase {
   public void setSolenoids() {
 
     if(mode == DriveState.swift) {
-      act_solenoid.set(Value.kForward);
+      act_solenoidLeft.set(Value.kForward);
+      act_solenoidRight.set(Value.kForward);
     }
     else {
-      act_solenoid.set(Value.kReverse);
+      act_solenoidLeft.set(Value.kReverse);
+      act_solenoidRight.set(Value.kReverse);
     }
   }
 

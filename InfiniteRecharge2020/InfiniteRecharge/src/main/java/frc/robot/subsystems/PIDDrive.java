@@ -17,12 +17,13 @@ public class PIDDrive extends PIDSubsystem {
   final double maxValue = 180.0;
   final double minValue = -180.0;
   public double speed;
-  public double errorThreshold = 1; //Threshold of error is good to x degrees
+  public double errorThreshold = 21; //Threshold of error is good to x degrees
 
   public PIDDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.025, 0, 0.001));
+        //new PIDController(0.025, 0, 0.001)); //dave
+        new PIDController(0.0015, 0, 0)); //main bot
         m_controller.enableContinuousInput(minValue, maxValue);
         setSetpoint(0);
       }
