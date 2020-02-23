@@ -12,6 +12,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import frc.robot.subsystems.Climber;
@@ -42,10 +45,10 @@ public class RobotMap {
     public static ColorWheel m_ColorWheel;
 
     //#region DriveBase
-    /*public static Spark m_frontLeft;
-    public static Spark m_backLeft;
-    public static Spark m_frontRight;
-    public static Spark m_backRight;*/
+    /*public static PWMVictorSPX m_frontLeft;
+    public static PWMVictorSPX m_backLeft;
+    public static PWMVictorSPX m_frontRight;
+    public static PWMVictorSPX m_backRight;*/
 
     public static WPI_TalonFX m_frontLeft;
     public static WPI_TalonFX m_backLeft;
@@ -79,11 +82,11 @@ public class RobotMap {
 
         m_actuator = new Actuator(8);
 
-        /*m_frontLeft = new Spark(8); //*
-        m_backLeft = new Spark(9); //*
+        /*m_frontLeft = new PWMVictorSPX(9); //*
+        m_backLeft = new PWMVictorSPX(6); //*
 
-        m_frontRight = new Spark(1); //*
-        m_backRight = new Spark(0); //**/
+        m_frontRight = new PWMVictorSPX(7); //*
+        m_backRight = new PWMVictorSPX(5); //** */
 
         m_frontLeft = new WPI_TalonFX(0);
         m_backLeft = new WPI_TalonFX(1);
@@ -106,6 +109,7 @@ public class RobotMap {
         m_visionDrive = new PIDVisionDrive();
         
         gyro = new AHRS();
+        gyro.zeroYaw();
         limeLight = new LimeLight();
         limeLight.ledOff();
 

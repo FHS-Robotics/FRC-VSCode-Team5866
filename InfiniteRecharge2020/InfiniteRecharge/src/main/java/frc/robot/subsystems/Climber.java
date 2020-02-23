@@ -26,7 +26,7 @@ public class Climber extends SubsystemBase {
     m_pivot = new Spark(motor_port);
     m_extender = new DoubleSolenoid(piston_port1, piston_port2); 
     extended = false;
-    m_extender.set(Value.kReverse);
+    m_extender.set(Value.kForward);
   }
 
   /**
@@ -55,6 +55,6 @@ public class Climber extends SubsystemBase {
    */
   public void switchExtention() {
     extended = !extended;
-    m_extender.set(extended ? Value.kForward : Value.kReverse); //forward if extended, backward if not
+    m_extender.set(extended ? Value.kReverse : Value.kForward); //forward if extended, backward if not
   }
 }

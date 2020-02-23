@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -55,6 +56,22 @@ public class VersaDrive extends SubsystemBase {
   public DriveState mode;
 
   /**
+   * The Versa drive base is a dual mode drive base for switching between agile mecanum and powerful friction wheels
+   */
+  public VersaDrive(DoubleSolenoid _actSolenoidLeft, DoubleSolenoid _actSolenoidRight, PWMSpeedController _frontLeft, PWMSpeedController _backLeft, PWMSpeedController _frontRight, PWMSpeedController _backRight) {
+
+    act_solenoidLeft = _actSolenoidLeft;
+    act_solenoidRight = _actSolenoidRight;
+
+    //pass in motors to the constructors of our swift and power drives
+    m_swiftDrive = new MecanumDrive(_frontLeft, _backLeft, _frontRight, _backRight);
+
+    //set the default mode to the mecanum
+    mode = DriveState.swift;
+    setSolenoids();
+  }
+
+    /**
    * The Versa drive base is a dual mode drive base for switching between agile mecanum and powerful friction wheels
    */
   public VersaDrive(DoubleSolenoid _actSolenoidLeft, DoubleSolenoid _actSolenoidRight, WPI_TalonFX _frontLeft, WPI_TalonFX _backLeft, WPI_TalonFX _frontRight, WPI_TalonFX _backRight) {
