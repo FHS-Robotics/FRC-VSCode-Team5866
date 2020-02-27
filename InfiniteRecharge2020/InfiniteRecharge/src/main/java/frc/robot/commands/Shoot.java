@@ -17,9 +17,13 @@ public class Shoot extends CommandBase {
   Shooter shooter;
   Timer timer = new Timer();
 
-  double cleartime = 0.5; //time to run backward to clear the balls
+  double cleartime = 1; //time to run backward to clear the balls
 
-  public Shoot() {
+  public enum mode {Forward, Reverse};
+  mode shootMode;
+
+  public Shoot(mode _shootMode) {
+    shootMode = _shootMode;
     shooter = RobotMap.m_shooter;
   }
 
@@ -34,12 +38,19 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
 
-    if(timer.get() < cleartime) {
-      RobotMap.shootTemp.set(-0.25);
+    if(shootMode == mode.Forward)
+    {
+      if(timer.get() < cleartime) {
+        RobotMap.shootTemp.set(-0.25);
+      }
+      else {
+        //shooter.setRPM(5500); //set to
+        RobotMap.shootTemp.set(1);
+      }
     }
-    else {
-      //shooter.setRPM(5500); //set to
-      RobotMap.shootTemp.set(1);
+    else if(shootMode == mode.Reverse)
+    {
+      RobotMap.shootTemp.set(-0.25);
     }
   }
 

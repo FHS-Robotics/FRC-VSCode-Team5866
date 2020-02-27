@@ -22,7 +22,7 @@ public class PIDDrive extends PIDSubsystem {
   public PIDDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.025, 0, 0.001)); //dave
+        new PIDController(0.005, 0, 0.000)); //dave
         //new PIDController(0.002, 0, 0)); //main bot
         m_controller.enableContinuousInput(minValue, maxValue);
         setSetpoint(0);

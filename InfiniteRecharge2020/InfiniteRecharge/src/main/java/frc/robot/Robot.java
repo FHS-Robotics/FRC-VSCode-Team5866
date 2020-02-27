@@ -11,7 +11,10 @@ import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +32,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static UsbCamera cam1;
+  public static UsbCamera cam2;
 
   OI m_oi;
 
@@ -48,12 +52,30 @@ public class Robot extends TimedRobot {
     cam1.setFPS(30);
     cam1.setResolution(310, 240);
     CameraServer.getInstance().startAutomaticCapture(cam1);
+
+    //start the camera and set its resolution
+    cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    cam2.setFPS(30);
+    cam2.setResolution(310, 240);
+    CameraServer.getInstance().startAutomaticCapture(cam2);
   }
 
 
   @Override
   public void robotPeriodic() {
     OI.PublishData();
+    if(DriverStation.getInstance().getAlliance() == Alliance.Red){
+      RobotMap.m_ledStrip.setRGB(255, 0, 0);
+      RobotMap.m_ledStrip2.setRGB(255, 0, 0);
+    }
+    else if (DriverStation.getInstance().getAlliance() == Alliance.Blue) {
+      RobotMap.m_ledStrip.setRGB(0, 0, 255);
+      RobotMap.m_ledStrip2.setRGB(0, 0, 255);
+    }
+    else {
+      RobotMap.m_ledStrip.setRGB(255, 255, 0);
+      RobotMap.m_ledStrip2.setRGB(255, 255, 0);
+    }
   }
 
 

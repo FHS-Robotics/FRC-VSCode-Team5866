@@ -110,14 +110,16 @@ public class TeleOpDrive extends CommandBase {
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
       //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation); //for driving using the gyro on dave
-      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -rotation); //for driving using the gyro on comp bot
-      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation); //for driving without the gyro
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -rotation); //for driving using the gyro on comp bot
+      System.out.println(rotation);
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -zRotation); //for driving without the gyro
     }
     else {
       //basically arcade drive with the mecanum
       //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation); //for driving using the gyro on dave
-      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -rotation); //for driving using the gyro on comp bot
-      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation); //for driving without the gyro
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -rotation); //for driving using the gyro on comp bot
+      System.out.println(rotation);
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -zRotation); //for driving without the gyro
       currentXSpeed = 0;
     }
   }
