@@ -45,14 +45,13 @@ public class TeleOpDrive extends CommandBase {
     currentXSpeed = 0;
     currentYSpeed = 0;
     currentZSpeed = 0;
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double xSpeed = OI.m_driverControl.getRawAxis(0); 
+    double xSpeed = -OI.m_driverControl.getRawAxis(0); 
     double ySpeed = OI.m_driverControl.getRawAxis(1);
     double zRotation = OI.m_driverControl.getRawAxis(4);
     //double zRotation = 180; //for testing a 180 degree turn
@@ -61,7 +60,7 @@ public class TeleOpDrive extends CommandBase {
     //dead spot
     xSpeed = Math.abs(xSpeed) > 0.1 ? xSpeed : 0;
     ySpeed = Math.abs(ySpeed) > 0.1 ? ySpeed : 0;
-    zRotation = Math.abs(zRotation) > 0.2 ? zRotation : 0;
+    zRotation = Math.abs(zRotation) > 0.1 ? zRotation : 0;
 
 
     double rotation;
@@ -88,10 +87,6 @@ public class TeleOpDrive extends CommandBase {
       m_pidDrive.addToSetpoint(zRotation * magnifier); //remap the zRptation value to a number between -180 : 180
     }
 
-    //System.out.println(xSpeed);
-    //System.out.println(ySpeed);
-    //System.out.println(zRotation);
-
     //move based on the pid setpoint
     rotation = m_pidDrive.speed;
 
@@ -99,7 +94,7 @@ public class TeleOpDrive extends CommandBase {
       in one direction and all of a sudden try to completely reverse the speed, the
       motors will die.  Instead, we'll zero them first
     */
-    if(Math.abs(xSpeed - currentXSpeed) > 1) {
+    /*if(Math.abs(xSpeed - currentXSpeed) > 1) {
       xSpeed = 0;
     }
     if(Math.abs(ySpeed - currentYSpeed) > 1) {
@@ -107,20 +102,24 @@ public class TeleOpDrive extends CommandBase {
     }
     if(Math.abs(rotation - currentZSpeed) > 1) {
       rotation = 0;
-    }
+    }*/
 
     currentXSpeed = xSpeed;
     currentYSpeed = ySpeed;
     currentZSpeed = rotation;
 
     if(m_drive.mode == VersaDrive.DriveState.swift) {
-      m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation); //for driving using the gyro
-      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, zRotation); //for driving without the gyro
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation); //for driving using the gyro on dave
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -rotation); //for driving using the gyro on comp bot
+      System.out.println(rotation);
+      //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -zRotation); //for driving without the gyro
     }
     else {
       //basically arcade drive with the mecanum
-      m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation); //for driving using the gyro
-      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, zRotation); //for driving without the gyro
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation); //for driving using the gyro on dave
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -rotation); //for driving using the gyro on comp bot
+      System.out.println(rotation);
+      //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -zRotation); //for driving without the gyro
       currentXSpeed = 0;
     }
   }
@@ -134,6 +133,6 @@ public class TeleOpDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return OI.climbed;
   }
 }

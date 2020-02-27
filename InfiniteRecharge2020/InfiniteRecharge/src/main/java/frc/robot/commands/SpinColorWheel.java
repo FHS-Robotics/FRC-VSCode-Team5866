@@ -9,51 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.TeleHook;
+import frc.robot.subsystems.ColorWheel;
 
-public class CableSystem extends CommandBase {
-  
-  TeleHook m_leftTeleCable;
-  TeleHook m_rightTeleCable;
+public class SpinColorWheel extends CommandBase {
 
-  boolean extend;
+  ColorWheel m_colorWheel;
+  boolean direction;
 
-  /**
-   * Creates a new HookSystem.
-   */
-  public CableSystem(boolean _extend) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotMap.m_leftTeleHook);
-    addRequirements(RobotMap.m_rightTeleHook);
-    
-    m_leftTeleCable = RobotMap.m_leftTeleHook;
-    m_leftTeleCable = RobotMap.m_rightTeleHook;
-    
-    extend = _extend;
+  public SpinColorWheel(boolean _direction) {
+    direction = _direction;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(extend){
-      m_leftTeleCable.extend();
-      m_rightTeleCable.extend();
-    }
-    else{
-      m_leftTeleCable.retract();
-      m_rightTeleCable.retract();
-    }
+    m_colorWheel = RobotMap.m_ColorWheel;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_colorWheel.spin(direction);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_leftTeleCable.releaseHook();
+    m_colorWheel.release();
   }
 
   // Returns true when the command should end.
