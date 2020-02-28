@@ -8,66 +8,49 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.Shoot.mode;
+import frc.robot.subsystems.Intake;
 
-public class Shoot extends CommandBase {
+public class IntakeShoot extends CommandBase {
 
-  Shooter shooter;
+  Shoot shoot;
+  IntakeSystem intake;
+  double shooterChargeUpTime = 2;
+
   Timer timer = new Timer();
 
-  double cleartime = 1; //time to run backward to clear the balls
-  double full5ShotTime = 5; //time it takes to shoot 5 balls
-
-  public enum mode {Forward, Reverse, Auto};
-  mode shootMode;
-
-  public Shoot(mode _shootMode) {
-    shootMode = _shootMode;
-    shooter = RobotMap.m_shooter;
+  public IntakeShoot() {
+    shoot = new Shoot(mode.Auto);
+    intake = new IntakeSystem(true);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
+    shoot.schedule();
     timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    if(shootMode == mode.Forward || shootMode == mode.Auto)
-    {
-      if(timer.get() < cleartime) {
-        RobotMap.shootTemp.set(-0.25);
-      }
-      else {
-        //shooter.setRPM(5500); //set to
-        RobotMap.shootTemp.set(1);
-      }
-    }
-    else if(shootMode == mode.Reverse)
-    {
-      RobotMap.shootTemp.set(-0.25);
+    if(timer.get() >= shooterChargeUpTime) {
+      intake.schedule();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.shootTemp.set(0);
-    timer.stop();
+    shoot.end(false);
+    intake.end(false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(shootMode == mode.Auto)
-      return (timer.get() >= full5ShotTime);
-    else
-      return false;
+    return (shoot.isFinished());
   }
 }
