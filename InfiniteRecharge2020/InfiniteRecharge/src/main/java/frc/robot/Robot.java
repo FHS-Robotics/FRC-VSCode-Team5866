@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.PlayMusic;
+import frc.robot.commands.auto.StillShotMove;
 
 /**
  * The Robot class is the master class of the entire project
@@ -66,46 +67,46 @@ public class Robot extends TimedRobot {
     OI.PublishData();
     if(DriverStation.getInstance().getAlliance() == Alliance.Red){
       RobotMap.m_ledStrip.setRGB(255, 0, 0);
-      RobotMap.m_ledStrip2.setRGB(255, 0, 0);
+      //RobotMap.m_ledStrip2.setRGB(255, 0, 0);
     }
     else if (DriverStation.getInstance().getAlliance() == Alliance.Blue) {
       RobotMap.m_ledStrip.setRGB(0, 0, 255);
-      RobotMap.m_ledStrip2.setRGB(0, 0, 255);
+      //RobotMap.m_ledStrip2.setRGB(0, 0, 255);
     }
     else {
       RobotMap.m_ledStrip.setRGB(255, 255, 0);
-      RobotMap.m_ledStrip2.setRGB(255, 255, 0);
+      //RobotMap.m_ledStrip2.setRGB(255, 255, 0);
     }
+    //RobotMap.m_ledStrip.rainbow();
   }
 
 
   @Override
   public void autonomousInit() {
-    PlayMusic music = new PlayMusic();
-    music.schedule();
-    
+    //PlayMusic music = new PlayMusic();
+    //music.schedule();
     RobotMap.limeLight.ledOff();
 
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    
-    CommandScheduler.getInstance().run();
-  }
 
-
-  @Override
-  public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kBallAuto:
         // Put custom auto code here.  This code will include putting into effect the shooting commands
         break;
       case kDefaultAuto:
       default:
-        // Put default auto code here
+        StillShotMove move = new StillShotMove(1.0);
+        move.schedule();
         break;
     }
+    CommandScheduler.getInstance().run();
+  }
 
+
+  @Override
+  public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
   }
 

@@ -120,7 +120,7 @@ public class RobotMap {
         orchestra.addInstrument(m_backRight);
         orchestra.addInstrument(m_frontRight);
 
-        m_ledStrip = new LEDStrip(4, 60);
-        m_ledStrip2 = new LEDStrip(5, 60);
+        m_ledStrip = new LEDStrip(4, 180);
+        //m_ledStrip2 = new LEDStrip(5, 60);
     }
 } 
