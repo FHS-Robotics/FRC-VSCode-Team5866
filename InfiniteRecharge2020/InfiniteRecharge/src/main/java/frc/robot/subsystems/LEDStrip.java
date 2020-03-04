@@ -9,9 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -23,7 +20,6 @@ public class LEDStrip extends SubsystemBase {
   AddressableLEDBuffer m_buffer;
 
   int m_rainbowFirstPixelHue = 0;
-  boolean hasTeam = false;
 
   public LEDStrip(int port, int length) {
     m_led = new AddressableLED(port);
@@ -53,7 +49,7 @@ public class LEDStrip extends SubsystemBase {
    * @param r : value from 0-255
    * @param g : value from 0-255
    * @param b : value from 0-255
-   * @param index : LED inexd to set
+   * @param index : LED index to set
    */
   public void setRGB(int r, int g, int b, int index) {
     m_buffer.setRGB(index, r, g, b);
@@ -75,26 +71,8 @@ public class LEDStrip extends SubsystemBase {
     m_rainbowFirstPixelHue %= 180;
 
     m_led.setData(m_buffer);
-
-    }
-    public void setTeamRGB(){
-
-      if(DriverStation.getInstance().getAlliance() == Alliance.Blue) {
-        setRGB(0, 0, 255);
-        hasTeam = true;
-      }
-      else if(DriverStation.getInstance().getAlliance() == Alliance.Red){
-        setRGB(255, 0, 0);
-        hasTeam = true;
-      }
-      else setRGB(0, 255, 0);
-    
-    }
-  
-  @Override
-  public void periodic() {
-    if(!hasTeam){
-      setTeamRGB();
-    }
   }
+
+  @Override
+  public void periodic() {}
 }

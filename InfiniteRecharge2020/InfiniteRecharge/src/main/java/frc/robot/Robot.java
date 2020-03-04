@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("Gyro Yaw", RobotMap.gyro.getYaw());
-    //RobotMap.m_ledStrip.rainbow();
+    RobotMap.m_ledStrip.rainbow();
 
     if(OI.resetGyro.getBoolean(true)) {
       OI.resetGyro.setBoolean(false);
