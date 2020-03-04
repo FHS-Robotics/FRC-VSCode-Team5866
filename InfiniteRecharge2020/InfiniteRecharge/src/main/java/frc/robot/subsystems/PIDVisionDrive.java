@@ -19,7 +19,7 @@ public class PIDVisionDrive extends PIDSubsystem {
   public PIDVisionDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.1, 0, 0.001));
+        new PIDController(0.1, 0, 0.00));
 
     getController().setTolerance(errorThreshold);
   }

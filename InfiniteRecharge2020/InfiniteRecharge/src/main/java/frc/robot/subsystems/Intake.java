@@ -12,12 +12,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.OI;
  
 
 public class Intake extends SubsystemBase {
   
   Spark m_intakeMotor;
-  double intakeSpeed = 0.25;
+  double intakeSpeed = 0.25; //the max speed to run the intake at full throttle
   
   /**
    * Creates a new Intake.
@@ -27,10 +28,14 @@ public class Intake extends SubsystemBase {
   }
 
   public void setForward(){
+    System.out.println("forward");
+    //m_intakeMotor.set(intakeSpeed * OI.intakeSens * (1/5));
     m_intakeMotor.set(intakeSpeed);
   }
   
   public void setReverse(){
+    System.out.println("reverse");
+    //m_intakeMotor.set(-intakeSpeed * OI.intakeSens * (1/5));
     m_intakeMotor.set(-intakeSpeed);
   } 
 

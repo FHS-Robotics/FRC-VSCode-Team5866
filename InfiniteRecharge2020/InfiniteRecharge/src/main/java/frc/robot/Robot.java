@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.PlayMusic;
+import frc.robot.commands.auto.DriveForTime;
 import frc.robot.commands.auto.StillShotMove;
 
 /**
@@ -68,9 +69,11 @@ public class Robot extends TimedRobot {
     if(DriverStation.getInstance().getAlliance() == Alliance.Red){
       RobotMap.m_ledStrip.setRGB(255, 0, 0);
       //RobotMap.m_ledStrip2.setRGB(255, 0, 0);
+      //RobotMap.m_ledStrip.redGold();
     }
     else if (DriverStation.getInstance().getAlliance() == Alliance.Blue) {
-      RobotMap.m_ledStrip.setRGB(0, 0, 255);
+      //RobotMap.m_ledStrip.setRGB(0, 0, 255);
+      RobotMap.m_ledStrip.blueGold();
       //RobotMap.m_ledStrip2.setRGB(0, 0, 255);
     }
     else {
@@ -86,6 +89,7 @@ public class Robot extends TimedRobot {
     //PlayMusic music = new PlayMusic();
     //music.schedule();
     RobotMap.limeLight.ledOff();
+    RobotMap.gyro.reset();
 
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
@@ -93,12 +97,13 @@ public class Robot extends TimedRobot {
 
     switch (m_autoSelected) {
       case kBallAuto:
-        // Put custom auto code here.  This code will include putting into effect the shooting commands
+        StillShotMove move = new StillShotMove(1.0);
+        move.schedule();
         break;
       case kDefaultAuto:
       default:
-        StillShotMove move = new StillShotMove(1.0);
-        move.schedule();
+        DriveForTime drive = new DriveForTime(0, -0.25, 0, 0.5);
+        drive.schedule();
         break;
     }
     CommandScheduler.getInstance().run();
@@ -137,6 +142,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    RobotMap.limeLight.ledOff();
+    //RobotMap.limeLight.ledOff();
   }
 }

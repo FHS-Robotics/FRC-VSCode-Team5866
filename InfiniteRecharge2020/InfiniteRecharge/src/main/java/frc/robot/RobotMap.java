@@ -111,7 +111,7 @@ public class RobotMap {
         gyro = new AHRS();
         gyro.zeroYaw();
         limeLight = new LimeLight();
-        limeLight.ledOff();
+        //limeLight.ledOff();
 
         orchestra = new Orchestra();
                 

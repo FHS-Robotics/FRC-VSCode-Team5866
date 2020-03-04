@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.SwitchDriveMode;
+import frc.robot.commands.SwitchLimelightLight;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.VisionAlignHorizontal;
 import frc.robot.commands.VisionAlignRotational;
@@ -23,15 +24,21 @@ import frc.robot.commands.SpinColorWheel;
 import frc.robot.commands.ExtendArm;
 import frc.robot.commands.ExtendColorWheel;
 import frc.robot.commands.ActivateHooks;
+import frc.robot.commands.ChangeIntakeSensitivity;
 import frc.robot.commands.IntakeSystem;/**
  * OI
  */
 public class OI {
 
     public static boolean climbed = false;
+
+    public static double intakeSens = 3; //max of 5 and changed with the corresponding command
+    public static boolean limeLightActive = true;
     
 	public static Joystick m_driverControl = new Joystick(0);
     public static Joystick m_gunnerControl = new Joystick(1);
+
+    public static JoystickButton switchLimeLight;
     
     public static JoystickButton switchDrive;
     public static JoystickButton alignTarget;
@@ -46,6 +53,9 @@ public class OI {
     public static JoystickButton shooterForward;
     public static JoystickButton shooterBackward;
     public static JoystickButton shootAll;
+
+    public static POVButton sensUp;
+    public static POVButton sensDown;
 
     //Climb system
     public static JoystickButton unfoldArm;
@@ -64,15 +74,20 @@ public class OI {
      * Initializer for all OI components
      */
     public OI() {
-        switchDrive = new JoystickButton(m_driverControl, 1);
+        switchDrive = new JoystickButton(m_driverControl, 10);
         alignTarget = new JoystickButton(m_driverControl, 8);
         alignRotate = new JoystickButton(m_driverControl, 7);
+
+        switchLimeLight = new JoystickButton(m_driverControl, 1); //button for turning limelight light on and off
 
         intakeForward = new JoystickButton(m_gunnerControl, 1);
         intakeBackward = new JoystickButton(m_gunnerControl, 2);
         shooterForward = new JoystickButton(m_gunnerControl, 3);
         shooterBackward = new JoystickButton(m_gunnerControl, 4);
         //shootAll = new JoystickButton(m_gunnerControl, 4);
+
+        sensUp = new POVButton(m_gunnerControl, 90);
+        sensDown = new POVButton(m_gunnerControl, 270);
 
         unfoldArm = new JoystickButton(m_driverControl, 4);
         foldArm = new JoystickButton(m_driverControl, 3);
@@ -89,6 +104,11 @@ public class OI {
         shooterForward.whenHeld(new Shoot(mode.Forward));
         shooterBackward.whenHeld(new Shoot(mode.Reverse));
 
+        switchLimeLight.whenPressed(new SwitchLimelightLight());
+
+        sensUp.whenPressed(new ChangeIntakeSensitivity(true));
+        sensDown.whenPressed(new ChangeIntakeSensitivity(false));
+         
         unfoldArm.whenHeld(new ExtendArm(true));
         foldArm.whenHeld(new ExtendArm(false));
         activateHook.whenHeld(new ActivateHooks());
@@ -101,7 +121,7 @@ public class OI {
         colorWheelSpinCounter.whenHeld(new SpinColorWheel(false));
 
         switchDrive.whenPressed(new SwitchDriveMode()); //switch drive mode when this button is pressed
-        alignTarget.whenHeld(new VisionAlignHorizontal()); //align to target when this button is pressed
+        //alignTarget.whenHeld(new VisionAlignHorizontal()); //align to target when this button is pressed
         alignTarget.whenHeld(new VisionAlignRotational()); //align to target rotation when this button is pressed
 
         turnLeft = new POVButton(m_driverControl, 270);
@@ -133,6 +153,8 @@ public class OI {
         SmartDashboard.putNumber("LimelightX", RobotMap.limeLight.getX());
         SmartDashboard.putNumber("LimelightY", RobotMap.limeLight.getY());
         SmartDashboard.putNumber("LimelightArea", RobotMap.limeLight.getArea());
+
+        SmartDashboard.putNumber("Intake Sensitivity", intakeSens);
 
         //test code
         //Shuffleboard.getTab("Bridge").add("LimeLightX", RobotMap.limeLight.getX());

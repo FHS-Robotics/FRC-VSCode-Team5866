@@ -32,7 +32,7 @@ public class DriveForTime extends CommandBase {
 
   @Override
   public void initialize() {
-    RobotMap.m_drive.setState(DriveState.swift);
+    RobotMap.m_drive.setState(DriveState.power);
     timer.start();
   }
   

@@ -39,7 +39,7 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
 
-    if(shootMode == mode.Forward || shootMode == mode.Auto)
+    if(shootMode == mode.Forward)
     {
       if(timer.get() < cleartime) {
         RobotMap.shootTemp.set(-0.25);
@@ -52,6 +52,9 @@ public class Shoot extends CommandBase {
     else if(shootMode == mode.Reverse)
     {
       RobotMap.shootTemp.set(-0.25);
+    }
+    else if(shootMode == mode.Auto){
+      RobotMap.shootTemp.set(0.9);
     }
   }
 

@@ -73,6 +73,26 @@ public class LEDStrip extends SubsystemBase {
     m_led.setData(m_buffer);
   }
 
+  public void blueGold() {
+    for(int i = 0; i < m_buffer.getLength(); i+=2) {
+      m_buffer.setRGB(i, 0, 0, 255);
+    }
+    for(int i = 1; i < m_buffer.getLength(); i+=2) {
+      m_buffer.setRGB(i, 255, 255, 0);
+    }
+    m_led.setData(m_buffer);
+  }
+
+  public void redGold() {
+    for(int i = 0; i < m_buffer.getLength(); i+=2) {
+      m_buffer.setRGB(i, 255, 0, 0);
+    }
+    for(int i = 1; i < m_buffer.getLength(); i+=2) {
+      m_buffer.setRGB(i, 255, 255, 0);
+    }
+    m_led.setData(m_buffer);
+  }
+
   @Override
   public void periodic() {}
 }

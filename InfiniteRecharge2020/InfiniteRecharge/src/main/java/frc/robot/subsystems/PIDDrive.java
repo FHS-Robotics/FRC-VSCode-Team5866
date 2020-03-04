@@ -22,8 +22,7 @@ public class PIDDrive extends PIDSubsystem {
   public PIDDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.005, 0, 0.000)); //dave
-        //new PIDController(0.002, 0, 0)); //main bot
+        new PIDController(0.0025, 0, 0.0)   ); //main
         m_controller.enableContinuousInput(minValue, maxValue);
         setSetpoint(0);
       }
@@ -31,14 +30,15 @@ public class PIDDrive extends PIDSubsystem {
   @Override
   public void useOutput(double output, double setpoint) {
     System.out.println(speed);
-    speed = speed > 1 ? 1 : speed;
-    speed = speed < -1 ? -1 : speed;
+    speed = speed > 0.5 ? 0.5 : speed;
+    speed = speed < -0.5 ? -0.5 : speed;
     speed = output; //remap value from -1 : 1
   }
 
   @Override
   public double getMeasurement() {
-    return RobotMap.gyro.getYaw();
+    System.out.println(RobotMap.gyro.getYaw());
+    return -RobotMap.gyro.getYaw();
   }
 
   /**

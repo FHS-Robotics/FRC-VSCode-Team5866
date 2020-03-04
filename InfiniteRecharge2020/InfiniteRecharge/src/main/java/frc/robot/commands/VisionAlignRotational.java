@@ -39,12 +39,14 @@ public class VisionAlignRotational extends CommandBase {
 
     double xSpeed = -OI.m_driverControl.getRawAxis(0); //move left and right using the joysticks
 
-    RobotMap.m_drive.m_swiftDrive.driveCartesian(xSpeed, 0, m_visionDrive.speed);
+    RobotMap.m_drive.m_swiftDrive.driveCartesian(xSpeed, 0, -m_visionDrive.speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_visionDrive.disable();
+    //RobotMap.limeLight.ledOff();
   }
 
   // Returns true when the command should end.
