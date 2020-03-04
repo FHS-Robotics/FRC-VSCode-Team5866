@@ -54,7 +54,7 @@ public class VisionAlignHorizontal extends CommandBase {
   @Override
   public void execute() {
     //if we're already on target angle-wise start moving left and right
-    if(m_pidDrive.onTarget()){
+    /*if(m_pidDrive.onTarget()){
       m_drive.m_swiftDrive.driveCartesian(m_visionDrive.speed, 0, m_pidDrive.speed);
     }
     else {
@@ -65,10 +65,18 @@ public class VisionAlignHorizontal extends CommandBase {
     }
     else {
       System.out.println("alligned");
-    }
+    }*/
 
-    System.out.println(m_pidDrive.speed);
-    System.out.println(RobotMap.limeLight.getX());
+    //wait 0.5 second to allow the limelight to turn on
+    if(timer.get() > 0.5) {
+      m_drive.m_swiftDrive.driveCartesian(m_visionDrive.speed, 0, m_pidDrive.speed);
+
+      System.out.println(m_pidDrive.speed);
+      System.out.println(RobotMap.limeLight.getX());
+    }
+    else {
+      m_drive.m_swiftDrive.driveCartesian(m_visionDrive.speed, 0, m_pidDrive.speed);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -82,6 +90,7 @@ public class VisionAlignHorizontal extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (waitTimer.get() >= waitTime || timer.get() >= 10); //return finished either after the target is reached or 10 seconds have elapsed
+    //return (waitTimer.get() >= waitTime || timer.get() >= 10); //return finished either after the target is reached or 10 seconds have elapsed
+    return false;
   }
 }

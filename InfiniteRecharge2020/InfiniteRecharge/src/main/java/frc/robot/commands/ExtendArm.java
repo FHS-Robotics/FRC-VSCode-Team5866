@@ -9,48 +9,35 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.TeleHook;
+import frc.robot.subsystems.Climber;
 
-public class HookSystem extends CommandBase {
-  /**
-   * Creates a new HookSystem.
-   */
-  TeleHook m_leftTeleHook;
-  TeleHook m_rightTeleHook;
+public class ExtendArm extends CommandBase {
 
-  boolean extend;
+  Climber climber;
+  boolean foldOrUnfold;
 
-  public HookSystem(boolean _extend) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotMap.m_leftTeleHook);
-    addRequirements(RobotMap.m_rightTeleHook);
-    m_leftTeleHook = RobotMap.m_leftTeleHook;
-    m_rightTeleHook = RobotMap.m_rightTeleHook;
-
-    extend = _extend;
+  public ExtendArm(boolean _foldOrUnfold) {
+    foldOrUnfold = _foldOrUnfold;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(extend){
-      m_leftTeleHook.extend();
+    climber = RobotMap.m_climber;
+    if(foldOrUnfold) {
+      climber.fold();
     }
-    else{
-      m_leftTeleHook.retract();
+    else {
+      climber.unfold();
     }
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_leftTeleHook.releaseHook();
-    m_rightTeleHook.releaseHook();
+    climber.release(); //release the climber after the command is ended
   }
 
   // Returns true when the command should end.

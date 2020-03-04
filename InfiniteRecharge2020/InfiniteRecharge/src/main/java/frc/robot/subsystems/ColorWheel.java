@@ -7,37 +7,26 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
- 
 
-public class Intake extends SubsystemBase {
-  
-  Spark m_intakeMotor;
-  double intakeSpeed = 0.25;
-  
+public class ColorWheel extends SubsystemBase {
+
+  Spark m_motor; //the motor spinning the color wheel
+  double speed = 0.1; //speed to run the spinner
+
+  public ColorWheel(int port) {
+    m_motor = new Spark(port);
+  }
+
   /**
-   * Creates a new Intake.
-   */
-  public Intake(int port) {
-    m_intakeMotor = new Spark(port);
+  * spin the motor to turn the color wheel
+  */
+  public void spin(boolean direction) {
+    m_motor.set(direction ? speed : -speed);
   }
 
-  public void setForward(){
-    m_intakeMotor.set(intakeSpeed);
+  public void release() {
+    m_motor.set(0);
   }
-  
-  public void setReverse(){
-    m_intakeMotor.set(-intakeSpeed);
-  } 
-
-  public void release(){
-    m_intakeMotor.set(0);
-  }
-
-  @Override
-  public void periodic() {}
 }

@@ -17,18 +17,22 @@ public class PIDDrive extends PIDSubsystem {
   final double maxValue = 180.0;
   final double minValue = -180.0;
   public double speed;
-  public double errorThreshold = 1; //Threshold of error is good to x degrees
+  public double errorThreshold = 2; //Threshold of error is good to x degrees
 
   public PIDDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.025, 0, 0.001));
+        new PIDController(0.005, 0, 0.000)); //dave
+        //new PIDController(0.002, 0, 0)); //main bot
         m_controller.enableContinuousInput(minValue, maxValue);
         setSetpoint(0);
       }
 
   @Override
   public void useOutput(double output, double setpoint) {
+    System.out.println(speed);
+    speed = speed > 1 ? 1 : speed;
+    speed = speed < -1 ? -1 : speed;
     speed = output; //remap value from -1 : 1
   }
 

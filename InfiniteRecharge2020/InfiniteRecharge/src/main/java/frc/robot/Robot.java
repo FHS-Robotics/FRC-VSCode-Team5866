@@ -7,25 +7,33 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.music.Orchestra;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.TeleOpDrive;
+import frc.robot.commands.PlayMusic;
+import frc.robot.commands.auto.StillShotMove;
 
 /**
  * The Robot class is the master class of the entire project
  */
 public class Robot extends TimedRobot {
+
   private static final String kDefaultAuto = "Default Cross Line";
   private static final String kBallAuto = "Shoot 3 balls";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static UsbCamera cam1;
+  public static UsbCamera cam2;
 
   OI m_oi;
 
@@ -45,48 +53,67 @@ public class Robot extends TimedRobot {
     cam1.setFPS(30);
     cam1.setResolution(310, 240);
     CameraServer.getInstance().startAutomaticCapture(cam1);
+
+    //start the camera and set its resolution
+    cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    cam2.setFPS(30);
+    cam2.setResolution(310, 240);
+    CameraServer.getInstance().startAutomaticCapture(cam2);
   }
 
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Gyro Yaw", RobotMap.gyro.getYaw());
-    RobotMap.m_ledStrip.rainbow();
-
-    if(OI.resetGyro.getBoolean(true)) {
-      OI.resetGyro.setBoolean(false);
-      RobotMap.gyro.reset();
+    OI.PublishData();
+    if(DriverStation.getInstance().getAlliance() == Alliance.Red){
+      RobotMap.m_ledStrip.setRGB(255, 0, 0);
+      //RobotMap.m_ledStrip2.setRGB(255, 0, 0);
     }
+    else if (DriverStation.getInstance().getAlliance() == Alliance.Blue) {
+      RobotMap.m_ledStrip.setRGB(0, 0, 255);
+      //RobotMap.m_ledStrip2.setRGB(0, 0, 255);
+    }
+    else {
+      RobotMap.m_ledStrip.setRGB(255, 255, 0);
+      //RobotMap.m_ledStrip2.setRGB(255, 255, 0);
+    }
+    //RobotMap.m_ledStrip.rainbow();
   }
 
 
   @Override
   public void autonomousInit() {
+    //PlayMusic music = new PlayMusic();
+    //music.schedule();
+    RobotMap.limeLight.ledOff();
+
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    
-    CommandScheduler.getInstance().run();
-  }
 
-
-  @Override
-  public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kBallAuto:
         // Put custom auto code here.  This code will include putting into effect the shooting commands
         break;
       case kDefaultAuto:
       default:
-        // Put default auto code here
+        StillShotMove move = new StillShotMove(1.0);
+        move.schedule();
         break;
     }
+    CommandScheduler.getInstance().run();
+  }
 
+
+  @Override
+  public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() {
+    System.out.println(RobotMap.orchestra.play());
+    RobotMap.limeLight.ledOff();
     /*CommandBase teleOpDrive = new TeleOpDrive();
     teleOpDrive.schedule();
     CommandScheduler.getInstance().run();*/
@@ -106,5 +133,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  @Override
+  public void disabledPeriodic() {
+    RobotMap.limeLight.ledOff();
   }
 }
