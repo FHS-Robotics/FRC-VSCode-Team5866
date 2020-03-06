@@ -5,22 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.auto;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.IntakeShoot;
-import frc.robot.commands.Shoot;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.OI;
+import frc.robot.RobotMap;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class StillShotMove extends SequentialCommandGroup {
-  /**
-   * Creates a new StillShotMove.
-   */
-  public StillShotMove(double time) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new IntakeShoot(), new DriveForTime(0, -0.25, 0, time));
+public class SwitchLimelightLight extends InstantCommand {
+
+  public SwitchLimelightLight() {}
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    OI.limeLightActive = !OI.limeLightActive;
+
+    if(OI.limeLightActive)
+      RobotMap.limeLight.ledOn();
+    else
+      RobotMap.limeLight.ledOff();
   }
 }

@@ -16,20 +16,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
 
-  //FalconFX falconMotor;
   private CANSparkMax m_motor;
   private CANPIDController m_pidController;
 
   public Shooter(int deviceID, double p, double i, double d) {
 
     m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
-    m_pidController = m_motor.getPIDController();
-    m_pidController.setP(p);
-    m_pidController.setI(i);
-    m_pidController.setD(d);
-    m_pidController.setOutputRange(-1, 1);
+    //m_pidController = m_motor.getPIDController();
+    //m_pidController.setP(p);
+    //m_pidController.setI(i);
+    //m_pidController.setD(d);
+    //m_pidController.setOutputRange(-1, 1);
 
-    this.setRPM(0);
+    //this.setRPM(0);
   }
 
   /**
@@ -38,5 +37,9 @@ public class Shooter extends SubsystemBase {
    */
   public void setRPM(double speed) {
     m_pidController.setReference(speed, ControlType.kVelocity);
+  }
+
+  public void set(double speed) {
+    m_motor.set(speed);
   }
 }

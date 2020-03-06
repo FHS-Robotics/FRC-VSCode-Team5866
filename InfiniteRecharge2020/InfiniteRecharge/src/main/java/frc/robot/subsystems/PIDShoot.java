@@ -10,42 +10,40 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.RobotMap;
+/**
+ * Class to calculate distance from the limelight and shoot that distance
+ */
+public class PIDShoot extends PIDSubsystem {
 
-public class PIDVisionDrive extends PIDSubsystem {
-  
-  public double speed;
-  private double errorThreshold = 0.5; //Our threshold of error is +-1 degree
+  double h1 = 0; //height of limelight lense from the ground
+  double h2 = 0; //height of vision target
+  double h3 = 0; //height of inner port
+  double a1 = 0; //angle of limelight lense from the horizontal
+  double a2; //angle of target from the center line of the limelight lense;
+  double d; //distance from the vision target on the outer port;
+  double d2 = 0; //distance of inner port wall from the outer port
 
-  public PIDVisionDrive() {
+  public PIDShoot() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.1, 0, 0.00));
-
-    getController().setTolerance(errorThreshold);
+        new PIDController(0, 0, 0));
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
-    speed = speed > 1 ? 1 : speed;
-    speed = speed < -1 ? -1 : speed;
-    speed = output;
+    // Use the output here
   }
 
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return -RobotMap.limeLight.getX();
+    return 0;
   }
 
-  public double getSetpoint() {
-    return m_controller.getSetpoint();
-  }
-
- /**
-   * Returns whether the robot is close enough to the set angle
-   * @return
-   */
-  public boolean onTarget() {
-    return Math.abs(getMeasurement() - getSetpoint()) < errorThreshold;
+  public double getDistance() {
+    a2 = RobotMap.limeLight.getY(); //set a2 to the angle of the target in the y
+    d = (h2 - h1) / Math.tan(a1 + a2);
+    d += d2;
+    return d;
   }
 }

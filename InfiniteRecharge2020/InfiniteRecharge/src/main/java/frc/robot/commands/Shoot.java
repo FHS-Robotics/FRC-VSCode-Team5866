@@ -39,26 +39,34 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
 
-    if(shootMode == mode.Forward || shootMode == mode.Auto)
+    if(shootMode == mode.Forward)
     {
       if(timer.get() < cleartime) {
-        RobotMap.shootTemp.set(-0.25);
+        shooter.set(-0.25);
+        //RobotMap.shootTemp.set(-0.25);
       }
       else {
         //shooter.setRPM(5500); //set to
-        RobotMap.shootTemp.set(1);
+        shooter.set(1);
+        //RobotMap.shootTemp.set(1);
       }
     }
     else if(shootMode == mode.Reverse)
     {
-      RobotMap.shootTemp.set(-0.25);
+      shooter.set(-0.25);
+      //RobotMap.shootTemp.set(-0.25);
+    }
+    else if(shootMode == mode.Auto){
+      shooter.set(0.9);
+      //RobotMap.shootTemp.set(0.9);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.shootTemp.set(0);
+    RobotMap.m_shooter.set(0);
+    //RobotMap.shootTemp.set(0);
     timer.stop();
   }
 

@@ -69,7 +69,8 @@ public class RobotMap {
 
     public static LimeLight limeLight;
 
-    public static Spark shootTemp;
+    //public static Spark shootTemp;
+    //public static CANSparkMax shootTemp;
 
     public static LEDStrip m_ledStrip;
     public static LEDStrip m_ledStrip2;
@@ -94,9 +95,11 @@ public class RobotMap {
         m_frontRight = new WPI_TalonFX(3);
         m_backRight = new WPI_TalonFX(2);
         
-        m_intake = new Intake(0);
-        //m_shooter = new Shooter(1, 1, 0, 0);
-        shootTemp = new Spark(1);
+        //m_intake = new Intake(0);
+        m_intake = new Intake(5);
+        m_shooter = new Shooter(5, 1, 0, 0);
+        //shootTemp = new Spark(1);
+        //shootTemp = new CANSparkMax(1, MotorType.kBrushless);
 
         m_ColorWheel = new ColorWheel(3); //*
 
@@ -111,7 +114,7 @@ public class RobotMap {
         gyro = new AHRS();
         gyro.zeroYaw();
         limeLight = new LimeLight();
-        limeLight.ledOff();
+        //limeLight.ledOff();
 
         orchestra = new Orchestra();
                 

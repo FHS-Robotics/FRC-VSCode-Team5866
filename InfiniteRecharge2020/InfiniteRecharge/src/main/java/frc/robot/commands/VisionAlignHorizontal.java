@@ -84,7 +84,7 @@ public class VisionAlignHorizontal extends CommandBase {
   public void end(boolean interrupted) {
     m_visionDrive.disable();
     m_pidDrive.disable();
-    RobotMap.limeLight.ledOff();
+    //RobotMap.limeLight.ledOff();
   }
 
   // Returns true when the command should end.

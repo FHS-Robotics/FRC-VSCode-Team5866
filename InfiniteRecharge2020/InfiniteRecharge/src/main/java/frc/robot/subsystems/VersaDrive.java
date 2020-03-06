@@ -67,7 +67,7 @@ public class VersaDrive extends SubsystemBase {
     m_swiftDrive = new MecanumDrive(_frontLeft, _backLeft, _frontRight, _backRight);
 
     //set the default mode to the mecanum
-    mode = DriveState.swift;
+    mode = DriveState.power;
     setSolenoids();
   }
 
@@ -82,8 +82,8 @@ public class VersaDrive extends SubsystemBase {
     //pass in motors to the constructors of our swift and power drives
     m_swiftDrive = new MecanumDrive(_frontLeft, _backLeft, _frontRight, _backRight);
 
-    //set the default mode to the mecanum
-    mode = DriveState.swift;
+    //set the default mode to the tank drive
+    mode = DriveState.power;
     setSolenoids();
   }
 
