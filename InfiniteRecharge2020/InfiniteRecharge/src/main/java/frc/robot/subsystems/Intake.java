@@ -17,14 +17,14 @@ import frc.robot.OI;
 
 public class Intake extends SubsystemBase {
   
-  Spark m_intakeMotor;
-  double intakeSpeed = 0.25; //the max speed to run the intake at full throttle
+  CANSparkMax m_intakeMotor;
+  double intakeSpeed = 1.0;//the max speed to run the intake at full throttle
   
   /**
    * Creates a new Intake.
    */
   public Intake(int port) {
-    m_intakeMotor = new Spark(port);
+    m_intakeMotor = new CANSparkMax(port, MotorType.kBrushless);
   }
 
   public void setForward(){
