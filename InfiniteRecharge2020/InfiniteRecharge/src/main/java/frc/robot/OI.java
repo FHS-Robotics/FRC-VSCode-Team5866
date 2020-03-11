@@ -42,7 +42,7 @@ public class OI {
     
     public static JoystickButton switchDrive;
     public static JoystickButton alignTarget;
-    public static JoystickButton alignRotate;
+    public static JoystickButton allignBall;
 
     public static POVButton turnLeft;
     public static POVButton turnForward;
@@ -53,6 +53,7 @@ public class OI {
     public static JoystickButton shooterForward;
     public static JoystickButton shooterBackward;
     public static JoystickButton shootAll;
+    public static JoystickButton shooterSmart;
 
     public static POVButton sensUp;
     public static POVButton sensDown;
@@ -76,7 +77,7 @@ public class OI {
     public OI() {
         switchDrive = new JoystickButton(m_driverControl, 10);
         alignTarget = new JoystickButton(m_driverControl, 8);
-        alignRotate = new JoystickButton(m_driverControl, 7);
+        allignBall = new JoystickButton(m_driverControl, 7);
 
         switchLimeLight = new JoystickButton(m_driverControl, 1); //button for turning limelight light on and off
 
@@ -84,6 +85,7 @@ public class OI {
         intakeBackward = new JoystickButton(m_gunnerControl, 2);
         shooterForward = new JoystickButton(m_gunnerControl, 3);
         shooterBackward = new JoystickButton(m_gunnerControl, 4);
+        shooterSmart = new JoystickButton(m_gunnerControl, 8);
         //shootAll = new JoystickButton(m_gunnerControl, 4);
 
         sensUp = new POVButton(m_gunnerControl, 90);
@@ -103,6 +105,7 @@ public class OI {
         intakeBackward.whenHeld(new IntakeSystem(false));
         shooterForward.whenHeld(new Shoot(mode.Forward));
         shooterBackward.whenHeld(new Shoot(mode.Reverse));
+        shooterSmart.whenHeld(new Shoot(mode.Smart));
 
         switchLimeLight.whenPressed(new SwitchLimelightLight());
 

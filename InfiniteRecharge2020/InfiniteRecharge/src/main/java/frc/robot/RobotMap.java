@@ -24,7 +24,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.PIDShoot;
 import frc.robot.subsystems.PIDVisionDrive;
+import frc.robot.subsystems.PixyBallAlligner;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VersaDrive;
 /**
@@ -41,6 +43,7 @@ public class RobotMap {
     public static Intake m_intake;
 
     public static Shooter m_shooter;
+    public static PIDShoot m_pidShoot;
 
     public static ColorWheel m_ColorWheel;
 
@@ -65,6 +68,8 @@ public class RobotMap {
     public static VersaDrive m_drive;
     public static PIDDrive m_pidDrive;
     public static PIDVisionDrive m_visionDrive;
+
+    public static PixyBallAlligner m_ballAlligner;
     //#endregion
 
     public static LimeLight limeLight;
@@ -96,8 +101,9 @@ public class RobotMap {
         m_backRight = new WPI_TalonFX(2);
         
         //m_intake = new Intake(0);
-        m_intake = new Intake(5);
+        m_intake = new Intake(4);
         m_shooter = new Shooter(5, 1, 0, 0);
+        m_pidShoot = new PIDShoot();
         //shootTemp = new Spark(1);
         //shootTemp = new CANSparkMax(1, MotorType.kBrushless);
 
@@ -110,6 +116,8 @@ public class RobotMap {
         m_pidDrive = new PIDDrive();
 
         m_visionDrive = new PIDVisionDrive();
+
+        m_ballAlligner = new PixyBallAlligner();
         
         gyro = new AHRS();
         gyro.zeroYaw();

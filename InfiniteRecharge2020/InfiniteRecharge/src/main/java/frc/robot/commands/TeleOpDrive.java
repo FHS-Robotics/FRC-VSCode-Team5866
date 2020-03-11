@@ -9,14 +9,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase; //currently not importing
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.PixyBallAlligner;
 import frc.robot.subsystems.VersaDrive;
 
 public class TeleOpDrive extends CommandBase {
 
   VersaDrive m_drive;
   PIDDrive m_pidDrive;
+  PixyBallAlligner m_alligner;
 
   private double currentXSpeed = 0;
   private double currentYSpeed = 0;
@@ -39,6 +42,8 @@ public class TeleOpDrive extends CommandBase {
   public void initialize() {
     m_drive = RobotMap.m_drive;
     m_pidDrive = RobotMap.m_pidDrive;
+    m_alligner = RobotMap.m_ballAlligner;
+    m_alligner.enable();
 
     m_pidDrive.setSetpoint(RobotMap.gyro.getYaw()); //set yaw to the current yaw to start
     m_pidDrive.enable();
@@ -53,8 +58,15 @@ public class TeleOpDrive extends CommandBase {
 
     double xSpeed = -OI.m_driverControl.getRawAxis(0); 
     double ySpeed = OI.m_driverControl.getRawAxis(1);
-    double zRotation = OI.m_driverControl.getRawAxis(4);
-    //double zRotation = 180; //for testing a 180 degree turn
+
+    //set rotation either to joysticks or if looking for a ball to the ball alligner's value
+    double zRotation;
+    if(OI.allignBall.get()) {
+      zRotation = m_alligner.speed;
+    }
+    else {
+      zRotation = OI.m_driverControl.getRawAxis(4);
+    }
 
 
     //dead spot
@@ -112,16 +124,16 @@ public class TeleOpDrive extends CommandBase {
       //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, rotation); //for driving using the gyro on dave
       //m_drive.m_swiftDrive.driveCartesian(xSpeed, ySpeed, -rotation); //for driving using the gyro on comp bot
       //System.out.println(rotation);
-      m_drive.m_swiftDrive.driveCartesian(xSpeed/4, ySpeed/4, -zRotation/4); //for driving without the gyro
+      m_drive.m_swiftDrive.driveCartesian(xSpeed * 0.3, ySpeed * 0.3, -zRotation * 0.3); //for driving without the gyro
     }
     else {
       //basically arcade drive with the mecanum
       //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, rotation); //for driving using the gyro on dave
       //m_drive.m_swiftDrive.driveCartesian(0, ySpeed, -rotation); //for driving using the gyro on comp bot
       //System.out.println(rotation);
-      m_drive.m_swiftDrive.driveCartesian(0, ySpeed/4, -zRotation/4); //for driving without the gyro
+      m_drive.m_swiftDrive.driveCartesian(0,  ySpeed * 0.3, -zRotation * 0.3); //for driving without the gyro
       currentXSpeed = 0;
-    }
+    } 
   }
 
   // Called once the command ends or is interrupted.
@@ -129,6 +141,7 @@ public class TeleOpDrive extends CommandBase {
   public void end(boolean interrupted) {
     m_drive.m_swiftDrive.driveCartesian(0, 0, 0);
     m_pidDrive.disable();
+    m_alligner.disable();
   }
 
   // Returns true when the command should end.

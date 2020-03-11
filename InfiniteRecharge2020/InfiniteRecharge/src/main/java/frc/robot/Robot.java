@@ -81,6 +81,9 @@ public class Robot extends TimedRobot {
       //RobotMap.m_ledStrip2.setRGB(255, 255, 0);
     }
     //RobotMap.m_ledStrip.rainbow();
+
+    double a2 = RobotMap.limeLight.getY(); //set a2 to the angle of the target in the y
+    SmartDashboard.putNumber("Distance", ((87 - 14.5) / Math.tan((29 + a2) * (3.14159/180))));
   }
 
 
