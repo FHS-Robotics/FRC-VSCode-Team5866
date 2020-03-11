@@ -37,7 +37,7 @@ public class VisionAlignRotational extends CommandBase {
   @Override
   public void execute() {
 
-    double xSpeed = -OI.m_driverControl.getRawAxis(0); //move left and right using the joysticks
+    double xSpeed = -OI.m_driverControl.getRawAxis(0) * 0.3; //move left and right using the joysticks
 
     RobotMap.m_drive.m_swiftDrive.driveCartesian(xSpeed, 0, -m_visionDrive.speed);
   }

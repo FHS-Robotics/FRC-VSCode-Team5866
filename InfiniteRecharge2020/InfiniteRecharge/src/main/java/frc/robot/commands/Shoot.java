@@ -17,10 +17,10 @@ public class Shoot extends CommandBase {
   Shooter shooter;
   Timer timer = new Timer();
 
-  double cleartime = 1; //time to run backward to clear the balls
+  double cleartime = 0.0; //time to run backward to clear the balls
   double full5ShotTime = 5; //time it takes to shoot 5 balls
 
-  public enum mode {Forward, Reverse, Auto};
+  public enum mode {Forward, Reverse, Auto, Smart};
   mode shootMode;
 
   public Shoot(mode _shootMode) {
@@ -33,6 +33,10 @@ public class Shoot extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
+    if(shootMode == mode.Smart) {
+      RobotMap.m_pidShoot.enable();
+      RobotMap.limeLight.ledOn();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,12 +57,15 @@ public class Shoot extends CommandBase {
     }
     else if(shootMode == mode.Reverse)
     {
-      shooter.set(-0.25);
+      shooter.set(-0.5);
       //RobotMap.shootTemp.set(-0.25);
     }
     else if(shootMode == mode.Auto){
       shooter.set(0.9);
       //RobotMap.shootTemp.set(0.9);
+    }
+    else if(shootMode == mode.Smart) {
+      shooter.set(RobotMap.m_pidShoot.speed);
     }
   }
 
@@ -68,6 +75,7 @@ public class Shoot extends CommandBase {
     RobotMap.m_shooter.set(0);
     //RobotMap.shootTemp.set(0);
     timer.stop();
+    RobotMap.m_pidShoot.disable();
   }
 
   // Returns true when the command should end.

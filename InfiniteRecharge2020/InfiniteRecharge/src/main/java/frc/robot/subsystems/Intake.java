@@ -18,7 +18,7 @@ import frc.robot.OI;
 public class Intake extends SubsystemBase {
   
   CANSparkMax m_intakeMotor;
-  double intakeSpeed = 1.0;//the max speed to run the intake at full throttle
+  double intakeSpeed = 0.3;//the max speed to run the intake at full throttle
   
   /**
    * Creates a new Intake.

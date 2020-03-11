@@ -14,20 +14,20 @@ import frc.robot.RobotMap;
 public class PIDVisionDrive extends PIDSubsystem {
   
   public double speed;
-  private double errorThreshold = 0.5; //Our threshold of error is +-1 degree
+  private double errorThreshold = 0.0; //Our threshold of error is +-1 degree
 
   public PIDVisionDrive() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.1, 0, 0.00));
+        new PIDController(0.03, 0, 0.00));
 
     getController().setTolerance(errorThreshold);
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
-    speed = speed > 1 ? 1 : speed;
-    speed = speed < -1 ? -1 : speed;
+    speed = speed > 0.3 ? 0.3 : speed;
+    speed = speed < -0.3 ? -0.3 : speed;
     speed = output;
   }
 
