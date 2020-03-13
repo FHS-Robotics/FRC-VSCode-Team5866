@@ -15,6 +15,9 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
+/**
+ * Plays music using the Falcon Motors
+ */
 public class PlayMusic extends CommandBase {
 
   public PlayMusic(){

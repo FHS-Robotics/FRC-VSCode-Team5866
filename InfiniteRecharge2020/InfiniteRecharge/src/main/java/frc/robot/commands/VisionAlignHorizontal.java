@@ -71,8 +71,8 @@ public class VisionAlignHorizontal extends CommandBase {
     if(timer.get() > 0.5) {
       m_drive.m_swiftDrive.driveCartesian(m_visionDrive.speed, 0, m_pidDrive.speed);
 
-      System.out.println(m_pidDrive.speed);
-      System.out.println(RobotMap.limeLight.getX());
+      //System.out.println(m_pidDrive.speed);
+      //System.out.println(RobotMap.limeLight.getX());
     }
     else {
       m_drive.m_swiftDrive.driveCartesian(m_visionDrive.speed, 0, m_pidDrive.speed);

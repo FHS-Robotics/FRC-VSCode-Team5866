@@ -29,15 +29,15 @@ public class PIDDrive extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    System.out.println(speed);
-    speed = speed > 0.5 ? 0.5 : speed;
+    //System.out.println(speed);
+    speed = speed > 0.5 ? 0.5 : speed; //throttle values to 0.5 max speed
     speed = speed < -0.5 ? -0.5 : speed;
     speed = output; //remap value from -1 : 1
   }
 
   @Override
   public double getMeasurement() {
-    System.out.println(RobotMap.gyro.getYaw());
+    //System.out.println(RobotMap.gyro.getYaw());
     return -RobotMap.gyro.getYaw();
   }
 

@@ -29,14 +29,15 @@ public class PIDShoot extends PIDSubsystem {
   public PIDShoot() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(1, 0, 0));
+        new PIDController(0.00561798, 0, 0));
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
+    speed = -output;
+    System.out.println(speed);
     speed = speed > 1 ? 1 : speed;
     speed = speed < 0 ? 0 : speed;
-    speed = output;
   }
 
   @Override

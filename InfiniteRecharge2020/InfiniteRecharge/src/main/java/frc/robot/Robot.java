@@ -25,6 +25,7 @@ import frc.robot.commands.auto.StillShotMove;
 
 /**
  * The Robot class is the master class of the entire project
+ * RIP 2020 and shoutout to COVID-19
  */
 public class Robot extends TimedRobot {
 

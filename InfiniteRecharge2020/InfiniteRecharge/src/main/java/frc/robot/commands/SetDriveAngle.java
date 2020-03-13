@@ -27,7 +27,7 @@ public class SetDriveAngle extends CommandBase {
   @Override
   public void initialize() {
     RobotMap.m_pidDrive.setSetpoint(angle);
-    System.out.println("it works");
+    //System.out.println("it works");
   }
 
 

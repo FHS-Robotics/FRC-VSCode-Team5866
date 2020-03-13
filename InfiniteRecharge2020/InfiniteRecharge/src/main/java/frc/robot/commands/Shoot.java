@@ -51,7 +51,7 @@ public class Shoot extends CommandBase {
       }
       else {
         //shooter.setRPM(5500); //set to
-        shooter.set(1);
+        shooter.set(1.0);
         //RobotMap.shootTemp.set(1);
       }
     }
