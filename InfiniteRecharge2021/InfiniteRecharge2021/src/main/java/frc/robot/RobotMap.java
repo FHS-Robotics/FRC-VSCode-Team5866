@@ -9,6 +9,24 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class RobotMap {
 
+    
+    //#region Motor Constants
+    private static final int c_leftFrontNum = 7;
+    private static final int c_leftMiddleNum = 8;
+    private static final int c_leftBacktNum = 9;
+    private static final int c_rightFrontNum = 5;
+    private static final int c_rightMiddleNum = 4;
+    private static final int c_rightBacktNum = 1;
+
+    private static final int c_skirtNum = 6;
+    private static final int c_stageOneNum = 3;
+    private static final int c_stageTowNum = 2;
+
+    private static final int c_shootLeftNum = 10;
+    private static final int c_shootRightNum = 11;
+    private static final int c_turretNum = 12;
+    //#endregion
+
     public static CANSparkMax m_leftBack;
     public static CANSparkMax m_leftMiddle;
     public static CANSparkMax m_leftFront;
@@ -20,6 +38,7 @@ public class RobotMap {
     public static SpeedControllerGroup m_right;
 
     public static DifferentialDrive m_drive;
+
 
     public static void init() {
         m_leftBack = new CANSparkMax(4, MotorType.kBrushless);

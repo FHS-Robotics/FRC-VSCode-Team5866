@@ -22,8 +22,8 @@ public class TeleOpDrive extends Command {
 
     @Override
     protected void execute() {
-        double xSpeed = -OI.m_driverControl.getRawAxis(1) * 0.5; 
-        double zRotation = OI.m_driverControl.getRawAxis(4) * 0.5;
+        double xSpeed = -OI.m_driverControl.getRawAxis(1) * 0.75; 
+        double zRotation = OI.m_driverControl.getRawAxis(4) * 0.75;
         
         //dead spot
         xSpeed = Math.abs(xSpeed) > 0.1 ? xSpeed : 0;
