@@ -12,11 +12,12 @@ public class TeleOpDrive extends Command {
    * Creates a new TeleOpDrive.1
    */
   public TeleOpDrive() {
+      requires(RobotMap.m_drive);
   }
 
     @Override
     protected void initialize() {
-        m_drive = RobotMap.m_drive;
+        m_drive = RobotMap.m_diffDrive;
         super.initialize();
     }
 

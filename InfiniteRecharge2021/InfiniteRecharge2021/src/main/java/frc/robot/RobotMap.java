@@ -1,11 +1,17 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Subsystems.DriveBase;
+import frc.robot.Subsystems.IntakeSystem;
+import frc.robot.Subsystems.Limelight;
+import frc.robot.Subsystems.PIDTurret;
+import frc.robot.Subsystems.Shooter;
 
 public class RobotMap {
 
@@ -20,7 +26,7 @@ public class RobotMap {
 
     private static final int c_skirtNum = 6;
     private static final int c_stageOneNum = 3;
-    private static final int c_stageTowNum = 2;
+    private static final int c_stageTwoNum = 2;
 
     private static final int c_shootLeftNum = 10;
     private static final int c_shootRightNum = 11;
@@ -37,7 +43,22 @@ public class RobotMap {
     public static SpeedControllerGroup m_left;
     public static SpeedControllerGroup m_right;
 
-    public static DifferentialDrive m_drive;
+    public static DifferentialDrive m_diffDrive;
+    public static DriveBase m_drive;
+
+    public static CANSparkMax in_skirt;
+    public static CANSparkMax in_stageOne;
+    public static CANSparkMax in_stageTwo;
+    public static IntakeSystem m_intake;
+
+    public static TalonFX shoot_right;
+    public static TalonFX shoot_left;
+    public static Shooter m_shooter;
+
+    public static CANSparkMax t_motor;
+    public static PIDTurret m_turret;
+
+    public static Limelight limeLight;
 
 
     public static void init() {
@@ -51,6 +72,22 @@ public class RobotMap {
         m_left = new SpeedControllerGroup(m_leftBack, m_leftMiddle, m_leftFront);
         m_right = new SpeedControllerGroup(m_rightBack, m_rightMiddle, m_rightFront);
 
-        m_drive = new DifferentialDrive(m_left, m_right);
+        m_diffDrive = new DifferentialDrive(m_left, m_right);
+        m_drive = new DriveBase(m_diffDrive);
+
+        in_skirt = new CANSparkMax(c_skirtNum, MotorType.kBrushless);
+        in_stageOne = new CANSparkMax(c_stageOneNum, MotorType.kBrushless);
+        in_stageTwo = new CANSparkMax(c_stageTwoNum, MotorType.kBrushless);
+        m_intake = new IntakeSystem(in_skirt, in_stageOne, in_stageTwo);
+
+        shoot_left = new TalonFX(c_shootLeftNum);
+        shoot_right = new TalonFX(c_shootRightNum);
+        m_shooter = new Shooter(shoot_left, shoot_right);
+
+        t_motor = new CANSparkMax(c_turretNum, MotorType.kBrushed);
+        m_turret = new PIDTurret(t_motor);
+        m_turret.enable();
+
+        limeLight = new Limelight();
     }
 }

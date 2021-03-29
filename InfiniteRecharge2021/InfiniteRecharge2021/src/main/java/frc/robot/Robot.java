@@ -33,10 +33,6 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-
-    TeleOpDrive teleOpDrive = new TeleOpDrive();
-    teleOpDrive.start();
-    
     Scheduler.getInstance().run();
   }
 
