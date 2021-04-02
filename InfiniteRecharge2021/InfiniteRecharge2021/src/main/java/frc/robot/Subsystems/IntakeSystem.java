@@ -4,7 +4,6 @@ import java.util.Hashtable;
 import java.util.TreeMap;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMax;
 
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.PWMSparkMax;
@@ -22,15 +21,29 @@ public class IntakeSystem {
         stageOne = _stageOne;
         stageTwo = _stageTwo;
 
-        speeds.put("skirt", 0.5);
-        speeds.put("stageOne", 1.0);
-        speeds.put("stageTwo", 1.0);
+        speeds = new Hashtable<>();
+        speeds.put("skirt", 0.25);
+        speeds.put("stageOne", -0.25);
+        speeds.put("stageTwo", -0.25);
     }
 
     public void intake(boolean direction) {
-        skirt.set(speeds.get("skirt"));
-        stageOne.set(speeds.get("stageOne"));
-        stageTwo.set(speeds.get("stageTwo"));
+        if(direction) {
+            skirt.set(speeds.get("skirt"));
+            stageOne.set(speeds.get("stageOne"));
+            stageTwo.set(speeds.get("stageTwo"));
+        }
+        else {
+            skirt.set(-speeds.get("skirt"));
+            stageOne.set(-speeds.get("stageOne"));
+            stageTwo.set(-speeds.get("stageTwo"));
+        }
+    }
+
+    public void release() {
+        skirt.set(0);
+        stageOne.set(0);
+        stageTwo.set(0);
     }
     
 }

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Commands.TeleOpDrive;
 
 /**
@@ -22,23 +24,38 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    oi = new OI();
     RobotMap.init();
+    oi = new OI();
   }
 
   @Override
   public void robotPeriodic() {
   }
 
+  @Override
+  public void autonomousInit() {
+    Command auto = oi.getAutonomousCommand();
+    auto.schedule();
+    CommandScheduler.getInstance().run();
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
+  }
+
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
     Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 }

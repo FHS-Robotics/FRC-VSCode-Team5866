@@ -16,7 +16,7 @@ public class PIDTurret extends PIDSubsystem{
     private double errorThreshold = 0.5; //Our threshold of error is +-1 degree
   
     public PIDTurret(CANSparkMax m) {
-      super(0.1, 0, 0.01);
+      super(0.01, .000, 0.015);
       setAbsoluteTolerance(errorThreshold);
 
       m_motor = m;
@@ -41,7 +41,7 @@ public class PIDTurret extends PIDSubsystem{
      * @return
      */
     public boolean onTarget() {
-      return Math.abs(returnPIDInput() - getSetpoint()) < errorThreshold;
+      return Math.abs(returnPIDInput() - getSetpoint()) < errorThreshold && RobotMap.limeLight.getArea() > 5;
     }
 
     //rotate motor
