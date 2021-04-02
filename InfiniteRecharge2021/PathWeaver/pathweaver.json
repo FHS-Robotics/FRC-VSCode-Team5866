@@ -4,6 +4,6 @@
   "maxVelocity": 3.0,
   "maxAcceleration": 3.0,
   "wheelBase": 0.6096,
-  "gameName": "Bounce Path",
+  "gameName": "Slalom Path",
   "outputDir": "../InfiniteRecharge2021/src/main/deploy/paths"
 }

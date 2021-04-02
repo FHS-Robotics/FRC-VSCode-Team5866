@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import frc.robot.Subsystems.DriveBase;
 import frc.robot.Subsystems.IntakeSystem;
 import frc.robot.Subsystems.Limelight;
+import frc.robot.Subsystems.PIDShooter;
 import frc.robot.Subsystems.PIDTurret;
 import frc.robot.Subsystems.Shooter;
 
@@ -79,6 +80,7 @@ public class RobotMap {
     public static TalonFX shoot_right;
     public static TalonFX shoot_left;
     public static Shooter m_shooter;
+    public static PIDShooter m_pidShooter;
 
     public static CANSparkMax t_motor;
     public static PIDTurret m_turret;
@@ -110,6 +112,8 @@ public class RobotMap {
         shoot_left = new TalonFX(c_shootLeftNum);
         shoot_right = new TalonFX(c_shootRightNum);
         m_shooter = new Shooter(shoot_left, shoot_right);
+        m_pidShooter = new PIDShooter();
+        m_pidShooter.enable();
 
         t_motor = new CANSparkMax(c_turretNum, MotorType.kBrushed);
         m_turret = new PIDTurret(t_motor);

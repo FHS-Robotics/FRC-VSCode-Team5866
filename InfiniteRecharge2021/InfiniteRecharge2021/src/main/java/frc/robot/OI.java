@@ -1,6 +1,12 @@
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 
 //import org.graalvm.compiler.lir.aarch64.AArch64AtomicMove.CompareAndSwapOp;
 
@@ -18,8 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Commands.ChangeShootSpeed;
 import frc.robot.Commands.Intake;
@@ -69,7 +77,7 @@ public class OI {
 
         autoChoice = new SendableChooser<>();
         autoChoice.setDefaultOption("none", "none");
-        autoChoice.addOption("BarrelRacing", "src\\main\\deploy\\paths\\BarrelRacing");
+        autoChoice.addOption("BarrelRacing", "src\\main\\deploy\\paths\\BarrelRacing.wpilib.json");
         autoChoice.addOption("BlueA", "src\\main\\deploy\\paths\\BlueA");
         autoChoice.addOption("BlueB", "src\\main\\deploy\\paths\\Blue");
         autoChoice.addOption("Bounce1", "src\\main\\deploy\\paths\\Bounce1");
@@ -96,21 +104,15 @@ public class OI {
    */
   public edu.wpi.first.wpilibj2.command.Command getAutonomousCommand() {
 
-    if(autoChoice.getSelected() == "none") {
-        return null;
-    }
-    String file = autoChoice.getSelected();
-
     // Create a voltage constraint to ensure we don't accelerate too fast
-    DifferentialDriveVoltageConstraint autoVoltageConstraint =
+    /*DifferentialDriveVoltageConstraint autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(RobotMap.ksVolts,
                                        RobotMap.kvVoltSecondsPerMeter,
                                        RobotMap.kaVoltSecondsSquaredPerMeter),
                                         RobotMap.kDriveKinematics,
                                         10);
-
-    // Create config for trajectory
+    //Create config for trajectory
     TrajectoryConfig config =
         new TrajectoryConfig(RobotMap.kMaxSpeedMetersPerSecond,
                              RobotMap.kMaxAccelerationMetersPerSecondSquared)
@@ -132,11 +134,59 @@ public class OI {
         new Pose2d(3, 0, new Rotation2d(0)),
         // Pass config
         config
-    );
+    );*/
     //return new SwitchLimelight();
 
-   RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
+    //create new list to store trajectories under
+    ArrayList<Trajectory> tlist = new ArrayList<>();
+    
+    if(autoChoice.getSelected() == "none") {
+        return null;
+    }
+    if(autoChoice.getSelected() == "bounce") {
+        //code to add multiple trajectories here
+    }
+    else {
+        String file = autoChoice.getSelected();
+        Trajectory trajectory = makeTrajectory(file); //make trajectory from selected option
+        tlist.add(trajectory);
+    }
+
+    //make a list of ramsete commands per each trajectory
+    CommandGroupBase group = new CommandGroupBase(){@Override
+        public void addCommands(edu.wpi.first.wpilibj2.command.Command... commands) {
+            for(Trajectory t : tlist) {
+                addCommands(makeRamseteCommand(t));
+            }
+        }};
+
+    // Reset odometry to the starting pose of the trajectory.
+    //now handled before each ramsete command that is run inherintely// RobotMap.m_drive.resetOdometry(tlist.get(0).getInitialPose());
+
+    // Run path following commands, then stop at the end.
+    return group.andThen(() -> RobotMap.m_drive.tankDriveVolts(0, 0));
+  }
+
+
+  public Trajectory makeTrajectory(String file) {
+    try {
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(file);
+        Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        return trajectory;
+     } catch (IOException ex) {
+        DriverStation.reportError("Unable to open trajectory: " + file, ex.getStackTrace());
+        return null;
+     }
+  }
+
+  /**
+   * makes a ramsete command and resets robot pose before starting
+   * @param trajectory
+   * @return
+   */
+  public RamseteCommand makeRamseteCommand(Trajectory trajectory) {
+    RamseteCommand ramseteCommand = new RamseteCommand(
+        trajectory,
         RobotMap.m_drive::getPose,
         new RamseteController(RobotMap.kRamseteB, RobotMap.kRamseteZeta),
         new SimpleMotorFeedforward(RobotMap.ksVolts,
@@ -150,11 +200,14 @@ public class OI {
         RobotMap.m_drive::tankDriveVolts,
         RobotMap.m_drive
     );
-
-    // Reset odometry to the starting pose of the trajectory.
-    RobotMap.m_drive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> RobotMap.m_drive.tankDriveVolts(0, 0));
+    
+    //reset robot pose to next pose before starting each path following command
+    ramseteCommand.beforeStarting(new Runnable(){
+        @Override
+        public void run() {
+            RobotMap.m_drive.resetOdometry(trajectory.getInitialPose());
+        }
+    }, RobotMap.m_drive);
+    return ramseteCommand;
   }
 }
