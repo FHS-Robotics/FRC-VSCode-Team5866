@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 public class Shooter extends Subsystem {
 
     public TalonFX m_left;
@@ -15,7 +16,7 @@ public class Shooter extends Subsystem {
     public double kv = 1.44; //volt seconds per meter.  When multiplied by m/s, it converts to volts. --> min volts requiret to maintain speed
     public double kp = 3.33;
     public double ka = 1.48;
-    public double kf = kv * 10 * 1023/12 * 6.28*0.0635 * 16.0/77.0 * 1.0/2048; //kv times 10deciseconds/second times 2*pi*r times 16/77 gear ratio times 1 input rotation/2048 native units
+    public double kf = kv * 10 * 1023/12 * 6.28*0.0635 * 8.0/77.0 * 1.0/2048; //kv times 10deciseconds/second times 2*pi*r times 16/77 gear ratio times 1 input rotation/2048 native units
     //1 m/s
     //15.748 rad/s
     //2.51 rps
@@ -26,16 +27,16 @@ public class Shooter extends Subsystem {
     //1 rpm = 0.399 m/m
     //falcon native units = 2048u/1rot
     double rotationspermeter = 2.51; //rotation of flywheel per meter
-    double gearFlyWheelPerMotor = 16/77; //16 flywheel rotations per 77 motor rotations
-    double gearMotorPerFlyWheel = 77/16;
-    double nativeUnitPerRotation = 2048;
+    double gearFlyWheelPerMotor = 18.0/77.0; //16 flywheel rotations per 77 motor rotations
+    double gearMotorPerFlyWheel = 77.0/18.0;
+    double nativeUnitPerRotation = 2048.0;
 
     //values for shoot forward and backward
     //public double shootForward = 0.5;
     //public double shootBackward = -0.25;
 
         //values for shoot forward and backward in meters per second
-        public double shootForward = 5;
+        public double shootForward = 5.0;
         public double shootBackward = -2.5;
 
     public Shooter(TalonFX left, TalonFX right) {
@@ -73,8 +74,12 @@ public class Shooter extends Subsystem {
         m_right.set(ControlMode.Velocity, 1000 * 2048/600); //speed in rpm    
         m_right.set(ControlMode.PercentOutput, DemandType.ArbitraryFeedForward, , demand1);*/
         //System.out.println((forward.calculate(shootForward) * 1023)/12);
-        m_left.set(ControlMode.Velocity, mpsToNativeUnits(shootForward));
-        m_right.set(ControlMode.Velocity, mpsToNativeUnits(shootForward));
+        //m_left.set(ControlMode.Velocity, mpsToNativeUnits(shootForward));
+        //m_right.set(ControlMode.Velocity, mpsToNativeUnits(shootForward));
+        m_left.set(ControlMode.Velocity, mpsToNativeUnits(RobotMap.m_pidShooter.shootSpeed));
+        m_right.set(ControlMode.Velocity, mpsToNativeUnits(RobotMap.m_pidShooter.shootSpeed));
+        //System.out.println(m_left.getSelectedSensorVelocity());
+        //System.out.println();
     }
  
     /**

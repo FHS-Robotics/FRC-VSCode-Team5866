@@ -30,10 +30,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+
   }
 
   @Override
   public void autonomousInit() {
+    TeleOpDrive.isAuto = true;
     Command auto = oi.getAutonomousCommand();
     auto.schedule();
     CommandScheduler.getInstance().run();
@@ -48,8 +50,10 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    TeleOpDrive.isAuto = false;
     Scheduler.getInstance().run();
     CommandScheduler.getInstance().run();
+    System.out.println("start");
   }
 
   /** This function is called periodically during operator control. */
@@ -59,3 +63,4 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
   }
 }
+

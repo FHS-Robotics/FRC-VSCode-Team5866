@@ -28,10 +28,10 @@ public class ChangeShootSpeed extends Command {
         double value = -OI.m_gunnerControl.getRawAxis(5) / 50.0;
         m_shooter.shootForward += value;
 
-        if(m_shooter.shootForward > 1)
+        /*if(m_shooter.shootForward > 1)
             m_shooter.shootForward = 1;
         else if (m_shooter.shootForward < -1)
-            m_shooter.shootForward = -1;
+            m_shooter.shootForward = -1;*/
 
         tableEntry.setNumber(RobotMap.m_shooter.shootForward);
         System.out.println("shooting value changed to" + RobotMap.m_shooter.shootForward);

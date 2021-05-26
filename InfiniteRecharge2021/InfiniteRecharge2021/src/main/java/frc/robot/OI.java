@@ -14,12 +14,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -30,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Commands.ChangeShootSpeed;
+import frc.robot.Commands.Elevate;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.Shoot;
 import frc.robot.Commands.SwitchLimelight;
@@ -72,16 +76,24 @@ public class OI {
     public static JoystickButton intakeBackward;
     public static JoystickButton turretLock;
     public static JoystickButton changeShootSpeed;
+    public static POVButton elevatorRaise;
+    public static POVButton elevatorLower;
 
     public OI() {
 
         autoChoice = new SendableChooser<>();
-        autoChoice.setDefaultOption("none", "none");
-        autoChoice.addOption("BarrelRacing", "src\\main\\deploy\\paths\\BarrelRacing.wpilib.json");
-        autoChoice.addOption("BlueA", "src\\main\\deploy\\paths\\BlueA");
-        autoChoice.addOption("BlueB", "src\\main\\deploy\\paths\\Blue");
-        autoChoice.addOption("Bounce1", "src\\main\\deploy\\paths\\Bounce1");
+        Shuffleboard.getTab("Bridge")
+            .add("Auto mode", autoChoice)
+            .withWidget(BuiltInWidgets.kComboBoxChooser);
 
+        autoChoice.setDefaultOption("none", "none");
+        autoChoice.addOption("BarrelRacing", "paths/output/BarrelRacing.wpilib.json");
+        autoChoice.addOption("BlueA", "src\\main\\deploy\\paths\\BlueA.wpilib.json");
+        autoChoice.addOption("BlueB", "src\\main\\deploy\\paths\\BlueB.wpilib.json");
+        autoChoice.addOption("Bounce", "src\\main\\deploy\\paths\\Bounce1.wpilib.json");
+        autoChoice.addOption("RedA", "src\\main\\deploy\\paths\\RedA.wpilib.json");
+        autoChoice.addOption("RedB", "src\\main\\deploy\\paths\\RedB.wpilib.json");
+        autoChoice.addOption("Salom", "src\\main\\deploy\\paths\\Slalom.wpilib.json");
 
         shootForward = new JoystickButton(m_gunnerControl, c_x);
         shootBackward = new JoystickButton(m_gunnerControl, c_y);
@@ -89,11 +101,17 @@ public class OI {
         intakeBackward = new JoystickButton(m_gunnerControl, c_b);
         changeShootSpeed = new JoystickButton(m_gunnerControl, c_rightThumb);
 
+        elevatorRaise = new POVButton(m_gunnerControl, 0);
+        elevatorLower = new POVButton(m_gunnerControl, 180);
+
         shootForward.whileHeld(new Shoot(true));
         shootBackward.whileHeld(new Shoot(false));
         intakeForward.whileHeld(new Intake(true));
         intakeBackward.whileHeld(new Intake(false));
         changeShootSpeed.whileHeld(new ChangeShootSpeed());
+
+        elevatorRaise.whileHeld(new Elevate(true));
+        elevatorLower.whileHeld(new Elevate(false));
     }
 
 
@@ -143,8 +161,12 @@ public class OI {
     if(autoChoice.getSelected() == "none") {
         return null;
     }
-    if(autoChoice.getSelected() == "bounce") {
+    if(autoChoice.getSelected() == "src\\main\\deploy\\paths\\Bounce1") {
         //code to add multiple trajectories here
+        tlist.add(makeTrajectory("src\\main\\deploy\\paths\\Bounce1"));
+        tlist.add(makeTrajectory("src\\main\\deploy\\paths\\Bounce2"));
+        tlist.add(makeTrajectory("src\\main\\deploy\\paths\\Bounce3"));
+        tlist.add(makeTrajectory("src\\main\\deploy\\paths\\Bounce4"));
     }
     else {
         String file = autoChoice.getSelected();

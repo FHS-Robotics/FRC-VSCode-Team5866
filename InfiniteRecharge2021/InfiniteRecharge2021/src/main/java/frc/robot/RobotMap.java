@@ -7,9 +7,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import frc.robot.Subsystems.DriveBase;
+import frc.robot.Subsystems.Elevator;
 import frc.robot.Subsystems.IntakeSystem;
 import frc.robot.Subsystems.Limelight;
 import frc.robot.Subsystems.PIDShooter;
@@ -34,18 +36,20 @@ public class RobotMap {
     private static final int c_shootLeftNum = 10;
     private static final int c_shootRightNum = 11;
     private static final int c_turretNum = 12;
+    private static final int c_elevatorLeft = 13;
+    public static final int c_elevatorRight = 14;
 
-    public static final double ksVolts = 0.22; ////////
-    public static final double kvVoltSecondsPerMeter = 1.98; ////////
-    public static final double kaVoltSecondsSquaredPerMeter = 0.2; ///////
+    public static final double ksVolts = 0.327;
+    public static final double kvVoltSecondsPerMeter = 1.15;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.0947;
  
     public static final double kEncoderDistancePerPulse = 0.5; ///////
     public static final double kEncoderVelocityPerRPM = 0.5; ///////
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 8.5; ///////
+    public static final double kPDriveVel = 2.18; ///////
 
-    public static final double kTrackwidthMeters = 0.69; ///////
+    public static final double kTrackwidthMeters = 157.561;//0.69; ///////
     public static final DifferentialDriveKinematics kDriveKinematics =
     new DifferentialDriveKinematics(kTrackwidthMeters);
 
@@ -85,11 +89,16 @@ public class RobotMap {
     public static CANSparkMax t_motor;
     public static PIDTurret m_turret;
 
+    public static TalonFX e_left;
+    public static TalonFX e_right;
+    public static Elevator m_elevator;
+
     public static Limelight limeLight;    
 
 
     public static void init() {
         m_gyro = new AHRS();
+        m_gyro.reset();
         
         m_leftBack = new CANSparkMax(c_leftBacktNum, MotorType.kBrushless);
         m_leftMiddle = new CANSparkMax(c_leftMiddleNum, MotorType.kBrushless);
@@ -118,6 +127,10 @@ public class RobotMap {
         t_motor = new CANSparkMax(c_turretNum, MotorType.kBrushed);
         m_turret = new PIDTurret(t_motor);
         m_turret.enable();
+
+        e_left = new TalonFX(c_elevatorLeft);
+        e_right = new TalonFX(c_elevatorRight);
+        m_elevator = new Elevator(e_left, e_right);
 
         limeLight = new Limelight();
     }

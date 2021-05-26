@@ -1,4 +1,5 @@
 package frc.robot.Commands;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -9,6 +10,7 @@ import frc.robot.Subsystems.DriveBase;
 public class TeleOpDrive extends CommandBase {
 
     DriveBase m_drive;
+    public static Boolean isAuto  = false;
 
     /**
      * Creates a new TeleOpDrive.1
@@ -31,7 +33,8 @@ public class TeleOpDrive extends CommandBase {
         xSpeed = Math.abs(xSpeed) > 0.1 ? xSpeed : 0;
         zRotation = Math.abs(zRotation) > 0.1 ? zRotation : 0;
 
-        m_drive.arcadeDrive(xSpeed, zRotation);
+        if(!isAuto)
+            m_drive.arcadeDrive(xSpeed, zRotation);
     }
 
     @Override
