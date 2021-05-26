@@ -1,0 +1,9 @@
+{
+  "lengthUnit": "Meter",
+  "exportUnit": "Always Meters",
+  "maxVelocity": 3.0,
+  "maxAcceleration": 3.0,
+  "wheelBase": 0.6096,
+  "gameName": "Slalom Path",
+  "outputDir": "../InfiniteRecharge2021/src/main/deploy/paths"
+}
