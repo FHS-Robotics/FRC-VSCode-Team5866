@@ -4,16 +4,16 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.TankDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class TeleOpDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final SwerveDrive m_swerveDrive;
+  private final TankDrive m_tankDrive;
 
-  public TeleOpDrive(SwerveDrive swerveDrive) {
-    m_swerveDrive = swerveDrive;
+  public TeleOpDrive(TankDrive swerveDrive) {
+    m_tankDrive = swerveDrive;
     addRequirements(swerveDrive);
   }
 

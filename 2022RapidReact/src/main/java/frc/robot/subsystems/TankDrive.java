@@ -6,9 +6,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SwerveDrive extends SubsystemBase {
+public class TankDrive extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  public SwerveDrive() {}
+  public TankDrive() {}
 
   @Override
   public void periodic() {
