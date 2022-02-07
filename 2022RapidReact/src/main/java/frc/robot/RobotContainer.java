@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final TankDrive m_swerveDrive = new TankDrive();
+  private final TankDrive m_tankDrive = new TankDrive();
 
-  private final TeleOpDrive m_teleOpDrive = new TeleOpDrive(m_swerveDrive);
+  private final TeleOpDrive m_teleOpDrive = new TeleOpDrive(m_tankDrive);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

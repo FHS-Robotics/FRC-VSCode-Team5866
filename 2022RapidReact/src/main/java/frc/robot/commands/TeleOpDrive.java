@@ -12,9 +12,9 @@ public class TeleOpDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final TankDrive m_tankDrive;
 
-  public TeleOpDrive(TankDrive swerveDrive) {
-    m_tankDrive = swerveDrive;
-    addRequirements(swerveDrive);
+  public TeleOpDrive(TankDrive tankDrive) {
+    m_tankDrive = tankDrive;
+    addRequirements(tankDrive);
   }
 
   @Override
