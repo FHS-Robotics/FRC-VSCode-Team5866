@@ -7,7 +7,7 @@ package frc.robot.commands;
 import frc.robot.subsystems.SwerveDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** A command that runs during Tele-Op period. */
+
 public class TeleOpDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final SwerveDrive m_swerveDrive;
