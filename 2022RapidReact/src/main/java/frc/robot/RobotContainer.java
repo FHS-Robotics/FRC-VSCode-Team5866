@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.subsystems.TankDrive;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final TankDrive m_tankDrive = new TankDrive();
+  private final TankDrive m_tankDrive = new TankDrive(new Talon(0), new Talon(1), new Talon(2), new Talon(3));
 
   private final TeleOpDrive m_teleOpDrive = new TeleOpDrive(m_tankDrive);
 

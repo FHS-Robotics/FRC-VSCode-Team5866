@@ -4,19 +4,23 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TankDrive extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public TankDrive() {}
+  private SpeedControllerGroup m_left;
+  private SpeedControllerGroup m_right;
+  private DifferentialDrive m_drive;
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public TankDrive(SpeedController frontLeft, SpeedController frontRight, SpeedController middleLeft, SpeedController middleRight) {
+    m_left = new SpeedControllerGroup(frontLeft, middleLeft);
+    m_right = new SpeedControllerGroup(frontRight, middleRight);
+    m_drive = new DifferentialDrive(m_left, m_right);
   }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
+  public void setSpeed(double left, double right) {
+    m_drive.tankDrive(left, right);
   }
 }
