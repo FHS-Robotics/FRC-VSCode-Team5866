@@ -32,5 +32,6 @@ public final class RobotMap {
         // double maxVelocityY = 100; // speed of strafe
         // double maxVelocityX = 50; // forward speed
         m_drive.setMaxOutput(.5);
+        m_drive.setDeadband(0.05);
     }
 }

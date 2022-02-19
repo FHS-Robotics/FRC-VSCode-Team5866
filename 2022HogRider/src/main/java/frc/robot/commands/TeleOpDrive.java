@@ -33,10 +33,6 @@ public class TeleOpDrive extends CommandBase {
         double xSpeed = OI.driverStick.getRawAxis(1) *0.5;
         double zRotation = OI.driverStick.getRawAxis(4) *0.5;
 
-        //dead spot
-        xSpeed = Math.abs(xSpeed) > 0.1 ? xSpeed : 0;
-        zRotation = Math.abs(xSpeed) > 0.1 ? zRotation : 0;
-
         m_drive.arcadeDrive(xSpeed, zRotation);
 
         // Intake controls
