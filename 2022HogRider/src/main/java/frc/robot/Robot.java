@@ -81,7 +81,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {
+  public void teleopExit() {
     RobotMap.m_teleOpDrive.end(false);
   }
 
