@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase {
 
     public void moveArm(boolean forward, double amount) {
         double trueAmount = forward ? (m_goingForward ? amount : 0) : (m_goingForward ? 0 : -amount);
-        // m_arm.set(trueAmount);
+        m_arm.set(trueAmount);
         System.out.println("The true amount is " + trueAmount);
         SmartDashboard.putNumber("true-amount", trueAmount);
     }
