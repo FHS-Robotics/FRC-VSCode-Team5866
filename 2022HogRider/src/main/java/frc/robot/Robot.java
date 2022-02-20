@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     SmartDashboard.putNumber("amount", 0.2);
+    SmartDashboard.putNumber("intake_amount", 0.2);
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
@@ -121,6 +122,15 @@ public class Robot extends TimedRobot {
       RobotMap.m_arm.moveArm(false, amount);
     } else {
       RobotMap.m_arm.stopArm();
+    }
+    
+    double intake_amount = SmartDashboard.getNumber("intake_amount", 0.2);
+    if (OI.driverController.getAButton()) {
+      RobotMap.m_intake.set(intake_amount);
+    } else if (OI.driverController.getBButton()) {
+      RobotMap.m_intake.set(-intake_amount);
+    } else {
+      RobotMap.m_intake.set(0);
     }
   }
 }
