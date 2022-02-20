@@ -17,8 +17,8 @@ public final class RobotMap {
     public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(0);
     public static WPI_TalonFX m_frontRight = new WPI_TalonFX(1);
 
-    public static Arm m_arm = new Arm(new CANSparkMax(4, MotorType.kBrushless));
-    public static IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(5, MotorType.kBrushless));
+    public static IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(4, MotorType.kBrushless));
+    public static Arm m_arm = new Arm(new CANSparkMax(5, MotorType.kBrushless));
 
     public static MotorControllerGroup m_left = new MotorControllerGroup(m_backLeft, m_frontLeft);
     public static MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_frontRight);

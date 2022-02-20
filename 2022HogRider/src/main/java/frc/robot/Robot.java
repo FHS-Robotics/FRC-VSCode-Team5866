@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,10 +47,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
+    SmartDashboard.putNumber("amount", 0.2);
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
+  }
+
+  @Override
+  public void robotPeriodic() {
+    RobotMap.m_arm.periodic();
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is run once each time the robot enters autonomous mode. */
@@ -106,28 +114,13 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-
-    // Arm Controls
-    if (armUp) {
-      if (Timer.getFPGATimestamp() - lastBurstTime < armTimeUp) {
-        RobotMap.m_arm.set(armTravel);
-      } else {
-        RobotMap.m_arm.set(armHoldUp);
-      }
+    double amount = SmartDashboard.getNumber("amount", 0.2);
+    if (OI.gunnerController.getAButton()) {
+      RobotMap.m_arm.moveArm(true, amount);
+    } else if (OI.gunnerController.getBButton()) {
+      RobotMap.m_arm.moveArm(false, amount);
     } else {
-      if (Timer.getFPGATimestamp() - lastBurstTime < armTimeDown) {
-        RobotMap.m_arm.set(-armTravel);
-      } else {
-        RobotMap.m_arm.set(-armHoldDown);
-      }
-    }
-
-    if (OI.gunnerController.getAButton() && !armUp) {
-      lastBurstTime = Timer.getFPGATimestamp();
-      armUp = true;
-    } else if (OI.gunnerController.getBButton() && armUp) {
-      lastBurstTime = Timer.getFPGATimestamp();
-      armUp = false;
+      RobotMap.m_arm.stopArm();
     }
   }
 }
