@@ -5,8 +5,8 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Values;
 
 /**
  * Arm
@@ -29,7 +29,7 @@ public class Arm extends SubsystemBase {
         // double trueAmount = forward ? (m_goingForward ? amount : 0) : (m_goingForward ? 0 : -amount);
         m_arm.set(trueAmount);
         System.out.println("Driving Arm Motor at " + trueAmount);
-        SmartDashboard.putNumber("arm-motor-set", trueAmount);
+        Values.PUT_ARM_MOVE(trueAmount);
     }
 
     public void stopArm() {
@@ -38,8 +38,7 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Arm.periodic() m_counter.get(): ",
-        m_counter.get());
+        Values.PUT_ARM_PERIODIC(m_counter.get());
         m_position += m_goingForward ? m_counter.get() : -m_counter.get();
         m_goingForward = m_position <= 90;
     }
