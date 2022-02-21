@@ -28,9 +28,6 @@ public final class RobotMap {
     public static TeleOpDrive m_teleOpDrive = new TeleOpDrive(OI.driverController, m_intake);
 
     static {
-        // TODO: Have max velocity configured in code.
-        // double maxVelocityY = 100; // speed of strafe
-        // double maxVelocityX = 50; // forward speed
         m_drive.setMaxOutput(.5);
         m_drive.setDeadband(0.05);
     }
