@@ -15,6 +15,9 @@ public class IntakeSystem extends SubsystemBase {
     }
 
     public void set(double percent) {
+        if (percent != 0.1 && percent != 0) {
+            System.out.println("Intake System setting: " + percent);
+        }
         m_intake.set(percent);
     }
 }

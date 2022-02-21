@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -10,19 +13,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Arm extends SubsystemBase {
     private final CANSparkMax m_arm;
-    // private final Counter m_counter = new Counter(new DigitalInput(0));
-    // private int m_position;
+    private final RelativeEncoder m_encoder;
+    private final Counter m_counter;
+    private int m_position;
     private boolean m_goingForward;
 
-    public Arm(CANSparkMax arm) {
+    public Arm(CANSparkMax arm, int encoderChanel) {
         m_arm = arm;
+        m_encoder = m_arm.getEncoder();
+        m_counter = new Counter(new DigitalInput(encoderChanel));
     }
 
-    public void moveArm(boolean forward, double amount) {
-        double trueAmount = forward ? (m_goingForward ? amount : 0) : (m_goingForward ? 0 : -amount);
+    public void moveArm(boolean upwards, double amount) {
+        double trueAmount = amount * (upwards ? -amount : amount);
+        // double trueAmount = forward ? (m_goingForward ? amount : 0) : (m_goingForward ? 0 : -amount);
         m_arm.set(trueAmount);
-        System.out.println("The true amount is " + trueAmount);
-        SmartDashboard.putNumber("true-amount", trueAmount);
+        System.out.println("Driving Arm Motor at " + trueAmount);
+        SmartDashboard.putNumber("arm-motor-set", trueAmount);
     }
 
     public void stopArm() {
@@ -31,9 +38,9 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // SmartDashboard.putNumber("Arm.periodic() m_counter.get(): ",
-        // m_counter.get());
-        // m_position += m_goingForward ? m_counter.get() : -m_counter.get();
-        // m_goingForward = m_position <= 90;
+        SmartDashboard.putNumber("Arm.periodic() m_counter.get(): ",
+        m_counter.get());
+        m_position += m_goingForward ? m_counter.get() : -m_counter.get();
+        m_goingForward = m_position <= 90;
     }
 }
