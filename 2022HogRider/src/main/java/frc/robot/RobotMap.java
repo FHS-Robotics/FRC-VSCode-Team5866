@@ -10,22 +10,31 @@ import frc.robot.commands.TeleOpDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.IntakeSystem;
 
-public final class RobotMap {
 
+/**
+ * This class makes all of the parts and subsystems that make up the
+ * robot accessible throughout the code.
+ */
+public final class RobotMap {
+    // TODO: Should these really be public?
     public static WPI_TalonFX m_backLeft = new WPI_TalonFX(2);
     public static WPI_TalonFX m_backRight = new WPI_TalonFX(3);
     public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(0);
     public static WPI_TalonFX m_frontRight = new WPI_TalonFX(1);
-
-    public static IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(4, MotorType.kBrushed));
-    public static Arm m_arm = new Arm(new CANSparkMax(5, MotorType.kBrushless), 0);
 
     public static MotorControllerGroup m_left = new MotorControllerGroup(m_backLeft, m_frontLeft);
     public static MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_frontRight);
 
     public static DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
+    // region Subsystems
+    public static IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(4, MotorType.kBrushed));
+    public static Arm m_arm = new Arm(new CANSparkMax(5, MotorType.kBrushless), 0);
+    // endregion
+
+    // region Commands
     public static TeleOpDrive m_teleOpDrive = new TeleOpDrive(OI.driverController, m_intake);
+    // endregion
 
     static {
         m_drive.setMaxOutput(.5);

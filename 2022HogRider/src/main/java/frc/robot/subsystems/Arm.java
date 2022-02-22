@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Values;
 
 /**
- * Arm
+ * Runs the robot's arm.
  */
 public final class Arm extends SubsystemBase {
     private final CANSparkMax m_arm;

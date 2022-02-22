@@ -22,6 +22,7 @@ public final class Robot extends TimedRobot {
 
   // Constants for controlling the arm. consider tuning these for your particular
   // robot
+  // TODO: Clean up Robot.java
   final double armHoldUp = 0.08;
   final double armHoldDown = 0.13;
   final double armTravel = 0.5;
@@ -40,16 +41,10 @@ public final class Robot extends TimedRobot {
   public static final int c_driveForwardAxis = 1;
   public static final int c_driveRotateAxis = 0;
 
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
+  // region general
   @Override
   public void robotInit() {
     Values.init();
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
   }
 
   @Override
@@ -57,8 +52,9 @@ public final class Robot extends TimedRobot {
     RobotMap.m_arm.periodic();
     CommandScheduler.getInstance().run();
   }
+  // endregion
 
-  /** This function is run once each time the robot enters autonomous mode. */
+  // region autonomous
   @Override
   public void autonomousInit() {
     RobotMap.m_frontLeft.setInverted(false);
@@ -73,15 +69,16 @@ public final class Robot extends TimedRobot {
     m_timer.start();
   }
 
-  /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // Drive for 2 seconds
   }
 
-  /**
-   * This function is called once each time the robot enters teleoperated mode.
-   */
+  @Override
+  public void autonomousExit() {
+  }
+  // endregion
+
+  // region teleop
   @Override
   public void teleopInit() {
     RobotMap.m_teleOpDrive.schedule();
@@ -92,7 +89,6 @@ public final class Robot extends TimedRobot {
     RobotMap.m_teleOpDrive.end(false);
   }
 
-  /** This function is called periodically during teleoperated mode. */
   @Override
   public void teleopPeriodic() {
     RobotMap.m_frontLeft.setInverted(false);
@@ -104,15 +100,19 @@ public final class Robot extends TimedRobot {
     RobotMap.m_backRight.setInverted(true);
     RobotMap.m_backRight.setSelectedSensorPosition(0);
   }
+  // endregion
 
-  /** This function is called once each time the robot enters test mode. */
+  // region test
   @Override
   public void testInit() {
   }
 
-  /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    
   }
+
+  @Override
+  public void testExit() {
+  }
+  // endregion
 }

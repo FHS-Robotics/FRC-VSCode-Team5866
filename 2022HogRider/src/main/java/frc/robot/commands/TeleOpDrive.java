@@ -8,16 +8,16 @@ import frc.robot.Values;
 import frc.robot.subsystems.IntakeSystem;
 import frc.robot.OI;
 
+/**
+ * This command should run during and only during teleop.
+ * It connects controller input to the intake, drive and arm of the robot.
+ */
 public final class TeleOpDrive extends CommandBase {
 
     IntakeSystem m_intakeSystem;
-
     DifferentialDrive m_drive;
     XboxController m_driverControl;
 
-    /**
-     * Creates a new TeleOpDrive.1
-     */
     public TeleOpDrive(XboxController driverController, IntakeSystem intakeSystem) {
         m_driverControl = driverController;
         m_intakeSystem = intakeSystem;

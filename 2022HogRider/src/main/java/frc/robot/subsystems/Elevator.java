@@ -4,6 +4,9 @@ import com.revrobotics.CANSparkMax;
 
 import frc.robot.Values;
 
+/**
+ * Controls the elevator on the robot.
+ */
 public final class Elevator { 
     private final CANSparkMax m_motor;
 
