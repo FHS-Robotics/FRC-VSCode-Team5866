@@ -37,9 +37,9 @@ public class TeleOpDrive extends CommandBase {
         m_drive.arcadeDrive(xSpeed, zRotation);
 
         if (OI.driverController.getAButton()) {
-          RobotMap.m_arm.moveArm(true, Values.INTAKE_SPEED());
+          RobotMap.m_arm.moveArm(true, Values.ARM_SPEED());
         } else if (OI.driverController.getBButton()) {
-          RobotMap.m_arm.moveArm(false, Values.INTAKE_SPEED());
+          RobotMap.m_arm.moveArm(false, Values.ARM_SPEED());
         } else {
           RobotMap.m_arm.stopArm();
         }

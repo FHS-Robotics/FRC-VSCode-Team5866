@@ -12,7 +12,7 @@ public final class Values {
         return SmartDashboard.getNumber("intake_speed", 0.3);
     }
 
-    public static double ARN_SPEED() {
+    public static double ARM_SPEED() {
         return SmartDashboard.getNumber("arm_speed", 1);
     }
 

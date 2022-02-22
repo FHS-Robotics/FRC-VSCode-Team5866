@@ -29,6 +29,6 @@ public final class RobotMap {
 
     static {
         m_drive.setMaxOutput(.5);
-        m_drive.setDeadband(0.05);
+        m_drive.setDeadband(0.5);
     }
 }
