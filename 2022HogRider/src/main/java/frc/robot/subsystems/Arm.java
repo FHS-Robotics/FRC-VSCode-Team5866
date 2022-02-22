@@ -11,7 +11,7 @@ import frc.robot.Values;
 /**
  * Arm
  */
-public class Arm extends SubsystemBase {
+public final class Arm extends SubsystemBase {
     private final CANSparkMax m_arm;
     // private final RelativeEncoder m_encoder;
     private final Counter m_counter;

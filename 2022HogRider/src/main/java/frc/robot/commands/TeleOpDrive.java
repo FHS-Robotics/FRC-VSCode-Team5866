@@ -8,7 +8,7 @@ import frc.robot.Values;
 import frc.robot.subsystems.IntakeSystem;
 import frc.robot.OI;
 
-public class TeleOpDrive extends CommandBase {
+public final class TeleOpDrive extends CommandBase {
 
     IntakeSystem m_intakeSystem;
 

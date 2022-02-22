@@ -4,7 +4,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
-public class OI {
+public final class OI {
     public static XboxController driverController = new XboxController(0);
     public static XboxController gunnerController = new XboxController(1);
 

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * directory.
  */
 
-public class Robot extends TimedRobot {
+public final class Robot extends TimedRobot {
 
   private final Timer m_timer = new Timer();
 

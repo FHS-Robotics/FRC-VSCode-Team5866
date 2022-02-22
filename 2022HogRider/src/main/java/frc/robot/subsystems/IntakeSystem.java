@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 /**
  * IntakeSystem
  */
-public class IntakeSystem extends SubsystemBase {
+public final class IntakeSystem extends SubsystemBase {
     private final CANSparkMax m_intake;
 
     public IntakeSystem(CANSparkMax intake) {
