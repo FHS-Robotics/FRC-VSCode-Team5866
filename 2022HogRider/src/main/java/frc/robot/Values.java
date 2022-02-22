@@ -6,6 +6,7 @@ public final class Values {
     public static void init() {
         SmartDashboard.putNumber("intake_speed", 0.3);
         SmartDashboard.putNumber("arm_speed", 1);
+        SmartDashboard.putNumber("elevator_speed", 1);
     }
 
     public static double INTAKE_SPEED() {
@@ -14,6 +15,10 @@ public final class Values {
 
     public static double ARM_SPEED() {
         return SmartDashboard.getNumber("arm_speed", 1);
+    }
+
+    public static double ELEVATOR_SPEED() {
+        return SmartDashboard.getNumber("elevator_speed", 1);
     }
 
     public static void PUT_ARM_MOVE(double trueAmount) {
