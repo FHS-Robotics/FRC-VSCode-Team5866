@@ -15,36 +15,36 @@ import frc.robot.OI;
  * It connects controller input to the intake, drive and arm of the robot.
  */
 public final class TeleOpDrive<TMotor extends MotorController & IMotorController> extends CommandBase {
-    IntakeSystem m_intakeSystem;
-    Drive<TMotor> m_drive;
+      IntakeSystem m_intakeSystem;
+      Drive<TMotor> m_drive;
 
-    public TeleOpDrive(IntakeSystem intakeSystem, Drive<TMotor> drive) {
-        m_intakeSystem = intakeSystem;
-        m_drive = drive;
-        addRequirements(intakeSystem, drive);
-    }
+      public TeleOpDrive(IntakeSystem intakeSystem, Drive<TMotor> drive) {
+            m_intakeSystem = intakeSystem;
+            m_drive = drive;
+            addRequirements(intakeSystem, drive);
+      }
 
-    @Override
-    public void execute() {
-        double xSpeed = OI.driverController.getLeftY();
-        double zRotation = OI.driverController.getRightX();
+      @Override
+      public void execute() {
+            double xSpeed = OI.driverController.getLeftY();
+            double zRotation = OI.driverController.getRightX();
 
-        m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
+            m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
 
-        if (OI.driverController.getAButton()) {
-          RobotMap.m_arm.moveArm(true, Values.ARM_SPEED());
-        } else if (OI.driverController.getBButton()) {
-          RobotMap.m_arm.moveArm(false, Values.ARM_SPEED());
-        } else {
-          RobotMap.m_arm.stopArm();
-        }
+            if (OI.driverController.getAButton()) {
+                  RobotMap.m_arm.moveArm(true, Values.ARM_SPEED());
+            } else if (OI.driverController.getBButton()) {
+                  RobotMap.m_arm.moveArm(false, Values.ARM_SPEED());
+            } else {
+                  RobotMap.m_arm.stopArm();
+            }
 
-        if (OI.gunnerController.getAButton()) {
-            RobotMap.m_intake.set(Values.INTAKE_SPEED());
-        } else if (OI.gunnerController.getBButton()) {
-            RobotMap.m_intake.set(-Values.INTAKE_SPEED());
-        } else {
-            RobotMap.m_intake.set(0);
-        }
-    }
+            if (OI.gunnerController.getAButton()) {
+                  RobotMap.m_intake.set(Values.INTAKE_SPEED());
+            } else if (OI.gunnerController.getBButton()) {
+                  RobotMap.m_intake.set(-Values.INTAKE_SPEED());
+            } else {
+                  RobotMap.m_intake.set(0);
+            }
+      }
 }

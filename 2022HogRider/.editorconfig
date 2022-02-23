@@ -1,0 +1,12 @@
+# EditorConfig is awesome: https://EditorConfig.org
+root = true
+
+[*]
+end_of_line = crlf
+insert_final_newline = true
+
+# 6-Space indents FTW
+[src/*.java]
+charset = utf-8
+indent_style = space
+indent_size = 6

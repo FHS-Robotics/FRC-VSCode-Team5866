@@ -12,17 +12,17 @@ import frc.robot.subsystems.IntakeSystem;
  * It performs automated movement and point scoring
  */
 public final class AutonomousDrive<TMotor extends MotorController & IMotorController> extends CommandBase {
-    IntakeSystem m_intakeSystem;
-    Drive<TMotor> m_drive;
+      IntakeSystem m_intakeSystem;
+      Drive<TMotor> m_drive;
 
-    public AutonomousDrive(IntakeSystem intakeSystem, Drive<TMotor> drive) {
-        m_intakeSystem = intakeSystem;
-        m_drive = drive;
-        addRequirements(intakeSystem, drive);
-    }
+      public AutonomousDrive(IntakeSystem intakeSystem, Drive<TMotor> drive) {
+            m_intakeSystem = intakeSystem;
+            m_drive = drive;
+            addRequirements(intakeSystem, drive);
+      }
 
-    @Override
-    public void initialize() {
-        m_drive.prepareForAutonomous();
-    }
+      @Override
+      public void initialize() {
+            m_drive.prepareForAutonomous();
+      }
 }

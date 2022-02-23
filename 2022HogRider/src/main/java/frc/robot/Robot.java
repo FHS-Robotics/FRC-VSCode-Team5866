@@ -17,61 +17,61 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public final class Robot extends TimedRobot {
 
-  // region general
-  @Override
-  public void robotInit() {
-    Values.init();
-  }
+      // region general
+      @Override
+      public void robotInit() {
+            Values.init();
+      }
 
-  @Override
-  public void robotPeriodic() {
-    RobotMap.m_arm.periodic();
-    CommandScheduler.getInstance().run();
-  }
-  // endregion
+      @Override
+      public void robotPeriodic() {
+            RobotMap.m_arm.periodic();
+            CommandScheduler.getInstance().run();
+      }
+      // endregion
 
-  // region autonomous
-  @Override
-  public void autonomousInit() {
-    RobotMap.m_drive.prepareForAutonomous();
-  }
+      // region autonomous
+      @Override
+      public void autonomousInit() {
+            RobotMap.m_drive.prepareForAutonomous();
+      }
 
-  @Override
-  public void autonomousPeriodic() {
-  }
+      @Override
+      public void autonomousPeriodic() {
+      }
 
-  @Override
-  public void autonomousExit() {
-  }
-  // endregion
+      @Override
+      public void autonomousExit() {
+      }
+      // endregion
 
-  // region teleop
-  @Override
-  public void teleopInit() {
-    RobotMap.m_teleOpDrive.schedule();
-  }
+      // region teleop
+      @Override
+      public void teleopInit() {
+            RobotMap.m_teleOpDrive.schedule();
+      }
 
-  @Override
-  public void teleopExit() {
-    RobotMap.m_teleOpDrive.end(false);
-  }
+      @Override
+      public void teleopExit() {
+            RobotMap.m_teleOpDrive.end(false);
+      }
 
-  @Override
-  public void teleopPeriodic() {
-  }
-  // endregion
+      @Override
+      public void teleopPeriodic() {
+      }
+      // endregion
 
-  // region test
-  @Override
-  public void testInit() {
-  }
+      // region test
+      @Override
+      public void testInit() {
+      }
 
-  @Override
-  public void testPeriodic() {
-  }
+      @Override
+      public void testPeriodic() {
+      }
 
-  @Override
-  public void testExit() {
-  }
-  // endregion
+      @Override
+      public void testExit() {
+      }
+      // endregion
 }
