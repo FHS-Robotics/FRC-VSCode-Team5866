@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
@@ -17,29 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 
 public final class Robot extends TimedRobot {
-
-  private final Timer m_timer = new Timer();
-
-  // Constants for controlling the arm. consider tuning these for your particular
-  // robot
-  // TODO: Clean up Robot.java
-  final double armHoldUp = 0.08;
-  final double armHoldDown = 0.13;
-  final double armTravel = 0.5;
-
-  final double armTimeUp = 0.5;
-  final double armTimeDown = 0.35;
-
-  // Varibles needed for the code
-  boolean armUp = true; // Arm initialized to up because that's how it would start a match
-  boolean burstMode = false;
-  double lastBurstTime = 0;
-
-  double autoStart = 0;
-  boolean goForAuto = false;
-
-  public static final int c_driveForwardAxis = 1;
-  public static final int c_driveRotateAxis = 0;
 
   // region general
   @Override
@@ -57,16 +33,7 @@ public final class Robot extends TimedRobot {
   // region autonomous
   @Override
   public void autonomousInit() {
-    RobotMap.m_frontLeft.setInverted(false);
-    RobotMap.m_frontLeft.setSelectedSensorPosition(0);
-    RobotMap.m_frontRight.setInverted(true);
-    RobotMap.m_frontRight.setSelectedSensorPosition(0);
-    RobotMap.m_backLeft.setInverted(false);
-    RobotMap.m_backLeft.setSelectedSensorPosition(0);
-    RobotMap.m_backRight.setInverted(true);
-    RobotMap.m_backRight.setSelectedSensorPosition(0);
-    m_timer.reset();
-    m_timer.start();
+    RobotMap.m_drive.prepareForAutonomous();
   }
 
   @Override
@@ -91,14 +58,6 @@ public final class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    RobotMap.m_frontLeft.setInverted(false);
-    RobotMap.m_frontLeft.setSelectedSensorPosition(0);
-    RobotMap.m_frontRight.setInverted(true);
-    RobotMap.m_frontRight.setSelectedSensorPosition(0);
-    RobotMap.m_backLeft.setInverted(false);
-    RobotMap.m_backLeft.setSelectedSensorPosition(0);
-    RobotMap.m_backRight.setInverted(true);
-    RobotMap.m_backRight.setSelectedSensorPosition(0);
   }
   // endregion
 

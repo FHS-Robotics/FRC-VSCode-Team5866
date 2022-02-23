@@ -5,7 +5,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * Encapsulates all to do with intaking balls.
+ * Encapsulates all to do with taking in balls.
  */
 public final class IntakeSystem extends SubsystemBase {
     private final CANSparkMax m_intake;

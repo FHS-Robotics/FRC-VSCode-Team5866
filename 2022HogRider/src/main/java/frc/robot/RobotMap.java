@@ -4,10 +4,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.IntakeSystem;
 
 
@@ -16,28 +16,26 @@ import frc.robot.subsystems.IntakeSystem;
  * robot accessible throughout the code.
  */
 public final class RobotMap {
-    // TODO: Should these really be public?
-    public static WPI_TalonFX m_backLeft = new WPI_TalonFX(2);
-    public static WPI_TalonFX m_backRight = new WPI_TalonFX(3);
-    public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(0);
-    public static WPI_TalonFX m_frontRight = new WPI_TalonFX(1);
-
-    public static MotorControllerGroup m_left = new MotorControllerGroup(m_backLeft, m_frontLeft);
-    public static MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_frontRight);
-
-    public static DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
-
     // region Subsystems
-    public static IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(4, MotorType.kBrushed));
-    public static Arm m_arm = new Arm(new CANSparkMax(5, MotorType.kBrushless), 0);
-    // endregion
-
-    // region Commands
-    public static TeleOpDrive m_teleOpDrive = new TeleOpDrive(OI.driverController, m_intake);
+    public static final Drive<WPI_TalonFX> m_drive;
+    public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(4, MotorType.kBrushed));
+    public static final Arm m_arm = new Arm(new CANSparkMax(5, MotorType.kBrushless), 0);
     // endregion
 
     static {
-        m_drive.setMaxOutput(.5);
-        m_drive.setDeadband(0.5);
+        WPI_TalonFX m_frontLeft = new WPI_TalonFX(0);
+        WPI_TalonFX m_frontRight = new WPI_TalonFX(1);
+        WPI_TalonFX m_backLeft = new WPI_TalonFX(2);
+        WPI_TalonFX m_backRight = new WPI_TalonFX(3);
+
+        m_drive = new Drive<WPI_TalonFX>(m_frontLeft, m_frontRight, m_backLeft, m_backRight);
+
+        m_drive.getDrive().setMaxOutput(.5);
+        m_drive.getDrive().setDeadband(0.5);
     }
+
+    // region Commands
+    public static final TeleOpDrive<WPI_TalonFX> m_teleOpDrive = new TeleOpDrive<WPI_TalonFX>(OI.driverController, m_intake, m_drive);
+    public static final AutonomousDrive<WPI_TalonFX> m_autonomousDrive = new AutonomousDrive<WPI_TalonFX>(m_intake, m_drive);
+    // endregion
 }
