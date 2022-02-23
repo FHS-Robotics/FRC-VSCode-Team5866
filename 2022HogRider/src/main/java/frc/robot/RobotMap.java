@@ -35,7 +35,7 @@ public final class RobotMap {
     }
 
     // region Commands
-    public static final TeleOpDrive<WPI_TalonFX> m_teleOpDrive = new TeleOpDrive<WPI_TalonFX>(OI.driverController, m_intake, m_drive);
+    public static final TeleOpDrive<WPI_TalonFX> m_teleOpDrive = new TeleOpDrive<WPI_TalonFX>(m_intake, m_drive);
     public static final AutonomousDrive<WPI_TalonFX> m_autonomousDrive = new AutonomousDrive<WPI_TalonFX>(m_intake, m_drive);
     // endregion
 }
