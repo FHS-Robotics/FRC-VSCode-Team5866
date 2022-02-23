@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 
 public final class Robot extends TimedRobot {
-
       // region general
       @Override
       public void robotInit() {
