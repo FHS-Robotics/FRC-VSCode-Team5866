@@ -5,9 +5,9 @@ import com.ctre.phoenix.motorcontrol.IMotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
-import frc.robot.Values;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.IntakeSystem;
+import frc.robot.utilities.Settings;
 import frc.robot.OI;
 
 /**
@@ -32,17 +32,17 @@ public final class TeleOpDrive<TMotor extends MotorController & IMotorController
             m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
 
             if (OI.driverController.getAButton()) {
-                  RobotMap.m_arm.moveArm(true, Values.ARM_SPEED());
+                  RobotMap.m_arm.moveArm(true, Settings.ARM_SPEED());
             } else if (OI.driverController.getBButton()) {
-                  RobotMap.m_arm.moveArm(false, Values.ARM_SPEED());
+                  RobotMap.m_arm.moveArm(false, Settings.ARM_SPEED());
             } else {
                   RobotMap.m_arm.stopArm();
             }
 
             if (OI.gunnerController.getAButton()) {
-                  RobotMap.m_intake.set(Values.INTAKE_SPEED());
+                  RobotMap.m_intake.set(Settings.INTAKE_SPEED());
             } else if (OI.gunnerController.getBButton()) {
-                  RobotMap.m_intake.set(-Values.INTAKE_SPEED());
+                  RobotMap.m_intake.set(-Settings.INTAKE_SPEED());
             } else {
                   RobotMap.m_intake.set(0);
             }

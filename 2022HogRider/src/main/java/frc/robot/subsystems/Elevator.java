@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
-import frc.robot.Values;
+import frc.robot.utilities.Settings;
 
 /**
  * Controls the elevator on the robot.
@@ -15,10 +15,10 @@ public final class Elevator {
       }
 
       public void moveUp() {
-            m_motor.set(Values.ELEVATOR_SPEED());
+            m_motor.set(Settings.ELEVATOR_SPEED());
       }
 
       public void moveDown() {
-            m_motor.set(-Values.ELEVATOR_SPEED());
+            m_motor.set(-Settings.ELEVATOR_SPEED());
       }
 }
