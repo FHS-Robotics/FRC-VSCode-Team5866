@@ -1,6 +1,7 @@
 package frc.robot.utilities;
 
 import edu.wpi.first.wpilibj.Preferences;
+import frc.robot.RobotMap;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.commands.autonomous.ShootBalls;
 
@@ -9,7 +10,19 @@ import frc.robot.commands.autonomous.ShootBalls;
  */
 public final class Settings {
       public static void init() {
+            // Debugging
             initInteger("debug_level", 0);
+
+            // Channels
+            initInteger("ch_arm", 5);
+            initInteger("ch_elevator", 6);
+            initInteger("ch_intake", 4);
+            initInteger("ch_w_fl", 0);
+            initInteger("ch_w_fr", 1);
+            initInteger("ch_w_bl", 2);
+            initInteger("ch_w_br", 3);
+
+            // Miscellaneous
             initDouble("intake_speed", 0.3);
             initDouble("arm_speed", 0.01);
             initDouble("elevator_speed", 1);
@@ -23,6 +36,67 @@ public final class Settings {
        */
       public static int LOG_LEVEL() {
             return getInteger("debug_level", 0);
+      }
+
+      /**
+       * Channel of the Arm.
+       * 
+       * @see RobotMap
+       */
+      public static int CH_ARM() {
+            return getInteger("ch_arm", 0);
+      }
+
+      /**
+       * Channel of the Elevator.
+       */
+      public static int CH_ELEVATOR() {
+            return getInteger("ch_elevator", 0);
+      }
+
+      /**
+       * Channel of the Intake.
+       * 
+       * @see RobotMap
+       */
+      public static int CH_INTAKE() {
+            return getInteger("ch_intake", 0);
+      }
+
+      /**
+       * Channel of the Front Left Wheel.
+       * 
+       * @see RobotMap
+       */
+      public static int CH_W_FL() {
+            return getInteger("ch_w_fl", 0);
+      }
+
+      /**
+       * Channel of the Front Right Wheel.
+       * 
+       * @see RobotMap
+       */
+      public static int CH_W_FR() {
+            return getInteger("ch_w_fr", 1);
+      }
+
+      /**
+       * Channel of the Back Left Wheel.
+       * 
+       * @see RobotMap
+       */
+      public static int CH_W_BL() {
+            return getInteger("ch_w_bl", 2);
+      }
+
+      /**
+       * Channel of the Back Right Wheel.
+       * 
+       * @see RobotMap
+       */
+      public static int CH_W_BR() {
+            return getInteger("ch_w_br", 3);
       }
 
       /**
