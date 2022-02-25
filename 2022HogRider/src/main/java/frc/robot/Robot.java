@@ -4,8 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autonomous.DriveForward;
+import frc.robot.commands.autonomous.LowerArm;
+import frc.robot.commands.autonomous.ShootBalls;
 import frc.robot.utilities.Settings;
 
 /**
@@ -31,9 +37,16 @@ public final class Robot extends TimedRobot {
       // endregion
 
       // region autonomous
+      private Command m_currentAuto;
       @Override
       public void autonomousInit() {
             RobotMap.m_drive.prepareForAutonomous();
+            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, 1)
+                  .withTimeout(5)
+                  .andThen(new ShootBalls(RobotMap.m_intake))
+                  .andThen(new DriveForward<>(RobotMap.m_drive, -1))
+                  .withTimeout(5)
+                  .andThen(new LowerArm(RobotMap.m_arm));
       }
 
       @Override
@@ -42,6 +55,9 @@ public final class Robot extends TimedRobot {
 
       @Override
       public void autonomousExit() {
+            if (m_currentAuto != null) {
+                  m_currentAuto.cancel();
+            }
       }
       // endregion
 

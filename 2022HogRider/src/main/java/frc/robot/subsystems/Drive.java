@@ -53,4 +53,7 @@ public final class Drive<TMotor extends MotorController & IMotorController> exte
       public DifferentialDrive getDrive() {
             return m_drive;
       }
+
+      public void arcadeDriveSmart(double speed, double direction) {
+      }
 }
