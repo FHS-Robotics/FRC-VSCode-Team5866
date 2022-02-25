@@ -32,9 +32,9 @@ public final class TeleOpDrive<TMotor extends MotorController & IMotorController
             m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
 
             if (OI.driverController.getAButton()) {
-                  RobotMap.m_arm.moveArm(true, Settings.ARM_SPEED());
+                  RobotMap.m_arm.set(Settings.ARM_SPEED());
             } else if (OI.driverController.getBButton()) {
-                  RobotMap.m_arm.moveArm(false, Settings.ARM_SPEED());
+                  RobotMap.m_arm.set(-Settings.ARM_SPEED());
             } else {
                   RobotMap.m_arm.stopArm();
             }

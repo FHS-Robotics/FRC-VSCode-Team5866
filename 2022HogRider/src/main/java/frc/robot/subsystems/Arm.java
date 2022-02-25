@@ -24,12 +24,9 @@ public final class Arm extends SubsystemBase {
             m_counter = new Counter(new DigitalInput(encoderChanel));
       }
 
-      public void moveArm(boolean upwards, double amount) {
-            double trueAmount = amount * (upwards ? -amount : amount);
-            // double trueAmount = forward ? (m_goingForward ? amount : 0) : (m_goingForward
-            // ? 0 : -amount);
-            m_arm.set(trueAmount);
-            Debugging.debug("Driving Arm Motor at " + trueAmount);
+      public void set(double amount) {
+            m_arm.set(amount);
+            Debugging.debug("Driving Arm Motor at " + amount);
       }
 
       public void stopArm() {
