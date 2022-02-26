@@ -11,11 +11,11 @@ import frc.robot.commands.autonomous.ShootBalls;
 public final class Settings {
       public static void init() {
             // Debugging
-            initInteger("debug_level", 0);
+            initInteger("debug_level", 3);
 
             // Channels
             initInteger("ch_arm", 5);
-            initInteger("ch_elevator", 6);
+            initInteger("ch_elevator", 13);
             initInteger("ch_intake", 4);
             initInteger("ch_w_fl", 0);
             initInteger("ch_w_fr", 1);
@@ -26,7 +26,10 @@ public final class Settings {
             initDouble("intake_speed", 0.3);
             initDouble("arm_speed", 0.01);
             initDouble("elevator_speed", 1);
-            initDouble("drive_smart_scaling_factor", 1);
+            // (units per wheel rotation) = (units per rotation) * (gear ratio)
+            // (wheel rotations per meter) = 1 / (wheel circumference in meters)
+            // (units per wheel rotation) * (wheel rotations per meter)
+            initDouble("drive_smart_scaling_factor", (2048 * 3.75) * (1 / (.1524 * Math.PI)));
             initDouble("auto_travel_distance", 1);
       }
 

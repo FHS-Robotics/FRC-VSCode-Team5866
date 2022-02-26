@@ -36,6 +36,7 @@ public final class Robot extends TimedRobot {
             Debugging.info("CH_W_FR: " + Settings.CH_W_FR());
             Debugging.info("CH_W_BL: " + Settings.CH_W_BL());
             Debugging.info("CH_W_BR: " + Settings.CH_W_BR());
+            Debugging.info("Smart Drive Scaling Factor: " + Settings.DRIVE_SMART_SCALING_FACTOR());
       }
 
       @Override
