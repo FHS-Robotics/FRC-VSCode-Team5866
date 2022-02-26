@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.autonomous.DriveForward;
 import frc.robot.commands.autonomous.LowerArm;
 import frc.robot.commands.autonomous.ShootBalls;
@@ -41,12 +42,14 @@ public final class Robot extends TimedRobot {
       @Override
       public void autonomousInit() {
             RobotMap.m_drive.prepareForAutonomous();
-            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, 1)
-                  .withTimeout(5)
+            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, 1).withTimeout(5)
                   .andThen(new ShootBalls(RobotMap.m_intake))
-                  .andThen(new DriveForward<>(RobotMap.m_drive, -1))
-                  .withTimeout(5)
-                  .andThen(new LowerArm(RobotMap.m_arm));
+                  .andThen(
+                        new ParallelCommandGroup(
+                              new DriveForward<WPI_TalonFX>(RobotMap.m_drive, -1).withTimeout(5),
+                              new LowerArm(RobotMap.m_arm)
+                        )
+                  );
             m_currentAuto.schedule();
       }
 
