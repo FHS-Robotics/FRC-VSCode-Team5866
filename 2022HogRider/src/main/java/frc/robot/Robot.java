@@ -47,6 +47,7 @@ public final class Robot extends TimedRobot {
                   .andThen(new DriveForward<>(RobotMap.m_drive, -1))
                   .withTimeout(5)
                   .andThen(new LowerArm(RobotMap.m_arm));
+            m_currentAuto.schedule();
       }
 
       @Override
