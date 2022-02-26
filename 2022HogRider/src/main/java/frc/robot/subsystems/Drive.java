@@ -1,11 +1,14 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorController;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.autonomous.DriveForward;
+import frc.robot.utilities.Settings;
 
 /**
  * Controls robot movement.
@@ -54,6 +57,18 @@ public final class Drive<TMotor extends MotorController & IMotorController> exte
             return m_drive;
       }
 
-      public void arcadeDriveSmart(double speed, double direction) {
+      /**
+       * Drive for a certain distance.
+       * Useful for autonomous code.
+       * 
+       * @param distance meters to straightly travel
+       * @see DriveForward
+       */
+      public void smartDrive(double distance) {
+            distance = distance * Settings.DRIVE_SMART_SCALING_FACTOR();
+            m_frontLeft.set(ControlMode.Position, distance);
+            m_frontRight.set(ControlMode.Position, distance);
+            m_backLeft.set(ControlMode.Position, distance);
+            m_backRight.set(ControlMode.Position, distance);
       }
 }

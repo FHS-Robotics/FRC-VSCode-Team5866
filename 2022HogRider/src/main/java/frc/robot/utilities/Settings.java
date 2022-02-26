@@ -26,6 +26,7 @@ public final class Settings {
             initDouble("intake_speed", 0.3);
             initDouble("arm_speed", 0.01);
             initDouble("elevator_speed", 1);
+            initDouble("drive_smart_scaling_factor", 1);
             initDouble("auto_travel_distance", 1);
       }
 
@@ -125,6 +126,15 @@ public final class Settings {
        */
       public static double ELEVATOR_SPEED() {
             return getDouble("elevator_speed", 1);
+      }
+
+      /**
+       * The factor that converts meters to motor units.
+       * 
+       * @see Drive
+       */
+      public static double DRIVE_SMART_SCALING_FACTOR() {
+            return getDouble("drive_smart_scaling_factor", 1);
       }
 
       public static double AUTO_TRAVEL_DISTANCE() {

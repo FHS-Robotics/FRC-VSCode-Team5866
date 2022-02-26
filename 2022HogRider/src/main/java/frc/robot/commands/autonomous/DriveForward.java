@@ -8,16 +8,16 @@ import frc.robot.subsystems.Drive;
 
 public class DriveForward<TMotor extends MotorController & IMotorController> extends CommandBase {
       private final Drive<TMotor> m_drive;
-      private final double m_xSpeed;
+      private final double m_distance;
 
-      public DriveForward(Drive<TMotor> drive, double xSpeed) {
+      public DriveForward(Drive<TMotor> drive, double distance) {
             m_drive = drive;
-            m_xSpeed = xSpeed;
+            m_distance = distance;
       }
 
       @Override
       public void execute() {
-            m_drive.arcadeDriveSmart(m_xSpeed, 0);
+            m_drive.smartDrive(m_distance);
       }
 }
            
