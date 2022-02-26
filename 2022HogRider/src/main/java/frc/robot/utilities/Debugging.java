@@ -2,9 +2,10 @@ package frc.robot.utilities;
 
 public final class Debugging {
       private enum Level {
-            Critical(0),
-            Error(1),
-            Debug(2);
+            Critical(1),
+            Error(2),
+            Info(3),
+            Debug(4);
             
             public final int value;
 
@@ -19,6 +20,10 @@ public final class Debugging {
 
       public static void error(String message) {
             log(Level.Error, message);
+      }
+
+      public static void info(String message) {
+            log(Level.Info, message);
       }
 
       public static void debug(String message) {

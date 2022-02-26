@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.autonomous.DriveForward;
 import frc.robot.commands.autonomous.LowerArm;
 import frc.robot.commands.autonomous.ShootBalls;
+import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
 
 /**
@@ -28,6 +29,13 @@ public final class Robot extends TimedRobot {
       @Override
       public void robotInit() {
             Settings.init();
+            Debugging.info("CH_ARM: " + Settings.CH_ARM());
+            Debugging.info("CH_ELEVATOR: " + Settings.CH_ELEVATOR());  
+            Debugging.info("CH_INTAKE: " + Settings.CH_INTAKE());
+            Debugging.info("CH_W_FL: " + Settings.CH_W_FL());
+            Debugging.info("CH_W_FR: " + Settings.CH_W_FR());
+            Debugging.info("CH_W_BL: " + Settings.CH_W_BL());
+            Debugging.info("CH_W_BR: " + Settings.CH_W_BR());
       }
 
       @Override
