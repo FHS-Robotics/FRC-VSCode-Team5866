@@ -1,16 +1,16 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Settings;
 
 /**
  * Controls the elevator on the robot.
  */
-public final class Elevator {
-      private final CANSparkMax m_motor;
+public final class Elevator extends SubsystemBase {
+      private final MotorController m_motor;
 
-      public Elevator(CANSparkMax motor) {
+      public Elevator(MotorController motor) {
             m_motor = motor;
       }
 
@@ -20,5 +20,9 @@ public final class Elevator {
 
       public void moveDown() {
             m_motor.set(-Settings.ELEVATOR_SPEED());
+      }
+
+      public void stopElevator() {
+            m_motor.set(0);
       }
 }
