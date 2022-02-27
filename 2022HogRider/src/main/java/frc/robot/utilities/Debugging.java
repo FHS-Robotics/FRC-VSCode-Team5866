@@ -51,6 +51,7 @@ public final class Debugging {
 
             messageTimeMap.put(m, time);
             log(m.level, text);
+            debug("sendRepeating(...), messageTimeMap = " + messageTimeMap.toString());
       }
       // endregion
 
@@ -70,7 +71,7 @@ public final class Debugging {
 
             sendOnceSet.add(m);
             log(m.level, text);
-            debug(sendOnceSet.toString());
+            debug("sendOnce(...), sendOnceSet = " + sendOnceSet.toString());
       }
 
       /**
@@ -80,7 +81,7 @@ public final class Debugging {
        */
       public static void resetSendOnce(Message m) {
             if (sendOnceSet.remove(m)) {
-                  debug("resetSendOnce(" + m.toString() + ")");
+                  debug("resetSendOnce(" + m.toString() + "), sendOnceSet = " + sendOnceSet.toString());
             }
       }
       // endregion
