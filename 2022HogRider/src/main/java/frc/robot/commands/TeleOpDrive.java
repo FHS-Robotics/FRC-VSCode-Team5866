@@ -8,7 +8,9 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.IntakeSystem;
+import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
+import frc.robot.utilities.Debugging.Message;
 import frc.robot.OI;
 
 /**
@@ -31,6 +33,30 @@ public final class TeleOpDrive<TMotor extends MotorController & IMotorController
 
       @Override
       public void execute() {
+            // GenericHID.isConnected() is very unreliable, and reports
+            // a controller as connected after unplugging it.
+
+            if (OI.driverController.isConnected()) {
+                  Debugging.resetSendOnce(Message.DriverUnplugged);
+                  doDriver();
+            } else {
+                  m_drive.getDrive().stopMotor();
+                  m_intakeSystem.set(0);
+                  Debugging.sendOnce(Message.DriverUnplugged, "The driver's controller is unplugged!");
+            }
+            
+
+            if (OI.gunnerController.isConnected()) {
+                  Debugging.resetSendOnce(Message.GunnerUnplugged);
+                  doGunner();
+            } else {
+                  m_arm.stopArm();
+                  m_elevator.stopElevator();
+                  Debugging.sendOnce(Message.GunnerUnplugged, "The gunner's controller is unplugged!");
+            }
+      }
+
+      private void doDriver() {
             double xSpeed = OI.driverController.getLeftY();
             double zRotation = OI.driverController.getRightX();
 
@@ -43,7 +69,9 @@ public final class TeleOpDrive<TMotor extends MotorController & IMotorController
             } else {
                   m_intakeSystem.set(0);
             }
+      }
 
+      private void doGunner() {
             if (OI.gunnerController.getAButton()) {
                   m_arm.set(Settings.ARM_SPEED());
             } else if (OI.gunnerController.getBButton()) {
