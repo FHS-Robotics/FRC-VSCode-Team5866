@@ -30,7 +30,7 @@ public final class Settings {
             // (wheel rotations per meter) = 1 / (wheel circumference in meters)
             // (units per wheel rotation) * (wheel rotations per meter)
             initDouble("drive_smart_scaling_factor", (2048 * 3.75) * (1 / (.1524 * Math.PI)));
-            initDouble("auto_travel_distance", 1);
+            initDouble("auto_travel_distance", 2.5);
       }
 
       /**

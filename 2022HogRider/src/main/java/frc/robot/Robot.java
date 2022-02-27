@@ -51,11 +51,11 @@ public final class Robot extends TimedRobot {
       @Override
       public void autonomousInit() {
             RobotMap.m_drive.prepareForAutonomous();
-            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, 5).withTimeout(5)
+            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, Settings.AUTO_TRAVEL_DISTANCE()).withTimeout(5)
                   .andThen(new ShootBalls(RobotMap.m_intake))
                   .andThen(
                         new ParallelCommandGroup(
-                              new DriveForward<WPI_TalonFX>(RobotMap.m_drive, -5).withTimeout(5),
+                              new DriveForward<WPI_TalonFX>(RobotMap.m_drive, Settings.AUTO_TRAVEL_DISTANCE()).withTimeout(5),
                               new LowerArm(RobotMap.m_arm)
                         )
                   );
