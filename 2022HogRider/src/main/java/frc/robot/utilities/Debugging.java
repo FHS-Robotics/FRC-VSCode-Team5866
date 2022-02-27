@@ -19,6 +19,7 @@ public final class Debugging {
       }
 
       public enum Message {
+            ArmSetAmount(Level.Debug),
             SmartDriveProgress(Level.Debug),
             DriverUnplugged(Level.Warning),
             GunnerUnplugged(Level.Warning);

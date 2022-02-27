@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
+import frc.robot.utilities.Debugging.Message;
 
 /**
  * Runs the robot's arm.
@@ -26,7 +27,7 @@ public final class Arm extends SubsystemBase {
 
       public void set(double amount) {
             m_arm.set(amount);
-            Debugging.debug("Driving Arm Motor at " + amount);
+            Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
       }
 
       public void stopArm() {
