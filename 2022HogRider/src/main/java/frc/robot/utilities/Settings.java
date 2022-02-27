@@ -11,7 +11,7 @@ import frc.robot.commands.autonomous.ShootBalls;
 public final class Settings {
       public static void init() {
             // Debugging
-            initInteger("debug_level", 3);
+            initInteger("debug_level", 2);
 
             // Channels
             initInteger("ch_arm", 5);
