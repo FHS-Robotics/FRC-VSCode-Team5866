@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
@@ -19,7 +20,7 @@ public final class RobotMap {
       // region Subsystems
       public static final Drive<WPI_TalonFX> m_drive;
       public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushed));
-      public static final Arm m_arm = new Arm(new WPI_TalonFX(Settings.CH_ARM()), 0);
+      public static final Arm m_arm = new Arm(new Victor(Settings.CH_ARM()), 0);
       public static final Elevator m_elevator = new Elevator(new WPI_TalonFX(Settings.CH_ELEVATOR()));
       // endregion
 
