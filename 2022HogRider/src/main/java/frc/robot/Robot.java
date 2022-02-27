@@ -29,6 +29,10 @@ public final class Robot extends TimedRobot {
       @Override
       public void robotInit() {
             Settings.init();
+            Debugging.info("Logging Level: " + Settings.LOG_LEVEL());
+            Debugging.info("---");
+
+            Debugging.info("Channel Settings");
             Debugging.info("CH_ARM: " + Settings.CH_ARM());
             Debugging.info("CH_ELEVATOR: " + Settings.CH_ELEVATOR());  
             Debugging.info("CH_INTAKE: " + Settings.CH_INTAKE());
@@ -37,6 +41,12 @@ public final class Robot extends TimedRobot {
             Debugging.info("CH_W_BL: " + Settings.CH_W_BL());
             Debugging.info("CH_W_BR: " + Settings.CH_W_BR());
             Debugging.info("Smart Drive Scaling Factor: " + Settings.DRIVE_SMART_SCALING_FACTOR());
+            Debugging.info("---");
+
+            Debugging.info("Miscellaneous Settings");
+            Debugging.info("intake_speed: " + Settings.INTAKE_SPEED());
+            Debugging.info("arm_speed: " + Settings.ARM_SPEED());
+            Debugging.info("elevator_speed: " + Settings.ELEVATOR_SPEED());
       }
 
       @Override
