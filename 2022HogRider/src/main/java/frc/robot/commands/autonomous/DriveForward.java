@@ -19,6 +19,11 @@ public class DriveForward<TMotor extends MotorController & IMotorController> ext
       public void execute() {
             m_drive.smartDrive(m_distance);
       }
+
+      @Override
+      public boolean isFinished() {
+            return m_drive.isSmartDriveFinished();
+      }
 }
            
 
