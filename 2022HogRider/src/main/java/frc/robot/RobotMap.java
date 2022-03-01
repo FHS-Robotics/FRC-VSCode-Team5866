@@ -19,7 +19,7 @@ public final class RobotMap {
       // region Subsystems
       public static final Drive m_drive;
       public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushed));
-      public static final Arm m_arm = new Arm(new CANSparkMax(Settings.CH_ARM(), MotorType.kBrushless), 0);
+      public static final Arm m_arm = new Arm(new WPI_TalonFX(Settings.CH_ARM()));
       public static final Elevator m_elevator = new Elevator(new WPI_TalonFX(Settings.CH_ELEVATOR()));
       // endregion
 

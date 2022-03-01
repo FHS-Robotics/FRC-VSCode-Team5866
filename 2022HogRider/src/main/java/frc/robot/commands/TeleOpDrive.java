@@ -70,9 +70,9 @@ public final class TeleOpDrive extends CommandBase {
 
       private void doGunner() {
             if (OI.gunnerController.getAButton()) {
-                  m_arm.set(Settings.ARM_SPEED());
+                  m_arm.moveUp();
             } else if (OI.gunnerController.getBButton()) {
-                  m_arm.set(-Settings.ARM_SPEED());
+                  m_arm.moveDown();
             } else {
                   m_arm.stopArm();
             }

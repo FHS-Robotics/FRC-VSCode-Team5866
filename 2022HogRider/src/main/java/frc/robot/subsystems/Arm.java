@@ -1,42 +1,49 @@
 package frc.robot.subsystems;
 
-// import com.revrobotics.RelativeEncoder;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
+import frc.robot.utilities.Settings;
 import frc.robot.utilities.Debugging.Message;
 
 /**
- * Runs the robot's arm.
+ * Runs the robot's arm. Requires a WPI_TalonFX because
+ * of it's integrated sensors.
  */
 public final class Arm extends SubsystemBase {
-      private final MotorController m_arm;
-      // private final RelativeEncoder m_encoder;
-      private final Counter m_counter;
-      private int m_position;
-      private boolean m_goingForward;
+      private final WPI_TalonFX m_arm;
+      private final TalonFXSensorCollection m_sensor;
 
-      public Arm(MotorController arm, int encoderChanel) {
+      public Arm(WPI_TalonFX arm) {
             m_arm = arm;
-            // m_encoder = m_arm.getEncoder();
-            m_counter = new Counter(new DigitalInput(encoderChanel));
+            m_sensor = m_arm.getSensorCollection();
+            zeroSensor();
       }
 
-      public void set(double amount) {
-            m_arm.set(amount);
+      public void moveUp() {
+            double amount = Settings.ARM_SPEED();
             Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
+            m_arm.set(amount);
+      }
+
+      public void moveDown() {
+            double amount = -Settings.ARM_SPEED();
+            Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
+            m_arm.set(amount);
       }
 
       public void stopArm() {
             m_arm.set(0);
       }
 
+      public void zeroSensor() {
+            m_sensor.setIntegratedSensorPosition(0, 0);
+      }
+
       @Override
       public void periodic() {
-            m_position += m_goingForward ? m_counter.get() : -m_counter.get();
-            m_goingForward = m_position <= 90;
+            Debugging.sendRepeating(Message.ArmSensorPosition, 3, "Arm Sensor: " + m_sensor.getIntegratedSensorPosition());
       }
 }
