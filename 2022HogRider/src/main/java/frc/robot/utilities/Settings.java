@@ -30,7 +30,7 @@ public final class Settings {
             // (wheel rotations per meter) = 1 / (wheel circumference in meters)
             // (units per wheel rotation) * (wheel rotations per meter)
             initDouble("drive_smart_scaling_factor", (2048 * 3.75) * (1 / (.1524 * Math.PI)));
-            initDouble("auto_travel_distance", 2.5);
+            initDouble("auto_travel_speed", 0.4);
       }
 
       /**
@@ -140,8 +140,8 @@ public final class Settings {
             return getDouble("drive_smart_scaling_factor", 1);
       }
 
-      public static double AUTO_TRAVEL_DISTANCE() {
-            return getDouble("auto_travel_distance", 1);
+      public static double AUTO_TRAVEL_SPEED() {
+            return getDouble("auto_travel_speed", 1);
       }
 
       // Past this point are helper methods used internally by

@@ -61,13 +61,13 @@ public final class Robot extends TimedRobot {
       @Override
       public void autonomousInit() {
             RobotMap.m_drive.prepareForAutonomous();
-            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, Settings.AUTO_TRAVEL_DISTANCE()).withTimeout(5)
+            m_currentAuto = new DriveForward<WPI_TalonFX>(RobotMap.m_drive, Settings.AUTO_TRAVEL_SPEED()).withTimeout(5)
                   .andThen(
                         new ShootBalls(RobotMap.m_intake).withTimeout(2)
                   )
                   .andThen(
                         new ParallelCommandGroup(
-                              new DriveForward<WPI_TalonFX>(RobotMap.m_drive, Settings.AUTO_TRAVEL_DISTANCE()).withTimeout(5),
+                              new DriveForward<WPI_TalonFX>(RobotMap.m_drive, Settings.AUTO_TRAVEL_SPEED()).withTimeout(5),
                               new LowerArm(RobotMap.m_arm).withTimeout(2)
                         )
                   );
@@ -105,8 +105,6 @@ public final class Robot extends TimedRobot {
       // region test
       @Override
       public void testInit() {
-            // Drive 2 Phoenix-Units
-            RobotMap.m_drive.smartDrive(2);
       }
 
       @Override

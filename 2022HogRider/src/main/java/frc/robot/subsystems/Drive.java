@@ -1,16 +1,11 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorController;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.autonomous.DriveForward;
-import frc.robot.utilities.Debugging;
-import frc.robot.utilities.Settings;
-import frc.robot.utilities.Debugging.Message;
 
 /**
  * Controls robot movement.
@@ -57,30 +52,5 @@ public final class Drive<TMotor extends MotorController & IMotorController> exte
 
       public DifferentialDrive getDrive() {
             return m_drive;
-      }
-
-      /**
-       * Drive for a certain distance.
-       * Useful for autonomous code.
-       * 
-       * @param distance meters to straightly travel
-       * @see DriveForward
-       */
-      public void smartDrive(double distance) {
-            distance = distance * Settings.DRIVE_SMART_SCALING_FACTOR();
-            m_frontLeft.set(ControlMode.Position, distance);
-            m_frontRight.set(ControlMode.Position, distance);
-            m_backLeft.set(ControlMode.Position, distance);
-            m_backRight.set(ControlMode.Position, distance);
-      }
-
-      public boolean isSmartDriveFinished() {
-            double positionFromFinish = Math.abs(m_frontLeft.getClosedLoopTarget(0));
-            Debugging.sendRepeating(
-                  Message.SmartDriveProgress, // Message Category
-                  1,                          // Message Repeat Period (seconds)
-                  "Current position from finish: " + positionFromFinish
-            );
-            return positionFromFinish < 0.1;
       }
 }
