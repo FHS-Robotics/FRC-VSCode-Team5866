@@ -9,7 +9,8 @@ public final class Debugging {
       private enum Level {
             Warning(0),
             Info(1),
-            Debug(2);
+            Debug(2),
+            Verbose(3);
             
             public final int value;
 
@@ -72,7 +73,7 @@ public final class Debugging {
 
             sendOnceSet.add(m);
             log(m.level, text);
-            debug("sendOnce(...), sendOnceSet = " + sendOnceSet.toString());
+            verbose("sendOnce(...), sendOnceSet = " + sendOnceSet.toString());
       }
 
       /**
@@ -82,7 +83,7 @@ public final class Debugging {
        */
       public static void resetSendOnce(Message m) {
             if (sendOnceSet.remove(m)) {
-                  debug("resetSendOnce(" + m.toString() + "), sendOnceSet = " + sendOnceSet.toString());
+                  verbose("resetSendOnce(" + m.toString() + "), sendOnceSet = " + sendOnceSet.toString());
             }
       }
       // endregion
@@ -93,6 +94,10 @@ public final class Debugging {
 
       public static void debug(String message) {
             log(Level.Debug, message);
+      }
+
+      public static void verbose(String message) {
+            log(Level.Verbose, message);
       }
 
       private static void log(Level level, String message) {
