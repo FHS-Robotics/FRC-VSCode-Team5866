@@ -12,6 +12,7 @@ public class LowerArm extends CommandBase {
 
     @Override
     public void execute() {
-        m_arm.set(-1);
+        m_arm.set(-1); //make sure command terminates after some amount of seconds or that you are using ControlMode.Position or something
+        //if you are using the vex 775 motors, then you will have to get the encoder value separately and write a PID loop
     }
 }

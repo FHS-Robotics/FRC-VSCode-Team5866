@@ -1,8 +1,5 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.IMotorController;
-
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
@@ -17,13 +14,13 @@ import frc.robot.OI;
  * This command should run during and only during teleop.
  * It connects controller input to the intake, drive and arm of the robot.
  */
-public final class TeleOpDrive<TMotor extends MotorController & IMotorController> extends CommandBase {
+public final class TeleOpDrive extends CommandBase {
       Arm m_arm;
       Elevator m_elevator;
       IntakeSystem m_intakeSystem;
-      Drive<TMotor> m_drive;
+      Drive m_drive;
 
-      public TeleOpDrive(Arm arm, Elevator elevator, IntakeSystem intakeSystem, Drive<TMotor> drive) {
+      public TeleOpDrive(Arm arm, Elevator elevator, IntakeSystem intakeSystem, Drive drive) {
             m_arm = arm;
             m_elevator = elevator;
             m_intakeSystem = intakeSystem;

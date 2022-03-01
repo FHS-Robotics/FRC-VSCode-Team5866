@@ -1,7 +1,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -18,9 +17,9 @@ import frc.robot.utilities.Settings;
  */
 public final class RobotMap {
       // region Subsystems
-      public static final Drive<WPI_TalonFX> m_drive;
+      public static final Drive m_drive;
       public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushed));
-      public static final Arm m_arm = new Arm(new WPI_VictorSPX(Settings.CH_ARM()), 0);
+      public static final Arm m_arm = new Arm(new CANSparkMax(Settings.CH_ARM(), MotorType.kBrushless), 0);
       public static final Elevator m_elevator = new Elevator(new WPI_TalonFX(Settings.CH_ELEVATOR()));
       // endregion
 
@@ -30,13 +29,16 @@ public final class RobotMap {
             WPI_TalonFX m_backLeft = new WPI_TalonFX(Settings.CH_W_BL());
             WPI_TalonFX m_backRight = new WPI_TalonFX(Settings.CH_W_BR());
 
-            m_drive = new Drive<WPI_TalonFX>(m_frontLeft, m_frontRight, m_backLeft, m_backRight);
+            m_frontLeft.setInverted(true);
+            m_backLeft.setInverted(true);
+
+            m_drive = new Drive(m_frontLeft, m_frontRight, m_backLeft, m_backRight);
 
             m_drive.getDrive().setMaxOutput(.5);
             m_drive.getDrive().setDeadband(0.5);
       }
 
       // region Commands
-      public static final TeleOpDrive<WPI_TalonFX> m_teleOpDrive = new TeleOpDrive<WPI_TalonFX>(m_arm, m_elevator, m_intake, m_drive);
+      public static final TeleOpDrive m_teleOpDrive = new TeleOpDrive(m_arm, m_elevator, m_intake, m_drive);
       // endregion
 }
