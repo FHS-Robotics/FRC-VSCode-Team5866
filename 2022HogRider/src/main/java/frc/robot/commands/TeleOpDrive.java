@@ -54,8 +54,10 @@ public final class TeleOpDrive extends CommandBase {
       }
 
       private void doDriver() {
-            double xSpeed = OI.driverController.getLeftY();
+            double xSpeed = -OI.driverController.getLeftY();
             double zRotation = OI.driverController.getRightX();
+
+            // System.out.println("speed:" + xSpeed + " rotation:" + zRotation);
 
             m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
 
