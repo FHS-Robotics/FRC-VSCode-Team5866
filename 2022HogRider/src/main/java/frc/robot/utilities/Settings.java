@@ -25,7 +25,7 @@ public final class Settings {
 
             // Miscellaneous
             initDouble("intake_speed", 0.3);
-            initDouble("arm_speed", 0.01);
+            initDouble("arm_speed", 0.3);
             initBoolean("arm_limits_enabled", true);
             initDouble("elevator_speed", 1);
             // (units per wheel rotation) = (units per rotation) * (gear ratio)

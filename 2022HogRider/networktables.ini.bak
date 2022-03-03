@@ -1,6 +1,6 @@
 [NetworkTables Storage 3.0]
 string "/Preferences/.type"="RobotPreferences"
-boolean "/Preferences/arm_limits_enabled"=true
+boolean "/Preferences/arm_limits_enabled"=false
 double "/Preferences/arm_speed"=0.1
 double "/Preferences/auto_travel_speed"=0.4
 double "/Preferences/ch_arm"=5
