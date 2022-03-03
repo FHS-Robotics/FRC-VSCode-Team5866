@@ -24,7 +24,9 @@ public final class Arm extends SubsystemBase {
        */
       public void moveSafely(double amount) {
             amount = amount * Settings.ARM_SPEED();
-            if(!RobotMap.limitUp.get() && Math.abs(amount) > 0.05) {
+
+            boolean limitHit = (RobotMap.limitUp.get()) && Settings.ARM_LIMITS_ENABLED();
+            if(!limitHit && Math.abs(amount) > 0.05) {
                   Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
                   m_arm.set(amount);
             } else {
@@ -36,8 +38,12 @@ public final class Arm extends SubsystemBase {
       @Override
       public void periodic() {
             if (RobotMap.limitUp.get()) {
-                  Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit!");
-                  m_arm.set(0);
+                  if (Settings.ARM_LIMITS_ENABLED()) {
+                        Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit!");
+                        m_arm.set(0);
+                  } else {
+                        Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit, but limits were disabled...");
+                  }
             } else {
                   Debugging.resetSendOnce(Message.ArmLimitMet);
             }

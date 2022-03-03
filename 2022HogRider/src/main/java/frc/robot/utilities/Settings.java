@@ -26,6 +26,7 @@ public final class Settings {
             // Miscellaneous
             initDouble("intake_speed", 0.3);
             initDouble("arm_speed", 0.01);
+            initBoolean("arm_limits_enabled", true);
             initDouble("elevator_speed", 1);
             // (units per wheel rotation) = (units per rotation) * (gear ratio)
             // (wheel rotations per meter) = 1 / (wheel circumference in meters)
@@ -131,6 +132,15 @@ public final class Settings {
       }
 
       /**
+       * This method controls whether the Arm's limit switches should be used.
+       * 
+       * @see Arm
+       */
+      public static boolean ARM_LIMITS_ENABLED() {
+            return getBoolean("arm_limits_enabled", true);
+      }
+
+      /**
        * This method controls the speed at which the Elevator runs.
        * 
        * @see TeleOpDrive
@@ -154,6 +164,12 @@ public final class Settings {
 
       // Past this point are helper methods used internally by
 
+      private static void initBoolean(String key, boolean value) {
+            if (!Preferences.containsKey(key)) {
+                  Preferences.setBoolean(key, value);
+            }
+      }
+
       private static void initDouble(String key, double value) {
             if (!Preferences.containsKey(key)) {
                   Preferences.setDouble(key, value);
@@ -164,6 +180,10 @@ public final class Settings {
             if (!Preferences.containsKey(key)) {
                   Preferences.setInt(key, value);
             }
+      }
+
+      private static boolean getBoolean(String key, boolean defaultValue) {
+            return Preferences.getBoolean(key, defaultValue);
       }
 
       private static double getDouble(String key, double defaultValue) {
