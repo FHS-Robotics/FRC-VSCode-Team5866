@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.utilities.Debugging;
+import frc.robot.utilities.Debugging.Message;
 
 /**
  * Controls robot movement.
@@ -53,6 +55,22 @@ public final class Drive extends SubsystemBase {
             m_backLeft.setSelectedSensorPosition(0, 0, 0);
             m_backRight.setInverted(true);
             m_backRight.setSelectedSensorPosition(0, 0, 0);
+      }
+
+      /**
+       * Arcade drives, stopping when xSpeed is too close to zero
+       *
+       * @param xSpeed driving speed
+       * @param zRotation turning speed
+       */
+      public void arcadeDrive(double xSpeed, double zRotation) {
+            if(Math.abs(xSpeed) > 0.05) {
+                  Debugging.sendRepeating(Message.DriveSetAmount, 1, "Driving Drive Motors at spd: " + xSpeed + ", rot: " + zRotation);
+                  m_drive.arcadeDrive(xSpeed, zRotation);
+            } else {
+                  Debugging.sendRepeating(Message.DriveSetAmount, 1, "Breaking Drive Motors NOW; Would have set at spd: " + xSpeed + ", rot: " + zRotation);
+                  m_drive.stopMotor();
+            }
       }
 
       public DifferentialDrive getDrive() {

@@ -22,6 +22,8 @@ public final class Debugging {
       public enum Message {
             ArmSetAmount(Level.Debug),
             ElevatorSetAmount(Level.Debug),
+            IntakeSetAmount(Level.Debug),
+            DriveSetAmount(Level.Debug),
             ArmLimitMet(Level.Debug),
             SmartDriveProgress(Level.Debug),
             DriverUnplugged(Level.Warning),

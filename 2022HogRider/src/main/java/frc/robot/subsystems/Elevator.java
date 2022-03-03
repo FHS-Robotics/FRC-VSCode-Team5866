@@ -20,7 +20,7 @@ public final class Elevator extends SubsystemBase {
       /**
        * Moves the elevator, stopping when amount is too close to zero.
        *
-       * @param amount the percent to multiply by Settings.ARM_SPEED()
+       * @param amount the percent to multiply by Settings.ELEVATOR_SPEED()
        */
       public void move(double amount) {
             amount = amount * Settings.ELEVATOR_SPEED();

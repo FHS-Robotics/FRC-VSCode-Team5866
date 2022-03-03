@@ -38,7 +38,7 @@ public final class TeleOpDrive extends CommandBase {
                   doDriver();
             } else {
                   m_drive.getDrive().stopMotor();
-                  m_intakeSystem.set(0);
+                  m_intakeSystem.move(0);
                   Debugging.sendOnce(Message.DriverUnplugged, "The driver's controller is unplugged!");
             }
             
@@ -56,10 +56,7 @@ public final class TeleOpDrive extends CommandBase {
       private void doDriver() {
             double xSpeed = -OI.driverController.getLeftY();
             double zRotation = OI.driverController.getRightX();
-
-            // System.out.println("speed:" + xSpeed + " rotation:" + zRotation);
-
-            m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
+            m_drive.arcadeDrive(xSpeed, zRotation);
       }
 
       private void doGunner() {
@@ -67,11 +64,11 @@ public final class TeleOpDrive extends CommandBase {
             m_arm.moveSafely(armSpeed);
 
             if (OI.gunnerController.getAButton()) {
-                  m_intakeSystem.set(Settings.INTAKE_SPEED());
+                  m_intakeSystem.move(Settings.INTAKE_SPEED());
             } else if (OI.gunnerController.getBButton()) {
-                  m_intakeSystem.set(-Settings.INTAKE_SPEED());
+                  m_intakeSystem.move(-Settings.INTAKE_SPEED());
             } else {
-                  m_intakeSystem.set(0);
+                  m_intakeSystem.move(0);
             }
 
             int pov = OI.gunnerController.getPOV();
