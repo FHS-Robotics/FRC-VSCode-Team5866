@@ -28,10 +28,6 @@ public final class Settings {
             initDouble("arm_speed", 0.3);
             initBoolean("arm_limits_enabled", true);
             initDouble("elevator_speed", 1);
-            // (units per wheel rotation) = (units per rotation) * (gear ratio)
-            // (wheel rotations per meter) = 1 / (wheel circumference in meters)
-            // (units per wheel rotation) * (wheel rotations per meter)
-            initDouble("drive_smart_scaling_factor", (2048 * 3.75) * (1 / (.1524 * Math.PI)));
             initDouble("auto_travel_speed", 0.4);
       }
 
@@ -147,15 +143,6 @@ public final class Settings {
        */
       public static double ELEVATOR_SPEED() {
             return getDouble("elevator_speed", 1);
-      }
-
-      /**
-       * The factor that converts meters to motor units.
-       * 
-       * @see Drive
-       */
-      public static double DRIVE_SMART_SCALING_FACTOR() {
-            return getDouble("drive_smart_scaling_factor", 1);
       }
 
       public static double AUTO_TRAVEL_SPEED() {
