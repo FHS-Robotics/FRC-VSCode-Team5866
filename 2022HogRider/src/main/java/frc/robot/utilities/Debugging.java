@@ -57,7 +57,7 @@ public final class Debugging {
 
             messageTimeMap.put(m, time);
             log(m.level, text);
-            debug("sendRepeating(...), messageTimeMap = " + messageTimeMap.toString());
+            verbose("sendRepeating(...), messageTimeMap = " + messageTimeMap.toString());
       }
       // endregion
 
