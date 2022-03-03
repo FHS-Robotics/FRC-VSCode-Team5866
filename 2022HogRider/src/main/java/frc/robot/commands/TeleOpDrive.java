@@ -48,7 +48,7 @@ public final class TeleOpDrive extends CommandBase {
                   doGunner();
             } else {
                   m_arm.moveSafely(0);
-                  m_elevator.stopElevator();
+                  m_elevator.move(0);
                   Debugging.sendOnce(Message.GunnerUnplugged, "The gunner's controller is unplugged!");
             }
       }
@@ -76,11 +76,11 @@ public final class TeleOpDrive extends CommandBase {
 
             int pov = OI.gunnerController.getPOV();
             if (pov == 0) {
-                  m_elevator.moveUp();
+                  m_elevator.move(1);
             } else if (pov == 180) {
-                  m_elevator.moveDown();
+                  m_elevator.move(-1);
             } else {
-                  m_elevator.stopElevator();
+                  m_elevator.move(0);
             }
       }
 }
