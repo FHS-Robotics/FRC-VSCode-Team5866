@@ -58,7 +58,6 @@ public final class Robot extends TimedRobot {
       private Command m_currentAuto;
       @Override
       public void autonomousInit() {
-            RobotMap.m_drive.prepareForAutonomous();
             m_currentAuto = new DriveForward(RobotMap.m_drive, Settings.AUTO_TRAVEL_SPEED()).withTimeout(5)
                   .andThen(
                         new ShootBalls(RobotMap.m_intake).withTimeout(2)
