@@ -32,7 +32,8 @@ public final class Robot extends TimedRobot {
 
             Debugging.info("Channel Settings");
             Debugging.info("CH_ARM: " + Settings.CH_ARM());
-            Debugging.info("CH_ELEVATOR: " + Settings.CH_ELEVATOR());  
+            Debugging.info("CH_ELEVATOR1: " + Settings.CH_ELEVATOR1());  
+            Debugging.info("CH_ELEVATOR2: " + Settings.CH_ELEVATOR2());  
             Debugging.info("CH_INTAKE: " + Settings.CH_INTAKE());
             Debugging.info("CH_W_FL: " + Settings.CH_W_FL());
             Debugging.info("CH_W_FR: " + Settings.CH_W_FR());

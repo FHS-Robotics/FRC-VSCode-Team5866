@@ -47,7 +47,7 @@ public final class TeleOpDrive extends CommandBase {
                   Debugging.resetSendOnce(Message.GunnerUnplugged);
                   doGunner();
             } else {
-                  m_arm.stopArm();
+                  m_arm.moveSafely(0);
                   m_elevator.stopElevator();
                   Debugging.sendOnce(Message.GunnerUnplugged, "The gunner's controller is unplugged!");
             }
@@ -60,23 +60,18 @@ public final class TeleOpDrive extends CommandBase {
             // System.out.println("speed:" + xSpeed + " rotation:" + zRotation);
 
             m_drive.getDrive().arcadeDrive(xSpeed, zRotation);
-
-            if (OI.driverController.getAButton()) {
-                  m_intakeSystem.set(Settings.INTAKE_SPEED());
-            } else if (OI.driverController.getBButton()) {
-                  m_intakeSystem.set(-Settings.INTAKE_SPEED());
-            } else {
-                  m_intakeSystem.set(0);
-            }
       }
 
       private void doGunner() {
+            double armSpeed = -OI.gunnerController.getLeftY();
+            m_arm.moveSafely(armSpeed);
+
             if (OI.gunnerController.getAButton()) {
-                  m_arm.moveUp();
+                  m_intakeSystem.set(Settings.INTAKE_SPEED());
             } else if (OI.gunnerController.getBButton()) {
-                  m_arm.moveDown();
+                  m_intakeSystem.set(-Settings.INTAKE_SPEED());
             } else {
-                  m_arm.stopArm();
+                  m_intakeSystem.set(0);
             }
 
             int pov = OI.gunnerController.getPOV();

@@ -1,49 +1,45 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
 import frc.robot.utilities.Debugging.Message;
 
 /**
- * Runs the robot's arm. Requires a WPI_TalonFX because
- * of it's integrated sensors.
+ * Runs the robot's arm.
  */
 public final class Arm extends SubsystemBase {
-      private final WPI_TalonFX m_arm;
-      private final TalonFXSensorCollection m_sensor;
+      private final MotorController m_arm;
 
-      public Arm(WPI_TalonFX arm) {
+      public Arm(MotorController arm) {
             m_arm = arm;
-            m_sensor = m_arm.getSensorCollection();
-            zeroSensor();
       }
 
-      public void moveUp() {
-            double amount = Settings.ARM_SPEED();
-            Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
-            m_arm.set(amount);
-      }
-
-      public void moveDown() {
-            double amount = -Settings.ARM_SPEED();
-            Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
-            m_arm.set(amount);
-      }
-
-      public void stopArm() {
-            m_arm.set(0);
-      }
-
-      public void zeroSensor() {
-            m_sensor.setIntegratedSensorPosition(0, 0);
+      /**
+       * Moves the arm safely, braking the motors when a limit switch is triggered.
+       *
+       * @param amount the percent to multiply by Settings.ARM_SPEED()
+       */
+      public void moveSafely(double amount) {
+            amount = amount * Settings.ARM_SPEED();
+            if(!RobotMap.limitUp.get() && Math.abs(amount) > 0.05) {
+                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
+                  m_arm.set(amount);
+            } else {
+                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "Breaking Arm Motor NOW; Would have set at " + amount);
+                  m_arm.set(0);
+            }
       }
 
       @Override
       public void periodic() {
-            Debugging.sendRepeating(Message.ArmSensorPosition, 3, "Arm Sensor: " + m_sensor.getIntegratedSensorPosition());
+            if (RobotMap.limitUp.get()) {
+                  Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit!");
+                  m_arm.set(0);
+            } else {
+                  Debugging.resetSendOnce(Message.ArmLimitMet);
+            }
       }
 }

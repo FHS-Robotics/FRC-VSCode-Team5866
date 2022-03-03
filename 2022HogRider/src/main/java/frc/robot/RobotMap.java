@@ -1,9 +1,12 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.TeleOpDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
@@ -17,13 +20,16 @@ import frc.robot.utilities.Settings;
  */
 public final class RobotMap {
       // region Subsystems
-      public static final Drive m_drive;
+      public static final Drive m_drive; // Initialized below
       public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushed));
-      public static final Arm m_arm = new Arm(new WPI_TalonFX(Settings.CH_ARM()));
-      public static final Elevator m_elevator = new Elevator(new WPI_TalonFX(Settings.CH_ELEVATOR()));
+      public static final Arm m_arm; // Initialized below
+      public static final Elevator m_elevator; // Initialized below
       // endregion
 
+      public static final DigitalInput limitUp = new DigitalInput(0);
+
       static {
+            // Drive
             WPI_TalonFX m_frontLeft = new WPI_TalonFX(Settings.CH_W_FL());
             WPI_TalonFX m_frontRight = new WPI_TalonFX(Settings.CH_W_FR());
             WPI_TalonFX m_backLeft = new WPI_TalonFX(Settings.CH_W_BL());
@@ -36,6 +42,17 @@ public final class RobotMap {
 
             m_drive.getDrive().setMaxOutput(.5);
             m_drive.getDrive().setDeadband(0.5);
+
+            // Arm
+            WPI_TalonFX armMotor = new WPI_TalonFX(Settings.CH_ARM());
+            armMotor.setNeutralMode(NeutralMode.Brake); // makes arm stay put when not commanded up or down
+            m_arm = new Arm(armMotor);
+
+            // Elevator
+            CANSparkMax elevatorMotor1 = new CANSparkMax(Settings.CH_ELEVATOR1(), MotorType.kBrushed);
+            CANSparkMax elevatorMotor2 = new CANSparkMax(Settings.CH_ELEVATOR2(), MotorType.kBrushed);
+            MotorControllerGroup elevatorMotors = new MotorControllerGroup(elevatorMotor1, elevatorMotor2);
+            m_elevator = new Elevator(elevatorMotors);
       }
 
       // region Commands

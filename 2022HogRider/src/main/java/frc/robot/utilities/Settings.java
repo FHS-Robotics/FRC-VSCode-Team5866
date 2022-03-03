@@ -15,7 +15,8 @@ public final class Settings {
 
             // Channels
             initInteger("ch_arm", 5);
-            initInteger("ch_elevator", 13);
+            initInteger("ch_elevator1", 6);
+            initInteger("ch_elevator2", 7);
             initInteger("ch_intake", 4);
             initInteger("ch_w_fl", 0);
             initInteger("ch_w_fr", 1);
@@ -54,8 +55,15 @@ public final class Settings {
       /**
        * Channel of the Elevator.
        */
-      public static int CH_ELEVATOR() {
-            return getInteger("ch_elevator", 0);
+      public static int CH_ELEVATOR1() {
+            return getInteger("ch_e1levator1", 0);
+      }
+
+      /**
+       * Channel of the Elevator.
+       */
+      public static int CH_ELEVATOR2() {
+            return getInteger("ch_elevator2", 0);
       }
 
       /**

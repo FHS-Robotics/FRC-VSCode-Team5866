@@ -12,8 +12,6 @@ public class LowerArm extends CommandBase {
 
     @Override
     public void execute() {
-        m_arm.moveDown();
-        //make sure command terminates after some amount of seconds or that you are using ControlMode.Position or something
-        //if you are using the vex 775 motors, then you will have to get the encoder value separately and write a PID loop
+        m_arm.moveSafely(-0.5); // Arm handles stopping the motor when the limit is reached.
     }
 }
