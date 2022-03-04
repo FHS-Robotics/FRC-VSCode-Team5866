@@ -3,7 +3,6 @@ package frc.robot.utilities;
 import edu.wpi.first.wpilibj.Preferences;
 import frc.robot.RobotMap;
 import frc.robot.commands.TeleOpDrive;
-import frc.robot.commands.autonomous.ShootBalls;
 
 /**
  * The settings of the robot that can update realtime by users with ShuffleBoard.
@@ -115,7 +114,6 @@ public final class Settings {
        * This method controls the speed at which the Intake runs.
        * 
        * @see TeleOpDrive
-       * @see ShootBalls
        */
       public static double INTAKE_SPEED() {
             return getDouble("intake_speed", 0.3);
