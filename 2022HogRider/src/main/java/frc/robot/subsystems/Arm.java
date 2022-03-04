@@ -25,7 +25,7 @@ public final class Arm extends SubsystemBase {
       public void moveSafely(double amount) {
             amount = amount * Settings.ARM_SPEED();
 
-            boolean limitHit = (RobotMap.limitUp.get()) && Settings.ARM_LIMITS_ENABLED();
+            boolean limitHit = (RobotMap.limitUp.get() && amount > 0) && Settings.ARM_LIMITS_ENABLED();
             if(!limitHit && Math.abs(amount) > 0.05) {
                   Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
                   m_arm.set(amount);
