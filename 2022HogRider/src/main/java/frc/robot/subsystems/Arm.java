@@ -45,7 +45,7 @@ public final class Arm extends SubsystemBase {
                         Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit!");
                         m_arm.set(0);
                   } else {
-                        Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit, but limits were disabled...");
+                        Debugging.sendOnce(Message.ArmLimitMet, "Ignoring upper arm limit");
                   }
             } else {
                   Debugging.resetSendOnce(Message.ArmLimitMet);
