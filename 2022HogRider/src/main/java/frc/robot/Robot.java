@@ -5,12 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.autonomous.DriveForward;
-import frc.robot.commands.autonomous.LowerArm;
-import frc.robot.commands.autonomous.ShootBalls;
 import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
 
@@ -55,28 +51,27 @@ public final class Robot extends TimedRobot {
       // endregion
 
       // region autonomous
-      private Command m_currentAuto;
+      private double autoStart;
       @Override
       public void autonomousInit() {
-            m_currentAuto = new ShootBalls(RobotMap.m_intake).withTimeout(2)
-                  .andThen(
-                        new ParallelCommandGroup(
-                              new DriveForward(RobotMap.m_drive, -0.6).withTimeout(3),
-                              new LowerArm(RobotMap.m_arm).withTimeout(2)
-                        )
-                  );
-            m_currentAuto.schedule();
+            autoStart = Timer.getFPGATimestamp();
       }
 
       @Override
       public void autonomousPeriodic() {
+            double fromStart = Timer.getFPGATimestamp() - autoStart;
+
+            if (fromStart < 2) {
+                  RobotMap.m_intake.move(-0.5);
+            } else if (fromStart < 2 + 3) {
+                  RobotMap.m_drive.arcadeDrive(-0.5, 0);
+            } else if (fromStart < 2 + 3 + 2) {
+                  RobotMap.m_arm.moveSafely(-1);
+            }
       }
 
       @Override
       public void autonomousExit() {
-            if (m_currentAuto != null) {
-                  m_currentAuto.cancel();
-            }
       }
       // endregion
 
