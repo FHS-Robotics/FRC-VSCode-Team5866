@@ -12,6 +12,6 @@ public class ShootBalls extends CommandBase {
 
       @Override
       public void execute() {
-            m_intakeSystem.move(1);
+            m_intakeSystem.move(-1);
       }
 }
