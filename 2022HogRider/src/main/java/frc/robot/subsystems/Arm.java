@@ -26,12 +26,15 @@ public final class Arm extends SubsystemBase {
             amount = amount * Settings.ARM_SPEED();
 
             boolean limitHit = (RobotMap.limitUp.get() && amount > 0) && Settings.ARM_LIMITS_ENABLED();
-            if(!limitHit && Math.abs(amount) > 0.05) {
+            if (limitHit) {
+                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "[!] Limit Hit--Stopping Arm; Would have set at " + amount);
+                  m_arm.set(0);
+            } else if(Math.abs(amount) < 0.05) {
+                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "[!] No Input--Stopping Arm; Would have set at " + amount);
+                  m_arm.set(0);
+            } else {
                   Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
                   m_arm.set(amount);
-            } else {
-                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "Breaking Arm Motor NOW; Would have set at " + amount);
-                  m_arm.set(0);
             }
       }
 
