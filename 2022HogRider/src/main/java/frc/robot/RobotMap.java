@@ -21,7 +21,7 @@ import frc.robot.utilities.Settings;
 public final class RobotMap {
       // region Subsystems
       public static final Drive m_drive; // Initialized below
-      public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushed));
+      public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushless));
       public static final Arm m_arm; // Initialized below
       public static final Elevator m_elevator; // Initialized below
       // endregion
