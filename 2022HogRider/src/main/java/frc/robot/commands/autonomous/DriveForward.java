@@ -5,16 +5,21 @@ import frc.robot.subsystems.Drive;
 
 public class DriveForward extends CommandBase {
       private final Drive m_drive;
-      private final double m_speed;
+      private final double m_meters;
 
-      public DriveForward(Drive drive, double speed) {
+      public DriveForward(Drive drive, double meters) {
             m_drive = drive;
-            m_speed = speed;
+            m_meters = meters;
+      }
+
+      @Override
+      public void initialize() {
+          m_drive.zeroPosition();
       }
 
       @Override
       public void execute() {
-            m_drive.getDrive().arcadeDrive(m_speed, 0);
+            m_drive.driveMeters(m_meters);
       }
 }
            

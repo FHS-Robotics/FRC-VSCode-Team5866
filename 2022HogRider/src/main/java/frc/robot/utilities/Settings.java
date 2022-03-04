@@ -28,7 +28,12 @@ public final class Settings {
             initDouble("arm_speed", 0.3);
             initBoolean("arm_limits_enabled", true);
             initDouble("elevator_speed", 1);
-            initDouble("auto_travel_speed", 0.4);
+            // (units per wheel rotation) = (units per rotation) * (gear ratio)
+            // (wheel rotations per meter) = 1 / (wheel circumference in meters)
+            // (units per wheel rotation) * (wheel rotations per meter)
+            initDouble("drive_meters_scaling_factor", (2048 * 3.75) * (1 / (.1524 * Math.PI)));
+            initDouble("auto_travel_meters_forwards", 1.2);
+            initDouble("auto_travel_meters_backwards", -2.5);
       }
 
       /**
@@ -145,8 +150,21 @@ public final class Settings {
             return getDouble("elevator_speed", 1);
       }
 
-      public static double AUTO_TRAVEL_SPEED() {
-            return getDouble("auto_travel_speed", 1);
+      /**
+       * The factor that converts meters to motor units.
+       * 
+       * @see Drive
+       */
+      public static double DRIVE_METERS_SCALING_FACTOR() {
+            return getDouble("drive_meters_scaling_factor", 1);
+      }
+
+      public static double AUTO_TRAVEL_METERS_FORWARDS() {
+            return getDouble("auto_travel_meters_forwards", 1);
+      }
+
+      public static double AUTO_TRAVEL_METERS_BACKWARDS() {
+            return getDouble("auto_travel_meters_backwards", 1);
       }
 
       // Past this point are helper methods used internally by

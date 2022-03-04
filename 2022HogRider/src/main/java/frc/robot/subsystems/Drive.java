@@ -1,12 +1,14 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorController;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
+import frc.robot.utilities.Settings;
 import frc.robot.utilities.Debugging.Message;
 
 /**
@@ -16,14 +18,16 @@ import frc.robot.utilities.Debugging.Message;
  * @see IMotorController
  */
 public final class Drive extends SubsystemBase {
-      /*private TalonFX m_frontLeft_1; //falcon motor
-      private CANSparkMax m_whatever; //neo motor
-
-      private VictorSPX m_victor; //victor spx*/
+      private WPI_TalonFX m_fl, m_fr, m_bl, m_br;
 
       private DifferentialDrive m_drive;
 
-      public Drive(MotorController fl, MotorController fr, MotorController bl, MotorController br) {
+      public Drive(WPI_TalonFX fl, WPI_TalonFX fr, WPI_TalonFX bl, WPI_TalonFX br) {
+            m_fl = fl;
+            m_fr = fr;
+            m_bl = bl;
+            m_br = br;
+
             m_drive = new DifferentialDrive(
                   new MotorControllerGroup(fl, bl),
                   new MotorControllerGroup(fr, br)
@@ -44,6 +48,22 @@ public final class Drive extends SubsystemBase {
                   Debugging.sendRepeating(Message.DriveSetAmount, 1, "Breaking Drive Motors NOW; Would have set at spd: " + xSpeed + ", rot: " + zRotation);
                   m_drive.stopMotor();
             }
+      }
+
+      public void zeroPosition() {
+            m_fl.setSelectedSensorPosition(0);
+            m_fr.setSelectedSensorPosition(0);
+            m_bl.setSelectedSensorPosition(0);
+            m_br.setSelectedSensorPosition(0);
+      }
+
+      public void driveMeters(double meters) {
+            double sensorUnits = meters * Settings.DRIVE_METERS_SCALING_FACTOR();
+
+            m_fl.set(ControlMode.Position, sensorUnits);
+            m_fr.set(ControlMode.Position, sensorUnits);
+            m_bl.set(ControlMode.Position, sensorUnits);
+            m_br.set(ControlMode.Position, sensorUnits);
       }
 
       public DifferentialDrive getDrive() {
