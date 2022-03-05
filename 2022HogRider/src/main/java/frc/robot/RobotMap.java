@@ -28,15 +28,20 @@ public final class RobotMap {
 
       public static final DigitalInput limitUp = new DigitalInput(0);
 
+      public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(Settings.CH_W_FL());
+      public static WPI_TalonFX m_frontRight = new WPI_TalonFX(Settings.CH_W_FR());
+      public static WPI_TalonFX m_backLeft = new WPI_TalonFX(Settings.CH_W_BL());
+      public static WPI_TalonFX m_backRight = new WPI_TalonFX(Settings.CH_W_BR());
+
       static {
             // Drive
-            WPI_TalonFX m_frontLeft = new WPI_TalonFX(Settings.CH_W_FL());
-            WPI_TalonFX m_frontRight = new WPI_TalonFX(Settings.CH_W_FR());
-            WPI_TalonFX m_backLeft = new WPI_TalonFX(Settings.CH_W_BL());
-            WPI_TalonFX m_backRight = new WPI_TalonFX(Settings.CH_W_BR());
-
             m_frontLeft.setInverted(true);
             m_backLeft.setInverted(true);
+
+            m_frontLeft.setNeutralMode(NeutralMode.Brake);
+            m_frontRight.setNeutralMode(NeutralMode.Brake);
+            m_backLeft.setNeutralMode(NeutralMode.Brake);
+            m_backRight.setNeutralMode(NeutralMode.Brake);
 
             m_drive = new Drive(m_frontLeft, m_frontRight, m_backLeft, m_backRight);
 
