@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
-import frc.robot.utilities.Debugging.Message;
 
 /**
  * Controls the elevator on the robot.
@@ -24,11 +23,12 @@ public final class Elevator extends SubsystemBase {
        */
       public void move(double amount) {
             amount = amount * Settings.ELEVATOR_SPEED();
+            Debugging.put("elevator_current_speed", amount);
             if(Math.abs(amount) > 0.05) {
-                  Debugging.sendRepeating(Message.ElevatorSetAmount, 1, "Driving Elevator Motor at " + amount);
+                  Debugging.put("elevator_brakes_on", "No");
                   m_motor.set(amount);
             } else {
-                  Debugging.sendRepeating(Message.ElevatorSetAmount, 1, "Breaking Elevator Motor NOW; Would have set at " + amount);
+                  Debugging.put("elevator_brakes_on", "Yes");
                   m_motor.set(0);
             }
       }

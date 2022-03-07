@@ -6,7 +6,6 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.IntakeSystem;
 import frc.robot.utilities.Debugging;
-import frc.robot.utilities.Debugging.Message;
 import frc.robot.OI;
 
 /**
@@ -30,20 +29,20 @@ public final class TeleOpDrive extends CommandBase {
       @Override
       public void execute() {
             if (OI.driverController.isConnected()) {
-                  Debugging.resetSendOnce(Message.DriverUnplugged);
+                  Debugging.put("driver_connected", "Yes");
 
                   double xSpeed = -OI.driverController.getLeftY();
                   double zRotation = OI.driverController.getRightX();
                   m_drive.arcadeDrive(xSpeed, zRotation);
             } else {
-                  Debugging.sendOnce(Message.DriverUnplugged, "The driver's controller is unplugged!");
+                  Debugging.put("driver_connected", "No");
 
                   m_drive.getDrive().stopMotor();
             }
             
 
             if (OI.gunnerController.isConnected()) {
-                  Debugging.resetSendOnce(Message.GunnerUnplugged);
+                  Debugging.put("gunner_connected", "Yes");
 
                   double armSpeed = -OI.gunnerController.getLeftY();
                   m_arm.moveSafely(armSpeed);
@@ -65,7 +64,7 @@ public final class TeleOpDrive extends CommandBase {
                         m_elevator.move(0);
                   }
             } else {
-                  Debugging.sendOnce(Message.GunnerUnplugged, "The gunner's controller is unplugged!");
+                  Debugging.put("gunner_connected", "No");
 
                   m_intakeSystem.move(0);
                   m_arm.moveSafely(0);

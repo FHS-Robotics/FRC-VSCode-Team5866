@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
-import frc.robot.utilities.Debugging.Message;
 
 /**
  * Runs the robot's arm.
@@ -25,30 +24,14 @@ public final class Arm extends SubsystemBase {
       public void moveSafely(double amount) {
             amount = amount * Settings.ARM_SPEED();
 
-            boolean limitHit = (RobotMap.limitUp.get() && amount > 0) && Settings.ARM_LIMITS_ENABLED();
-            if (limitHit) {
-                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "[!] Limit Hit--Stopping Arm; Would have set at " + amount);
+            if (amount < .1 && amount > -.1)
+                  amount = 0;
+            
+            SmartDashboard.putBoolean("LIMIT", RobotMap.limitUp.get());
+            SmartDashboard.putNumber("AMM", amount);
+            if (!RobotMap.limitUp.get() && amount >= 0 && Settings.ARM_LIMITS_ENABLED())
                   m_arm.set(0);
-            } else if(Math.abs(amount) < 0.05) {
-                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "[!] No Input--Stopping Arm; Would have set at " + amount);
-                  m_arm.set(0);
-            } else {
-                  Debugging.sendRepeating(Message.ArmSetAmount, 1, "Driving Arm Motor at " + amount);
+            else
                   m_arm.set(amount);
-            }
-      }
-
-      @Override
-      public void periodic() {
-            if (RobotMap.limitUp.get()) {
-                  if (Settings.ARM_LIMITS_ENABLED()) {
-                        Debugging.sendOnce(Message.ArmLimitMet, "Hit upper arm limit!");
-                        m_arm.set(0);
-                  } else {
-                        Debugging.sendOnce(Message.ArmLimitMet, "Ignoring upper arm limit");
-                  }
-            } else {
-                  Debugging.resetSendOnce(Message.ArmLimitMet);
-            }
       }
 }

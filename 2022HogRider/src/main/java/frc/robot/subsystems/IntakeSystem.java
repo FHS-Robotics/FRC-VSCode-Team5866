@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
-import frc.robot.utilities.Debugging.Message;
 
 /**
  * Encapsulates all to do with taking in balls.
@@ -23,11 +22,12 @@ public final class IntakeSystem extends SubsystemBase {
        */
       public void move(double amount) {
             amount = amount * Settings.INTAKE_SPEED();
+            Debugging.put("intake_current_speed", amount);
             if(Math.abs(amount) > 0.05) {
-                  Debugging.sendRepeating(Message.IntakeSetAmount, 1, "Running Intake at " + amount);
+                  Debugging.put("intake_brakes_on", "No");
                   m_motor.set(amount);
             } else {
-                  Debugging.sendRepeating(Message.IntakeSetAmount, 1, "Breaking Intake NOW; Would have set at " + amount);
+                  Debugging.put("intake_brakes_on", "Yes");
                   m_motor.set(0);
             }
       }

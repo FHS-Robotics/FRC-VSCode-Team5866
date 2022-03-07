@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
-import frc.robot.utilities.Debugging.Message;
 
 /**
  * Controls robot movement.
@@ -41,11 +40,14 @@ public final class Drive extends SubsystemBase {
        * @param zRotation turning speed
        */
       public void arcadeDrive(double xSpeed, double zRotation) {
+            Debugging.put("drive_speed", "spd: " + xSpeed + ", rot: " + zRotation);
             if(Math.abs(xSpeed) > 0.05) {
-                  Debugging.sendRepeating(Message.DriveSetAmount, 1, "Driving Drive Motors at spd: " + xSpeed + ", rot: " + zRotation);
+                  Debugging.put("drive_brakes_on", "No");
+
                   m_drive.arcadeDrive(xSpeed, zRotation);
             } else {
-                  Debugging.sendRepeating(Message.DriveSetAmount, 1, "Breaking Drive Motors NOW; Would have set at spd: " + xSpeed + ", rot: " + zRotation);
+                  Debugging.put("drive_brakes_on", "Yes");
+
                   m_drive.stopMotor();
             }
       }
