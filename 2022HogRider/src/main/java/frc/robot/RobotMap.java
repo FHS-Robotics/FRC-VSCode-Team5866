@@ -12,7 +12,8 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.IntakeSystem;
-import frc.robot.utilities.Settings;
+
+import static frc.robot.Constants.*;
 
 /**
  * This class makes all of the parts and subsystems that make up the
@@ -21,17 +22,17 @@ import frc.robot.utilities.Settings;
 public final class RobotMap {
       // region Subsystems
       public static final Drive m_drive; // Initialized below
-      public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(Settings.CH_INTAKE(), MotorType.kBrushless));
+      public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(kChIntake, MotorType.kBrushless));
       public static final Arm m_arm; // Initialized below
       public static final Elevator m_elevator; // Initialized below
       // endregion
 
-      public static final DigitalInput limitUp = new DigitalInput(0);
+      public static final DigitalInput limitUp = new DigitalInput(kChLimitUp);
 
-      public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(Settings.CH_W_FL());
-      public static WPI_TalonFX m_frontRight = new WPI_TalonFX(Settings.CH_W_FR());
-      public static WPI_TalonFX m_backLeft = new WPI_TalonFX(Settings.CH_W_BL());
-      public static WPI_TalonFX m_backRight = new WPI_TalonFX(Settings.CH_W_BR());
+      public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(kChWheelFL);
+      public static WPI_TalonFX m_frontRight = new WPI_TalonFX(kChWheelFR);
+      public static WPI_TalonFX m_backLeft = new WPI_TalonFX(kChWheelBL);
+      public static WPI_TalonFX m_backRight = new WPI_TalonFX(kChWheelBR);
 
       static {
             // Drive
@@ -49,12 +50,12 @@ public final class RobotMap {
             m_drive.getDrive().setDeadband(0.5);
 
             // Arm
-            CANSparkMax armMotor = new CANSparkMax(Settings.CH_ARM(), MotorType.kBrushless);
+            CANSparkMax armMotor = new CANSparkMax(kChArm, MotorType.kBrushless);
             m_arm = new Arm(armMotor);
 
             // Elevator
-            CANSparkMax elevatorMotor1 = new CANSparkMax(Settings.CH_ELEVATOR1(), MotorType.kBrushless);
-            CANSparkMax elevatorMotor2 = new CANSparkMax(Settings.CH_ELEVATOR2(), MotorType.kBrushless);
+            CANSparkMax elevatorMotor1 = new CANSparkMax(kChElevator1, MotorType.kBrushless);
+            CANSparkMax elevatorMotor2 = new CANSparkMax(kChElevator2, MotorType.kBrushless);
             MotorControllerGroup elevatorMotors = new MotorControllerGroup(elevatorMotor1, elevatorMotor2);
             m_elevator = new Elevator(elevatorMotors);
       }

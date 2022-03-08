@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
-import frc.robot.utilities.Settings;
+
+import static frc.robot.Constants.*;
 
 /**
  * Controls robot movement.
@@ -60,7 +61,7 @@ public final class Drive extends SubsystemBase {
       }
 
       public void driveMeters(double meters) {
-            double sensorUnits = meters * Settings.DRIVE_METERS_SCALING_FACTOR();
+            double sensorUnits = meters * kEncoderToMeterFactor;
 
             m_fl.set(ControlMode.Position, sensorUnits);
             m_fr.set(ControlMode.Position, sensorUnits);

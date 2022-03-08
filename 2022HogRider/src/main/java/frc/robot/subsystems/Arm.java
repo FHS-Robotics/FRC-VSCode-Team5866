@@ -6,6 +6,8 @@ import frc.robot.RobotMap;
 import frc.robot.utilities.Debugging;
 import frc.robot.utilities.Settings;
 
+import static frc.robot.Constants.*;
+
 /**
  * Runs the robot's arm.
  */
@@ -22,14 +24,14 @@ public final class Arm extends SubsystemBase {
        * @param amount the percent to multiply by Settings.ARM_SPEED()
        */
       public void moveSafely(double amount) {
-            amount = amount * Settings.ARM_SPEED();
+            amount = amount * kArmSpeed;
 
             if (amount < .1 && amount > -.1)
                   amount = 0;
-            
+
             Debugging.put("arm_limit_up", RobotMap.limitUp.get() ? "Yes" : "No");
             Debugging.put("arm_current_speed", amount);
-            if (!RobotMap.limitUp.get() && amount >= 0 && Settings.ARM_LIMITS_ENABLED()) {
+            if (!RobotMap.limitUp.get() && amount >= 0 && Settings.get("arm_limits_enabled", true)) {
                   Debugging.put("arm_brakes_on", "Yes");
                   m_arm.set(0);
             } else {

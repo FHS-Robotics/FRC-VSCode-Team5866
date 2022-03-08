@@ -3,7 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
-import frc.robot.utilities.Settings;
+
+import static frc.robot.Constants.*;
 
 /**
  * Controls the elevator on the robot.
@@ -22,7 +23,7 @@ public final class Elevator extends SubsystemBase {
        * @param amount the percent to multiply by Settings.ELEVATOR_SPEED()
        */
       public void move(double amount) {
-            amount = amount * Settings.ELEVATOR_SPEED();
+            amount = amount * kElevatorSpeed;
             Debugging.put("elevator_current_speed", amount);
             if(Math.abs(amount) > 0.05) {
                   Debugging.put("elevator_brakes_on", "No");
