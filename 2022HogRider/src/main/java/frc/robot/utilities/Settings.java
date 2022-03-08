@@ -8,10 +8,8 @@ import frc.robot.commands.TeleOpDrive;
  * The settings of the robot that can update realtime by users with ShuffleBoard.
  */
 public final class Settings {
-      public static void init() {
-            // Debugging
-            initInteger("debug_level", 2);
 
+      public static void init() {
             // Channels
             initInteger("ch_arm", 5);
             initInteger("ch_elevator1", 6);
@@ -31,15 +29,6 @@ public final class Settings {
             // (wheel rotations per meter) = 1 / (wheel circumference in meters)
             // (units per wheel rotation) * (wheel rotations per meter)
             initDouble("drive_meters_scaling_factor", (2048 * 3.75) * (1 / (.1524 * Math.PI)));
-      }
-
-      /**
-       * This is the log level of the robot.
-       * 
-       * @see Debugging
-       */
-      public static int LOG_LEVEL() {
-            return getInteger("debug_level", 0);
       }
 
       /**
