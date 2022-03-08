@@ -49,13 +49,12 @@ public final class RobotMap {
             m_drive.getDrive().setDeadband(0.5);
 
             // Arm
-            WPI_TalonFX armMotor = new WPI_TalonFX(Settings.CH_ARM());
-            armMotor.setNeutralMode(NeutralMode.Brake); // makes arm stay put when not commanded up or down
+            CANSparkMax armMotor = new CANSparkMax(Settings.CH_ARM(), MotorType.kBrushless);
             m_arm = new Arm(armMotor);
 
             // Elevator
-            CANSparkMax elevatorMotor1 = new CANSparkMax(Settings.CH_ELEVATOR1(), MotorType.kBrushed);
-            CANSparkMax elevatorMotor2 = new CANSparkMax(Settings.CH_ELEVATOR2(), MotorType.kBrushed);
+            CANSparkMax elevatorMotor1 = new CANSparkMax(Settings.CH_ELEVATOR1(), MotorType.kBrushless);
+            CANSparkMax elevatorMotor2 = new CANSparkMax(Settings.CH_ELEVATOR2(), MotorType.kBrushless);
             MotorControllerGroup elevatorMotors = new MotorControllerGroup(elevatorMotor1, elevatorMotor2);
             m_elevator = new Elevator(elevatorMotors);
       }
