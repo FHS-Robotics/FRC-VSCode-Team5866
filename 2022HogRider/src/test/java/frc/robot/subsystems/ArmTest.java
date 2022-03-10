@@ -33,37 +33,47 @@ public class ArmTest {
         m_limitUpSim = new DIOSim(limitUp);
     }
 
-    private static class LimitTestData {
-        private final boolean limitActivated;
-        private final double moveSpeed;
-        private final double expectedSpeed;
+    @Test
+    public void upperLimitBreaksUpwards() {
+        m_limitUpSim.setValue(!Constants.kInvertLimitUp);
+        m_arm.moveSafely(1);
 
-        private LimitTestData(boolean limitActivated, double moveSpeed, double expectedSpeed) {
-            this.limitActivated = limitActivated;
-            this.moveSpeed = moveSpeed;
-            this.expectedSpeed = expectedSpeed;
-        }
+        assertEquals(1, m_motorSim.setSpeeds.size());
+        assertEquals(0, m_motorSim.setSpeeds.get(0), DELTA);
+
+        m_motorSim.resetMock();
     }
 
     @Test
-    public void upperLimitOnlyBrakesForwardMovement() {
-        LimitTestData[] testCases = new LimitTestData[] {
-            new LimitTestData(true, 1, 0d), // Upper Limit active, shouldn't move up
-            new LimitTestData(true, -1, -Constants.kArmSpeed), // Upper Limit active, should move down
-            new LimitTestData(false, 1, Constants.kArmSpeed), // Upper Limit unactive, should move up
-            new LimitTestData(false, -1, -Constants.kArmSpeed), // Upper Limit unactive, should move down
-        };
+    public void upperLimitMovesDownwards() {
+        m_limitUpSim.setValue(!Constants.kInvertLimitUp);
+        m_arm.moveSafely(-1);
 
-        for (var testCase : testCases) {
-            // The "^" operator means X-OR, giving "true" when the two
-            // booleans are different values.
-            m_limitUpSim.setValue(testCase.limitActivated ^ Constants.kInvertLimitUp);
-            m_arm.moveSafely(testCase.moveSpeed);
+        assertEquals(1, m_motorSim.setSpeeds.size());
+        assertEquals(-Constants.kArmSpeed, m_motorSim.setSpeeds.get(0), DELTA);
 
-            assertEquals(1, m_motorSim.setSpeeds.size());
-            assertEquals(testCase.expectedSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        m_motorSim.resetMock();
+    }
 
-            m_motorSim.resetMock();
-        }
+    @Test
+    public void noUpperLimitMovesUpwards() {
+        m_limitUpSim.setValue(Constants.kInvertLimitUp);
+        m_arm.moveSafely(1);
+
+        assertEquals(1, m_motorSim.setSpeeds.size());
+        assertEquals(Constants.kArmSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+
+        m_motorSim.resetMock();
+    }
+
+    @Test
+    public void noUpperLimitMovesDownwards() {
+        m_limitUpSim.setValue(Constants.kInvertLimitUp);
+        m_arm.moveSafely(-1);
+
+        assertEquals(1, m_motorSim.setSpeeds.size());
+        assertEquals(-Constants.kArmSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+
+        m_motorSim.resetMock();
     }
 }
