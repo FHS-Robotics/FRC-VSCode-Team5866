@@ -27,7 +27,7 @@ public final class RobotMap {
       public static final Elevator m_elevator; // Initialized below
       // endregion
 
-      public static final DigitalInput limitUp = new DigitalInput(kChLimitUp);
+      public static final DigitalInput m_limitUp = new DigitalInput(kChLimitUp);
 
       public static WPI_TalonFX m_frontLeft = new WPI_TalonFX(kChWheelFL);
       public static WPI_TalonFX m_frontRight = new WPI_TalonFX(kChWheelFR);
@@ -51,7 +51,7 @@ public final class RobotMap {
 
             // Arm
             CANSparkMax armMotor = new CANSparkMax(kChArm, MotorType.kBrushless);
-            m_arm = new Arm(armMotor);
+            m_arm = new Arm(armMotor, m_limitUp);
 
             // Elevator
             CANSparkMax elevatorMotor1 = new CANSparkMax(kChElevator1, MotorType.kBrushless);
