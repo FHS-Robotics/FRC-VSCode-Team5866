@@ -1,0 +1,69 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
+import frc.robot.Constants;
+import frc.robot.MockMotorController;
+import org.junit.*;
+
+import static org.junit.Assert.*;
+
+public class ArmTest {
+    private final static double DELTA = 1e-2;
+    private static Arm m_arm;
+    private static MockMotorController m_motorSim;
+    private static DIOSim m_limitUpSim;
+
+    /**
+     * Initializes testing, is static because only one Digital Input
+     * may be made at a time.
+     */
+    @BeforeClass
+    public static void setup() {
+        assert HAL.initialize(500, 0);
+        // Create a fake MotorController for testing
+        m_motorSim = new MockMotorController();
+        // Create a "real" Digital Input
+        DigitalInput limitUp = new DigitalInput(0);
+        m_arm = new Arm(m_motorSim, limitUp);
+        // This DIOSim allows us to give "fake" outputs to the
+        // "real" DigitalInput.
+        // This is pretty nifty for testing.
+        m_limitUpSim = new DIOSim(limitUp);
+    }
+
+    private static class LimitTestData {
+        private final boolean limitActivated;
+        private final double moveSpeed;
+        private final double expectedSpeed;
+
+        private LimitTestData(boolean limitActivated, double moveSpeed, double expectedSpeed) {
+            this.limitActivated = limitActivated;
+            this.moveSpeed = moveSpeed;
+            this.expectedSpeed = expectedSpeed;
+        }
+    }
+
+    @Test
+    public void upperLimitOnlyBrakesForwardMovement() {
+        LimitTestData[] testCases = new LimitTestData[] {
+            new LimitTestData(true, 1, 0d), // Upper Limit active, shouldn't move up
+            new LimitTestData(true, -1, -Constants.kArmSpeed), // Upper Limit active, should move down
+            new LimitTestData(false, 1, Constants.kArmSpeed), // Upper Limit unactive, should move up
+            new LimitTestData(false, -1, -Constants.kArmSpeed), // Upper Limit unactive, should move down
+        };
+
+        for (var testCase : testCases) {
+            // The "^" operator means X-OR, giving "true" when the two
+            // booleans are different values.
+            m_limitUpSim.setValue(testCase.limitActivated ^ Constants.kInvertLimitUp);
+            m_arm.moveSafely(testCase.moveSpeed);
+
+            assertEquals(1, m_motorSim.setSpeeds.size());
+            assertEquals(testCase.expectedSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+
+            m_motorSim.resetMock();
+        }
+    }
+}
