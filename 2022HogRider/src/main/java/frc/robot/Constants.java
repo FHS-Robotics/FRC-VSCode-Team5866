@@ -18,4 +18,6 @@ public final class Constants {
       public final static double kIntakeSpeed = 0.3;
       public final static double kArmSpeed = 0.3;
       public final static double kElevatorSpeed = .25;
+
+      public final static boolean kInvertLimitUp = true;
 }

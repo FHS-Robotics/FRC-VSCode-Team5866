@@ -38,9 +38,15 @@ public final class Arm extends SubsystemBase {
             if (amount < .1 && amount > -.1)
                   amount = 0;
 
-            Debugging.put("arm_limit_up", !m_limitUp.get() ? "Yes" : "No");
+            Debugging.put("arm_limit_up", kInvertLimitUp ^ m_limitUp.get() ? "Yes" : "No");
             Debugging.put("arm_current_speed", amount);
-            if (!m_limitUp.get() && amount >= 0 && Settings.get("arm_limits_enabled", true)) {
+
+            // The "^" operator does an X-OR returning "true" when
+            // the booleans are different values.
+            // In other words, when kInvertLimitUp is true,
+            // m_limitUp.get() is inverted.
+            boolean hitLimit = kInvertLimitUp ^ m_limitUp.get() && amount >= 0;
+            if (hitLimit && Settings.get("arm_limits_enabled", true)) {
                   Debugging.put("arm_brakes_on", "Yes");
                   m_arm.set(0);
             } else {
