@@ -61,6 +61,16 @@ public final class Robot extends TimedRobot {
       }
       // endregion
 
+      // region simulation
+      @Override
+      public void simulationInit() {
+      }
+
+      @Override
+      public void simulationPeriodic() {
+      }
+      // endregion
+
       // region test
       @Override
       public void testInit() {
