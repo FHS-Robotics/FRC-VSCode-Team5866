@@ -67,6 +67,12 @@ public final class Drive extends SubsystemBase {
             m_fr.set(ControlMode.Position, sensorUnits);
             m_bl.set(ControlMode.Position, sensorUnits);
             m_br.set(ControlMode.Position, sensorUnits);
+
+            // Differiential Drive has a built-in safety mechanism
+            // that stops it's motors when it has not been updated recently
+            //
+            // feed() tells the MotorSafety that we have updated motor values.
+            m_drive.feed();
       }
 
       public DifferentialDrive getDrive() {
