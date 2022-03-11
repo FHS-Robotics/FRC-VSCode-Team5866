@@ -17,7 +17,7 @@ import frc.robot.utilities.Settings;
  */
 
 public final class Robot extends TimedRobot {
-      private RobotContainer m_robotContainer = new RobotContainer();
+      private RobotContainer m_robotContainer = new RobotContainer(this);
 
       // region general
       @Override

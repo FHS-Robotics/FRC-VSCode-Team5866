@@ -19,11 +19,15 @@ import frc.robot.subsystems.Intake;
 
 import static frc.robot.Constants.*;
 
+import java.util.function.Function;
+
 /**
  * This class makes all of the parts and subsystems that make up the
  * robot accessible throughout the code.
  */
 public final class RobotContainer {
+      private final Robot m_robot;
+
       // region Controllers
       private final XboxController m_driverController = new XboxController(0);
       private final XboxController m_gunnerController = new XboxController(1);
@@ -40,7 +44,9 @@ public final class RobotContainer {
       private final AutonomousCommand m_autonomousCommand = new AutonomousCommand();
       // endregion
 
-      public RobotContainer() {
+      public RobotContainer(Robot robot) {
+            m_robot = robot;
+
             configureSubsystems();
             configureButtonBindings();
       }
@@ -80,13 +86,24 @@ public final class RobotContainer {
        * This hooks up all the buttons to commands for teleop
        */
       private void configureButtonBindings() {
+            // inTeleop() creates a new function from a runnable
+            // so that the runnable's code will only execute when
+            // the robot is in tele op mode.
+            Function<Runnable, Runnable> inTeleop = (run) -> {
+                  return () -> {
+                        if (m_robot.isTeleopEnabled()) {
+                              run.run();
+                        }
+                  };
+            };
+
             // region Driver Controller
 
             // Lambda (function) that arcade drives
             // according to the driver controller.
             Runnable driveFn = () -> m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
             m_drive.setDefaultCommand(
-                  new RunCommand(driveFn, m_drive)
+                  new RunCommand(inTeleop.apply(driveFn), m_drive)
             );
 
             // endregion
@@ -94,7 +111,7 @@ public final class RobotContainer {
             // region Gunner Controller
 
             Runnable armFn = () -> m_arm.moveSafely(-m_gunnerController.getLeftY());
-            m_arm.setDefaultCommand(new RunCommand(armFn, m_arm));
+            m_arm.setDefaultCommand(new RunCommand(inTeleop.apply(armFn), m_arm));
 
             Runnable elevatorFn = () -> {
                   switch(m_gunnerController.getPOV()) {
@@ -108,7 +125,7 @@ public final class RobotContainer {
                               m_elevator.move(0);
                   }
             };
-            m_elevator.setDefaultCommand(new RunCommand(elevatorFn, m_elevator));
+            m_elevator.setDefaultCommand(new RunCommand(inTeleop.apply(elevatorFn), m_elevator));
 
             var gunnerBtnA = new JoystickButton(m_gunnerController, Button.kA.value);
             var gunnerBtnB = new JoystickButton(m_gunnerController, Button.kB.value);
