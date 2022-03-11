@@ -2,7 +2,7 @@ package frc.robot.utilities;
 
 import edu.wpi.first.wpilibj.Preferences;
 
-public class Settings {
+public final class Settings {
     public static void init() {
         get("arm_limits_enabled", true);
     }

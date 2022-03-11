@@ -5,7 +5,7 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
-public class MockMotorController implements MotorController {
+public final class MockMotorController implements MotorController {
     public List<Double> setSpeeds = new ArrayList<>();
     public boolean wasDisabled = false;
     public boolean wasStopped = false;

@@ -8,7 +8,7 @@ import org.junit.Test;
 import frc.robot.Constants;
 import frc.robot.MockMotorController;
 
-public class ElevatorTest {
+public final class ElevatorTest {
     private final static double DELTA = 1e-2;
     private final MockMotorController m_motorSim = new MockMotorController();
     private final Elevator m_elevator = new Elevator(m_motorSim);

@@ -9,7 +9,7 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-public class ArmTest {
+public final class ArmTest {
     private final static double DELTA = 1e-2;
     private static Arm m_arm;
     private static MockMotorController m_motorSim;

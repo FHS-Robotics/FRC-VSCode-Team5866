@@ -8,7 +8,7 @@ import org.junit.Test;
 import frc.robot.Constants;
 import frc.robot.MockMotorController;
 
-public class IntakeSystemTest {
+public final class IntakeSystemTest {
     private final static double DELTA = 1e-2;
     private final MockMotorController m_motorSim = new MockMotorController();
     private final Intake m_intakeSystem = new Intake(m_motorSim);
