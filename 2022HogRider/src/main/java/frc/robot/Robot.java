@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utilities.Settings;
 
@@ -18,6 +17,8 @@ import frc.robot.utilities.Settings;
  */
 
 public final class Robot extends TimedRobot {
+      private RobotContainer m_robotContainer = new RobotContainer();
+
       // region general
       @Override
       public void robotInit() {
@@ -31,47 +32,28 @@ public final class Robot extends TimedRobot {
       // endregion
 
       // region autonomous
-      private double autoStart;
       @Override
       public void autonomousInit() {
-            autoStart = Timer.getFPGATimestamp();
+            m_robotContainer.getAutonomousCommand().schedule();
       }
 
       @Override
       public void autonomousPeriodic() {
-            double fromStart = Timer.getFPGATimestamp() - autoStart;
-
-            if (fromStart < 2) {
-                  RobotMap.m_intake.move(-1);
-            } else if (fromStart < 3.5) {
-                  RobotMap.m_intake.move(0);
-                  RobotMap.m_frontLeft.set(-0.25);
-                  RobotMap.m_frontRight.set(-0.25);
-                  RobotMap.m_backLeft.set(-0.25);
-                  RobotMap.m_backRight.set(-0.25);
-            } else {
-                  RobotMap.m_frontLeft.set(0);
-                  RobotMap.m_frontRight.set(0);
-                  RobotMap.m_backLeft.set(0);
-                  RobotMap.m_backRight.set(0);
-                  System.out.println("Waiting for Auto Finish...");
-            }
       }
 
       @Override
       public void autonomousExit() {
+            m_robotContainer.getAutonomousCommand().cancel();
       }
       // endregion
 
       // region teleop
       @Override
       public void teleopInit() {
-            RobotMap.m_teleOpDrive.schedule();
       }
 
       @Override
       public void teleopExit() {
-            RobotMap.m_teleOpDrive.end(false);
       }
 
       @Override
