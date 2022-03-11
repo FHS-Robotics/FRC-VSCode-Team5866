@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.IntakeSystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.utilities.Debugging;
 import frc.robot.OI;
 
@@ -15,10 +15,10 @@ import frc.robot.OI;
 public final class TeleOpDrive extends CommandBase {
       Arm m_arm;
       Elevator m_elevator;
-      IntakeSystem m_intakeSystem;
+      Intake m_intakeSystem;
       Drive m_drive;
 
-      public TeleOpDrive(Arm arm, Elevator elevator, IntakeSystem intakeSystem, Drive drive) {
+      public TeleOpDrive(Arm arm, Elevator elevator, Intake intakeSystem, Drive drive) {
             m_arm = arm;
             m_elevator = elevator;
             m_intakeSystem = intakeSystem;

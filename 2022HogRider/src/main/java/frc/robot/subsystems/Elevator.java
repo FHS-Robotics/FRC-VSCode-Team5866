@@ -23,7 +23,7 @@ public final class Elevator extends SubsystemBase {
        * @param amount the percent to multiply by Settings.ELEVATOR_SPEED()
        */
       public void move(double amount) {
-            amount = amount * kElevatorSpeed;
+            amount = amount * kSpeedElevator;
             Debugging.put("elevator_current_speed", amount);
             if(Math.abs(amount) > 0.05) {
                   Debugging.put("elevator_brakes_on", "No");

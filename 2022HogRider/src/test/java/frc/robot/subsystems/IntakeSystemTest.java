@@ -11,7 +11,7 @@ import frc.robot.MockMotorController;
 public class IntakeSystemTest {
     private final static double DELTA = 1e-2;
     private final MockMotorController m_motorSim = new MockMotorController();
-    private final IntakeSystem m_intakeSystem = new IntakeSystem(m_motorSim);
+    private final Intake m_intakeSystem = new Intake(m_motorSim);
 
     @After
     public void teardown() {
@@ -23,7 +23,7 @@ public class IntakeSystemTest {
         m_intakeSystem.move(1);
         
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(Constants.kIntakeSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(Constants.kSpeedIntake, m_motorSim.setSpeeds.get(0), DELTA);
     }
     
     @Test
@@ -31,7 +31,7 @@ public class IntakeSystemTest {
         m_intakeSystem.move(-1);
         
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(-Constants.kIntakeSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(-Constants.kSpeedIntake, m_motorSim.setSpeeds.get(0), DELTA);
     }
     @Test
     public void breaks() {

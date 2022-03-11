@@ -33,7 +33,7 @@ public final class Arm extends SubsystemBase {
        * @param amount the percent to multiply by Settings.ARM_SPEED()
        */
       public void moveSafely(double amount) {
-            amount = amount * kArmSpeed;
+            amount = amount * kSpeedArm;
 
             if (amount < .1 && amount > -.1)
                   amount = 0;

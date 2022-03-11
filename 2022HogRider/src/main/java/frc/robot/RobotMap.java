@@ -11,7 +11,7 @@ import frc.robot.commands.TeleOpDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.IntakeSystem;
+import frc.robot.subsystems.Intake;
 
 import static frc.robot.Constants.*;
 
@@ -22,7 +22,7 @@ import static frc.robot.Constants.*;
 public final class RobotMap {
       // region Subsystems
       public static final Drive m_drive; // Initialized below
-      public static final IntakeSystem m_intake = new IntakeSystem(new CANSparkMax(kChIntake, MotorType.kBrushless));
+      public static final Intake m_intake = new Intake(new CANSparkMax(kChIntake, MotorType.kBrushless));
       public static final Arm m_arm; // Initialized below
       public static final Elevator m_elevator; // Initialized below
       // endregion

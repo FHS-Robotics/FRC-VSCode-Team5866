@@ -50,7 +50,7 @@ public class ArmTest {
         m_arm.moveSafely(-1);
 
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(-Constants.kArmSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(-Constants.kSpeedArm, m_motorSim.setSpeeds.get(0), DELTA);
 
         m_motorSim.resetMock();
     }
@@ -61,7 +61,7 @@ public class ArmTest {
         m_arm.moveSafely(1);
 
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(Constants.kArmSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(Constants.kSpeedArm, m_motorSim.setSpeeds.get(0), DELTA);
 
         m_motorSim.resetMock();
     }
@@ -72,7 +72,7 @@ public class ArmTest {
         m_arm.moveSafely(-1);
 
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(-Constants.kArmSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(-Constants.kSpeedArm, m_motorSim.setSpeeds.get(0), DELTA);
 
         m_motorSim.resetMock();
     }

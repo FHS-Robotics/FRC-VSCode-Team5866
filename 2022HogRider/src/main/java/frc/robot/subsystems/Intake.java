@@ -9,10 +9,10 @@ import static frc.robot.Constants.*;
 /**
  * Encapsulates all to do with taking in balls.
  */
-public final class IntakeSystem extends SubsystemBase {
+public final class Intake extends SubsystemBase {
       private final MotorController m_motor;
 
-      public IntakeSystem(MotorController motor) {
+      public Intake(MotorController motor) {
             m_motor = motor;
       }
 
@@ -22,7 +22,7 @@ public final class IntakeSystem extends SubsystemBase {
        * @param amount the percent to multiply by Settings.INTAKE_SPEED()
        */
       public void move(double amount) {
-            amount = amount * kIntakeSpeed;
+            amount = amount * kSpeedIntake;
             Debugging.put("intake_current_speed", amount);
             if(Math.abs(amount) > 0.05) {
                   Debugging.put("intake_brakes_on", "No");

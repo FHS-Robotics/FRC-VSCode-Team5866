@@ -15,9 +15,9 @@ public final class Constants {
       public final static int kChLimitUp = 0;
 
       public final static double kEncoderToMeterFactor = (2048 * 3.75) * (1 / (.1524 * Math.PI));
-      public final static double kIntakeSpeed = 0.3;
-      public final static double kArmSpeed = 0.3;
-      public final static double kElevatorSpeed = .25;
+      public final static double kSpeedIntake = 0.3;
+      public final static double kSpeedArm = 0.3;
+      public final static double kSpeedElevator = .25;
 
       public final static boolean kInvertLimitUp = true;
 }

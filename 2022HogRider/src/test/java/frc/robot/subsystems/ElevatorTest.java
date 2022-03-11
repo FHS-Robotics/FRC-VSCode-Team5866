@@ -23,7 +23,7 @@ public class ElevatorTest {
         m_elevator.move(1);
         
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(Constants.kElevatorSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(Constants.kSpeedElevator, m_motorSim.setSpeeds.get(0), DELTA);
     }
     
     @Test
@@ -31,7 +31,7 @@ public class ElevatorTest {
         m_elevator.move(-1);
         
         assertEquals(1, m_motorSim.setSpeeds.size());
-        assertEquals(-Constants.kElevatorSpeed, m_motorSim.setSpeeds.get(0), DELTA);
+        assertEquals(-Constants.kSpeedElevator, m_motorSim.setSpeeds.get(0), DELTA);
     }
     
     @Test
