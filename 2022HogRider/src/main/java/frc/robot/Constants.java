@@ -1,7 +1,7 @@
 package frc.robot;
 
 /**
- * The settings of the robot that can update realtime by users with ShuffleBoard.
+ * Magic numbers of the Robot.
  */
 public final class Constants {
       public final static int kChArm = 5;
