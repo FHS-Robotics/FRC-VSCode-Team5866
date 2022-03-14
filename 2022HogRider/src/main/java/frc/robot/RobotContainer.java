@@ -52,7 +52,7 @@ public final class RobotContainer {
       }
       
       /**
-       * This creates all the motors and sensors objecst, and this
+       * This creates all the motors and sensors objects, and this
        * passes them to subsystems to instantiate them.
        */
       private void configureSubsystems() {
@@ -88,7 +88,7 @@ public final class RobotContainer {
       private void configureButtonBindings() {
             // inTeleop() creates a new function from a runnable
             // so that the runnable's code will only execute when
-            // the robot is in tele op mode.
+            // the robot is in teleop mode.
             Function<Runnable, Runnable> inTeleop = (run) -> {
                   return () -> {
                         if (m_robot.isTeleopEnabled()) {
@@ -131,7 +131,7 @@ public final class RobotContainer {
             var gunnerBtnB = new JoystickButton(m_gunnerController, Button.kB.value);
 
             gunnerBtnA
-            // Makes an imganiary Trigger that is active when
+            // Makes an imaginary Trigger that is active when
             // the A button is pressed and the B button is released
                   .and(gunnerBtnB.negate())
                   .whileActiveContinuous(() -> m_intake.move(1), m_intake);
