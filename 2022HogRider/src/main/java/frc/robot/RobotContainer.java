@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -41,7 +42,7 @@ public final class RobotContainer {
       // endregion
 
       // region Commands
-      private final AutonomousCommand m_autonomousCommand = new AutonomousCommand();
+      private final AutonomousCommand m_autonomousCommand;
       // endregion
 
       public RobotContainer(Robot robot) {
@@ -49,6 +50,10 @@ public final class RobotContainer {
 
             configureSubsystems();
             configureButtonBindings();
+
+            // We initialize the autonomous command after m_drive
+            // has been constructed.
+            m_autonomousCommand = new AutonomousCommand(m_drive, m_intake);
       }
       
       /**
@@ -64,13 +69,18 @@ public final class RobotContainer {
             WPI_TalonFX driveFr = new WPI_TalonFX(kChWheelFR);
             WPI_TalonFX driveBl = new WPI_TalonFX(kChWheelBL);
             WPI_TalonFX driveBr = new WPI_TalonFX(kChWheelBR);
+            driveBl.follow(driveFl);
+            driveBr.follow(driveFr);
             driveFl.setInverted(true);
             driveBl.setInverted(true);
             driveFl.setNeutralMode(NeutralMode.Brake);
             driveFr.setNeutralMode(NeutralMode.Brake);
             driveBl.setNeutralMode(NeutralMode.Brake);
             driveBr.setNeutralMode(NeutralMode.Brake);
-            m_drive = new Drive(driveFl, driveFr, driveBl, driveBr);
+            driveBl.close();
+            driveBr.close();
+            ADXRS450_Gyro gyro = new ADXRS450_Gyro(kChGyro);
+            m_drive = new Drive(driveFl, driveFr, gyro);
             m_drive.getDrive().setMaxOutput(.5);
             m_drive.getDrive().setDeadband(0.5);
 

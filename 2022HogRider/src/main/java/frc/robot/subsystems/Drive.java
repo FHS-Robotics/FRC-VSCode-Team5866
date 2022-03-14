@@ -1,14 +1,15 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
-
 import static frc.robot.Constants.*;
 
 /**
@@ -18,20 +19,29 @@ import static frc.robot.Constants.*;
  * @see IMotorController
  */
 public final class Drive extends SubsystemBase {
-      private WPI_TalonFX m_fl, m_fr, m_bl, m_br;
+      private final WPI_TalonFX m_left, m_right;
+      private final Gyro m_gyro;
+      private final DifferentialDrive m_drive;
 
-      private DifferentialDrive m_drive;
+      private final DifferentialDriveOdometry m_odometry;
 
-      public Drive(WPI_TalonFX fl, WPI_TalonFX fr, WPI_TalonFX bl, WPI_TalonFX br) {
-            m_fl = fl;
-            m_fr = fr;
-            m_bl = bl;
-            m_br = br;
+      /**
+       * Creates a new drive train.
+       * @param left The left motor controller which other controllers follow().
+       * @param right The left motor controller which other controllers follow()
+       * @param gyro The gyro to orient the robot with.
+       */
+      public Drive(WPI_TalonFX left, WPI_TalonFX right, Gyro gyro) {
+            m_left = left;
+            m_right = right;
+            m_gyro = gyro;
 
             m_drive = new DifferentialDrive(
-                  new MotorControllerGroup(fl, bl),
-                  new MotorControllerGroup(fr, br)
+                  left,
+                  right
             );
+
+            m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
       }
 
       /**
@@ -53,29 +63,40 @@ public final class Drive extends SubsystemBase {
             }
       }
 
-      public void zeroPosition() {
-            m_fl.setSelectedSensorPosition(0);
-            m_fr.setSelectedSensorPosition(0);
-            m_bl.setSelectedSensorPosition(0);
-            m_br.setSelectedSensorPosition(0);
+      public void tankDriveVolts(double leftVolts, double rightVolts) {
+            m_left.setVoltage(leftVolts);
+            m_right.setVoltage(rightVolts);
+            m_drive.feed();
       }
 
-      public void driveMeters(double meters) {
-            double sensorUnits = meters * kEncoderToMeterFactor;
+      public Pose2d getPose() {
+            return m_odometry.getPoseMeters();
+      }
 
-            m_fl.set(ControlMode.Position, sensorUnits);
-            m_fr.set(ControlMode.Position, sensorUnits);
-            m_bl.set(ControlMode.Position, sensorUnits);
-            m_br.set(ControlMode.Position, sensorUnits);
+      public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+            return new DifferentialDriveWheelSpeeds(m_left.getSelectedSensorVelocity() * kDistancePerPulse, m_right.getSelectedSensorVelocity() * kDistancePerPulse);
+      }
 
-            // Differential Drive has a built-in safety mechanism
-            // that stops it's motors when it has not been updated recently
-            //
-            // feed() tells the MotorSafety that we have updated motor values.
-            m_drive.feed();
+      public void resetOdometry(Pose2d pose) {
+            m_left.setSelectedSensorPosition(0);
+            m_right.setSelectedSensorPosition(0);
+            m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+      }
+
+      public double getAverageEncoderDistance() {
+            return (m_left.getSelectedSensorPosition() * kDistancePerPulse + m_right.getSelectedSensorPosition() * kDistancePerPulse) / 2.0;
       }
 
       public DifferentialDrive getDrive() {
             return m_drive;
+      }
+
+      @Override
+      public void periodic() {
+            m_odometry.update(
+                  m_gyro.getRotation2d(),
+                  m_left.getSelectedSensorPosition() * kDistancePerPulse,
+                  m_right.getSelectedSensorPosition() * kDistancePerPulse
+            );
       }
 }
