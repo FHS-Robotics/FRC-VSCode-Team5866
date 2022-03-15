@@ -61,9 +61,15 @@ public final class AutonomousCommand extends SequentialCommandGroup {
             );
   
             return new SequentialCommandGroup(
-                  new InstantCommand(() -> drive.resetOdometry(trajectory.getInitialPose()), drive),
+                  new InstantCommand(() -> {
+                        drive.resetOdometry(trajectory.getInitialPose());
+                        drive.setTrajectory(trajectory);
+                  }, drive),
                   ramseteCommand,
-                  new InstantCommand(() -> drive.tankDriveVolts(0, 0), drive)
+                  new InstantCommand(() -> {
+                        drive.tankDriveVolts(0, 0);
+                        drive.setTrajectory(null);
+                  }, drive)
             );
       }
 }

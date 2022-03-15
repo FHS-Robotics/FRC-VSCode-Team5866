@@ -21,6 +21,20 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/Talon FX [5]": "Motor Controller",
       "/SmartDashboard/Robot Field2d": "Field2d"
+    },
+    "windows": {
+      "/SmartDashboard/Robot Field2d": {
+        "bottom": 900,
+        "height": 8.229599952697754,
+        "image": "PathWeaver/Fields/2022-field.png",
+        "left": 74,
+        "right": 1774,
+        "top": 50,
+        "width": 16.459199905395508,
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {

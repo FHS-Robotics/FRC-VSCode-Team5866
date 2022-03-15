@@ -6,11 +6,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
 import static frc.robot.Constants.*;
+
+import java.util.List;
 
 /**
  * Controls robot movement.
@@ -24,6 +29,7 @@ public final class Drive extends SubsystemBase {
       private final DifferentialDrive m_drive;
 
       private final DifferentialDriveOdometry m_odometry;
+      private final Field2d m_field;
 
       /**
        * Creates a new drive train.
@@ -42,6 +48,8 @@ public final class Drive extends SubsystemBase {
             );
 
             m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+            m_field = new Field2d();
+            SmartDashboard.putData("Robot Field2d", m_field);
       }
 
       /**
@@ -87,6 +95,19 @@ public final class Drive extends SubsystemBase {
             return (m_left.getSelectedSensorPosition() * kDistancePerPulse + m_right.getSelectedSensorPosition() * kDistancePerPulse) / 2.0;
       }
 
+      /**
+       * Updates shuffleboard with a field, mainly for autonomous.
+       *
+       * @param trajectory when null removes trajectory
+       */
+      public void setTrajectory(Trajectory trajectory) {
+            if (trajectory != null) {
+                  m_field.getObject("trajectory").setTrajectory(trajectory);
+            } else {
+                  m_field.getObject("trajectory").setPoses(List.of());
+            }
+      }
+
       public DifferentialDrive getDrive() {
             return m_drive;
       }
@@ -98,5 +119,7 @@ public final class Drive extends SubsystemBase {
                   m_left.getSelectedSensorPosition() * kDistancePerPulse,
                   m_right.getSelectedSensorPosition() * kDistancePerPulse
             );
+
+            m_field.setRobotPose(getPose());
       }
 }
