@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class AutoTrajectory {
-      public static class AutoAction implements Comparable<AutoAction> {
+      public static final class AutoAction implements Comparable<AutoAction> {
             public final Type type;
             public final double startTime;
     
