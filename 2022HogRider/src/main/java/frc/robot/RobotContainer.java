@@ -8,11 +8,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
@@ -45,7 +43,6 @@ public final class RobotContainer {
 
       public RobotContainer() {
             configureSubsystems();
-            configureButtonBindings();
 
             // We initialize the autonomous command after m_drive
             // has been constructed.
@@ -89,44 +86,45 @@ public final class RobotContainer {
             m_intake = new Intake(new CANSparkMax(kChIntake, MotorType.kBrushless));
       }
 
-      /**
-       * This hooks up all the buttons to commands for teleop
-       */
-      private void configureButtonBindings() {
-            var gunnerBtnA = new JoystickButton(m_gunnerController, Button.kA.value);
-            var gunnerBtnB = new JoystickButton(m_gunnerController, Button.kB.value);
-
-            gunnerBtnA
-            // Makes an imaginary Trigger that is active when
-            // the A button is pressed and the B button is released
-                  .and(gunnerBtnB.negate())
-                  .whileActiveContinuous(() -> m_intake.move(1), m_intake);
-            gunnerBtnB
-                  .and(gunnerBtnA.negate()) 
-                  .whileActiveContinuous(() -> m_intake.move(-1), m_intake);
-      }
-
       private Command createTeleopCommand() {
-            Runnable armFn = () -> m_arm.moveSafely(-m_gunnerController.getLeftY());
-            Runnable driveFn = () -> m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
-            Runnable elevatorFn = () -> {
-                  switch(m_gunnerController.getPOV()) {
-                        case 0:
-                              m_elevator.move(1);
-                              break;
-                        case 180:
-                              m_elevator.move(-1);
-                              break;
-                        default:
-                              m_elevator.move(0);
-                  }
-            };
-            Runnable commandFn = () -> {
-                  armFn.run();
-                  driveFn.run();
-                  elevatorFn.run();
-            };
-            return new RunCommand(commandFn, m_arm, m_drive, m_elevator);
+            return new FunctionalCommand(
+                  // onInit
+                  () -> {},
+                  // onExecute
+                  () -> {
+                        m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
+                        m_arm.moveSafely(-m_gunnerController.getLeftY());
+                        switch(m_gunnerController.getPOV()) {
+                              case 0:
+                                    m_elevator.move(1);
+                                    break;
+                              case 180:
+                                    m_elevator.move(-1);
+                                    break;
+                              default:
+                                    m_elevator.move(0);
+                        }
+                        if (m_gunnerController.getAButton()) {
+                              m_intake.move(1);
+                        } else if (m_gunnerController.getBButton()) {
+                              m_intake.move(-1);
+                        } else {
+                              m_intake.move(0);
+                        }
+                  },
+                  // onEnd
+                  (interrupted) -> {
+                        m_drive.arcadeDrive(0, 0);
+                        m_arm.moveSafely(0);
+                        m_elevator.move(0);
+                        m_intake.move(0);
+                  },
+                  // isFinished
+                  () -> {
+                        return false;
+                  },
+                  m_arm, m_drive, m_elevator, m_intake
+            );
       }
 
       public AutonomousCommand getAutonomousCommand() {
