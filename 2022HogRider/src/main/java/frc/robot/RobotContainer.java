@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutonomousCommand;
@@ -20,15 +21,11 @@ import frc.robot.subsystems.Intake;
 
 import static frc.robot.Constants.*;
 
-import java.util.function.Function;
-
 /**
  * This class makes all of the parts and subsystems that make up the
  * robot accessible throughout the code.
  */
 public final class RobotContainer {
-      private final Robot m_robot;
-
       // region Controllers
       private final XboxController m_driverController = new XboxController(0);
       private final XboxController m_gunnerController = new XboxController(1);
@@ -43,17 +40,17 @@ public final class RobotContainer {
 
       // region Commands
       private final AutonomousCommand m_autonomousCommand;
+      private final Command m_teleopCommand;
       // endregion
 
-      public RobotContainer(Robot robot) {
-            m_robot = robot;
-
+      public RobotContainer() {
             configureSubsystems();
             configureButtonBindings();
 
             // We initialize the autonomous command after m_drive
             // has been constructed.
             m_autonomousCommand = new AutonomousCommand(m_drive, m_intake);
+            m_teleopCommand = createTeleopCommand();
       }
       
       /**
@@ -96,33 +93,22 @@ public final class RobotContainer {
        * This hooks up all the buttons to commands for teleop
        */
       private void configureButtonBindings() {
-            // inTeleop() creates a new function from a runnable
-            // so that the runnable's code will only execute when
-            // the robot is in teleop mode.
-            Function<Runnable, Runnable> inTeleop = (run) -> {
-                  return () -> {
-                        if (m_robot.isTeleopEnabled()) {
-                              run.run();
-                        }
-                  };
-            };
+            var gunnerBtnA = new JoystickButton(m_gunnerController, Button.kA.value);
+            var gunnerBtnB = new JoystickButton(m_gunnerController, Button.kB.value);
 
-            // region Driver Controller
+            gunnerBtnA
+            // Makes an imaginary Trigger that is active when
+            // the A button is pressed and the B button is released
+                  .and(gunnerBtnB.negate())
+                  .whileActiveContinuous(() -> m_intake.move(1), m_intake);
+            gunnerBtnB
+                  .and(gunnerBtnA.negate()) 
+                  .whileActiveContinuous(() -> m_intake.move(-1), m_intake);
+      }
 
-            // Lambda (function) that arcade drives
-            // according to the driver controller.
-            Runnable driveFn = () -> m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
-            m_drive.setDefaultCommand(
-                  new RunCommand(inTeleop.apply(driveFn), m_drive)
-            );
-
-            // endregion
-
-            // region Gunner Controller
-
+      private Command createTeleopCommand() {
             Runnable armFn = () -> m_arm.moveSafely(-m_gunnerController.getLeftY());
-            m_arm.setDefaultCommand(new RunCommand(inTeleop.apply(armFn), m_arm));
-
+            Runnable driveFn = () -> m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
             Runnable elevatorFn = () -> {
                   switch(m_gunnerController.getPOV()) {
                         case 0:
@@ -135,24 +121,19 @@ public final class RobotContainer {
                               m_elevator.move(0);
                   }
             };
-            m_elevator.setDefaultCommand(new RunCommand(inTeleop.apply(elevatorFn), m_elevator));
-
-            var gunnerBtnA = new JoystickButton(m_gunnerController, Button.kA.value);
-            var gunnerBtnB = new JoystickButton(m_gunnerController, Button.kB.value);
-
-            gunnerBtnA
-            // Makes an imaginary Trigger that is active when
-            // the A button is pressed and the B button is released
-                  .and(gunnerBtnB.negate())
-                  .whileActiveContinuous(() -> m_intake.move(1), m_intake);
-            gunnerBtnB
-                  .and(gunnerBtnA.negate()) 
-                  .whileActiveContinuous(() -> m_intake.move(-1), m_intake);
-                  
-            // endregion
+            Runnable commandFn = () -> {
+                  armFn.run();
+                  driveFn.run();
+                  elevatorFn.run();
+            };
+            return new RunCommand(commandFn, m_arm, m_drive, m_elevator);
       }
 
       public AutonomousCommand getAutonomousCommand() {
             return m_autonomousCommand;
+      }
+
+      public Command getTeleopCommand() {
+            return m_teleopCommand;
       }
 }
