@@ -30,14 +30,14 @@ public final class AutoTrajectory {
       /**
        * Filename of the trajectory JSON file.
        */
-      public final String file;
+      public final List<String> files;
       /**
        * List of actions, sorted by time ascending.
        */
       private final List<AutoAction> actions;
 
-      public AutoTrajectory(String file, AutoAction ...actions) {
-            this.file = file;
+      public AutoTrajectory(List<String> files, AutoAction ...actions) {
+            this.files = files;
             this.actions = new ArrayList<>(List.of(actions));
             this.actions.sort((a, b) -> a.compareTo(b));
       }

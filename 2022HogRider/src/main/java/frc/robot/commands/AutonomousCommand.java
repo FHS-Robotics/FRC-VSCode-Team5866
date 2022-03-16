@@ -15,7 +15,9 @@ import static frc.robot.Constants.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import frc.robot.subsystems.Arm;
@@ -28,8 +30,6 @@ import frc.robot.utilities.Settings;
  * During autonomous, this command follows paths as listed in
  * {@see Constants}.kAutoTrajectories. A {@see DoAutoActions}
  * manipulates the arm and intake while the robot follows a trajectory.
- *
- * TODO: support multiple trajectory files in an autonomous strategy.
  */
 public final class AutonomousCommand extends ProxyCommandBase {
       private final Arm m_arm;
@@ -45,12 +45,16 @@ public final class AutonomousCommand extends ProxyCommandBase {
 
             try {
                   for (var entry : kAutoTrajectories.entrySet()) {
-                        String filename = entry.getValue().file;
-                        Path trajectoryPath = Filesystem.getDeployDirectory()
-                              .toPath()
-                              .resolve("paths")
-                              .resolve(filename);
-                        m_file2trajectory.put(filename, TrajectoryUtil.fromPathweaverJson(trajectoryPath));
+                        for (String filename : entry.getValue().files) {
+                              if (m_file2trajectory.containsKey(filename)) {
+                                    continue;
+                              }
+                              Path trajectoryPath = Filesystem.getDeployDirectory()
+                                    .toPath()
+                                    .resolve("paths")
+                                    .resolve(filename);
+                              m_file2trajectory.put(filename, TrajectoryUtil.fromPathweaverJson(trajectoryPath));
+                        }
                   }
             } catch (IOException e) {
                   // Crash program on I/O failure
@@ -62,10 +66,16 @@ public final class AutonomousCommand extends ProxyCommandBase {
       protected Command generateDelegate() {
             var selectedStrategy = Settings.get("auto_strategy", "BlueBottom");
             var trajectoryDef = kAutoTrajectories.get(selectedStrategy);
-            var trajectory = m_file2trajectory.get(trajectoryDef.file);
+
+            List<Command> ramseteCommands = new ArrayList<>();
+            for (String file : trajectoryDef.files) {
+                  var trajectory = m_file2trajectory.get(file);
+                  ramseteCommands.add(createRamsete(m_drive, trajectory));
+            }
+            Command[] _ramseteCommands = (Command[]) ramseteCommands.toArray();
 
             return new ParallelCommandGroup(
-                  createRamsete(m_drive, trajectory),
+                  new SequentialCommandGroup(_ramseteCommands),
                   new DoAutoActions(trajectoryDef, m_arm, m_intake)
             );
       }
