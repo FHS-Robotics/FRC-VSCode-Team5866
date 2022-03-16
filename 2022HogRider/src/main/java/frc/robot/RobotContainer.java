@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.TeleopCommand;
 import frc.robot.subsystems.Arm;
@@ -59,6 +60,7 @@ public final class RobotContainer {
 
       public RobotContainer() {
             instantiateSubsystems();
+            CommandScheduler.getInstance().registerSubsystem(m_arm, m_drive, m_elevator, m_intake);
 
             // configureSubsystems() has made all of the subsystems.
             m_autonomousCommand = new AutonomousCommand(m_arm, m_drive, m_intake);
