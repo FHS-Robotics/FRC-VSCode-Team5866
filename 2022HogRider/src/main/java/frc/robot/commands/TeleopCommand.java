@@ -6,6 +6,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.utilities.Debugging;
 
 /**
  * During teleop, this command takes input from
@@ -42,24 +43,32 @@ public final class TeleopCommand extends CommandBase {
 
       @Override
       public void execute() {
-            m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
-            m_arm.moveSafely(-m_gunnerController.getLeftY());
-            switch (m_gunnerController.getPOV()) {
-                  case 0:
-                        m_elevator.move(1);
-                        break;
-                  case 180:
-                        m_elevator.move(-1);
-                        break;
-                  default:
-                        m_elevator.move(0);
+            Debugging.put("Driver Connected", m_driverController.isConnected() ? "Yes" : "No");
+            Debugging.put("Gunner Connected", m_gunnerController.isConnected() ? "Yes" : "No");
+
+            if (m_driverController.isConnected()) {
+                  m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
             }
-            if (m_gunnerController.getAButton()) {
-                  m_intake.move(1);
-            } else if (m_gunnerController.getBButton()) {
-                  m_intake.move(-1);
-            } else {
-                  m_intake.move(0);
+            if (m_gunnerController.isConnected()) {
+
+                  m_arm.moveSafely(-m_gunnerController.getLeftY());
+                  switch (m_gunnerController.getPOV()) {
+                        case 0:
+                              m_elevator.move(1);
+                              break;
+                        case 180:
+                              m_elevator.move(-1);
+                              break;
+                        default:
+                              m_elevator.move(0);
+                  }
+                  if (m_gunnerController.getAButton()) {
+                        m_intake.move(1);
+                  } else if (m_gunnerController.getBButton()) {
+                        m_intake.move(-1);
+                  } else {
+                        m_intake.move(0);
+                  }
             }
       }
 
