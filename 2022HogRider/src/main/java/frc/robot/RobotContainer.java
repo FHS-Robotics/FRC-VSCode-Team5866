@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.TeleopCommand;
 import frc.robot.subsystems.Arm;
@@ -74,6 +75,7 @@ public final class RobotContainer {
             CANSparkMax armMotor = new CANSparkMax(kChArm, MotorType.kBrushless);
             DigitalInput armLimitUp = new DigitalInput(kChLimitUp);
             m_arm = new Arm(armMotor, armLimitUp);
+            m_arm.setDefaultCommand(new RunCommand(() -> m_arm.moveSafely(0), m_arm));
 
             // Four Motor-Controllers make up our tank-drive.
             WPI_TalonFX driveFl = new WPI_TalonFX(kChWheelFL);
@@ -95,6 +97,7 @@ public final class RobotContainer {
             m_objectRefs.add(driveBr);
             ADXRS450_Gyro gyro = new ADXRS450_Gyro(kChGyro);
             m_drive = new Drive(driveFl, driveFr, gyro);
+            m_drive.setDefaultCommand(new RunCommand(() -> m_drive.arcadeDrive(0, 0), m_drive));
             m_drive.getDrive().setMaxOutput(.5);
             m_drive.getDrive().setDeadband(0.5);
 
@@ -102,9 +105,11 @@ public final class RobotContainer {
             CANSparkMax elevatorMotor2 = new CANSparkMax(kChElevator2, MotorType.kBrushless);
             MotorControllerGroup elevatorMotors = new MotorControllerGroup(elevatorMotor1, elevatorMotor2);
             m_elevator = new Elevator(elevatorMotors);
+            m_elevator.setDefaultCommand(new RunCommand(() -> m_elevator.move(0), m_elevator));
 
             var intakeMotor = new CANSparkMax(kChIntake, MotorType.kBrushless);
             m_intake = new Intake(intakeMotor);
+            m_intake.setDefaultCommand(new RunCommand(() -> m_intake.move(0), m_intake));
       }
 
       /**
