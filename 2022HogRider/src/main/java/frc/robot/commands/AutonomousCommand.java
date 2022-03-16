@@ -21,6 +21,7 @@ import java.util.Map;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
+import frc.robot.utilities.ProxyCommandBase;
 import frc.robot.utilities.Settings;
 
 /**
@@ -30,7 +31,7 @@ import frc.robot.utilities.Settings;
  *
  * TODO: support multiple trajectory files in an autonomous strategy.
  */
-public final class AutonomousCommand extends ParallelCommandGroup {
+public final class AutonomousCommand extends ProxyCommandBase {
       private final Arm m_arm;
       private final Drive m_drive;
       private final Intake m_intake;
@@ -44,8 +45,12 @@ public final class AutonomousCommand extends ParallelCommandGroup {
 
             try {
                   for (var entry : kAutoTrajectories.entrySet()) {
-                        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(entry.getValue().file);
-                        m_file2trajectory.put(entry.getKey(), TrajectoryUtil.fromPathweaverJson(trajectoryPath));
+                        String filename = entry.getValue().file;
+                        Path trajectoryPath = Filesystem.getDeployDirectory()
+                              .toPath()
+                              .resolve("paths")
+                              .resolve(filename);
+                        m_file2trajectory.put(filename, TrajectoryUtil.fromPathweaverJson(trajectoryPath));
                   }
             } catch (IOException e) {
                   // Crash program on I/O failure
@@ -54,24 +59,18 @@ public final class AutonomousCommand extends ParallelCommandGroup {
       }
 
       @Override
-      public void initialize() {
+      protected Command generateDelegate() {
             var selectedStrategy = Settings.get("auto_strategy", "BlueBottom");
             var trajectoryDef = kAutoTrajectories.get(selectedStrategy);
             var trajectory = m_file2trajectory.get(trajectoryDef.file);
 
-            addCommands(
-                  getRamsete(m_drive, trajectory),
+            return new ParallelCommandGroup(
+                  createRamsete(m_drive, trajectory),
                   new DoAutoActions(trajectoryDef, m_arm, m_intake)
             );
-            super.initialize();
       }
 
-      @Override
-      public boolean isFinished() {
-          return true;
-      }
-
-      private static Command getRamsete(Drive drive, Trajectory trajectory) {
+      private static Command createRamsete(Drive drive, Trajectory trajectory) {
             RamseteCommand ramseteCommand = new RamseteCommand(
                   trajectory,
                   drive::getPose,
