@@ -11,6 +11,8 @@ public final class AutoTrajectory {
             public enum Type {
                   DispenseBall, // Drop ball
                   IntakeBall, // Pickup ball
+                  ArmUp, // Lift Arm
+                  ArmDown, // Lower Arm
                   NoOp,
             }
 

@@ -61,7 +61,7 @@ public final class RobotContainer {
             instantiateSubsystems();
 
             // configureSubsystems() has made all of the subsystems.
-            m_autonomousCommand = new AutonomousCommand(m_drive, m_intake);
+            m_autonomousCommand = new AutonomousCommand(m_arm, m_drive, m_intake);
             m_teleopCommand = new TeleopCommand(m_driverController, m_gunnerController, m_arm, m_drive, m_intake, m_elevator);
       }
 

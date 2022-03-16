@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 
@@ -29,7 +30,7 @@ import frc.robot.subsystems.Intake;
  * TODO: Use {@see Settings} to change which autonomous strategy runs.
  */
 public final class AutonomousCommand extends SequentialCommandGroup {
-      public AutonomousCommand(Drive drive, Intake intake) {
+      public AutonomousCommand(Arm arm, Drive drive, Intake intake) {
             List<Command> commands = new ArrayList<>();
             try {
                   for (var trajectoryDef : kAutoTrajectories) {
@@ -38,7 +39,7 @@ public final class AutonomousCommand extends SequentialCommandGroup {
                         commands.add(
                               new ParallelCommandGroup(
                                     getRamsete(drive, trajectory),
-                                    new DoAutoActions(trajectoryDef, intake)
+                                    new DoAutoActions(trajectoryDef, arm, intake)
                               )
                         );
                   }
