@@ -48,9 +48,11 @@ public final class TeleopCommand extends CommandBase {
 
             if (m_driverController.isConnected()) {
                   m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
+            } else {
+                  m_drive.arcadeDrive(0, 0);
             }
-            if (m_gunnerController.isConnected()) {
 
+            if (m_gunnerController.isConnected()) {
                   m_arm.moveSafely(-m_gunnerController.getLeftY());
                   switch (m_gunnerController.getPOV()) {
                         case 0:
@@ -69,6 +71,10 @@ public final class TeleopCommand extends CommandBase {
                   } else {
                         m_intake.move(0);
                   }
+            } else {
+                  m_arm.moveSafely(0);
+                  m_elevator.move(0);
+                  m_intake.move(0);
             }
       }
 
