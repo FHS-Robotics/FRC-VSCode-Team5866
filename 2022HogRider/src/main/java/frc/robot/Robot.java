@@ -6,18 +6,43 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.AutonomousCommand;
+import frc.robot.commands.TeleopCommand;
 import frc.robot.utilities.Settings;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * Welcome to 5866 Fe Iron Tiger's robot code for the year 2022,
+ * <b>HogRider</b>!
+ *
+ * <p>
+ * Under-the-hood we use the {@see CommandScheduler} to run the periodic()
+ * methods of the robot's subsystems and to execute commands. When autonomous/teleop
+ * begins and ends, we schedule and cancel the singleton-like commands stored
+ * in {@see RobotContainer}.
+ * </p>
+ *
+ * <p>
+ * On how our robot is wired up, {@see RobotContainer} is responsible for
+ * creating and configuring motor controllers and passing them to subsystems.
+ * </p>
+ *
+ * <p>
+ * Also noteworthy, {@see Settings} holds values that may be changed in
+ * the middle of a match through a dashboard such as ShuffleBoard or SmartDashboard.
+ * </p>
+ *
+ * <p>
+ * Look through these classes to get started.
+ * </p>
+ *
+ * @see RobotContainer
+ * @see Settings
+ * @see Constants
+ * @see AutonomousCommand
+ * @see TeleopCommand
  */
-
 public final class Robot extends TimedRobot {
-      private RobotContainer m_robotContainer = new RobotContainer();
+      private final RobotContainer m_robotContainer = new RobotContainer();
 
       // region general
       @Override

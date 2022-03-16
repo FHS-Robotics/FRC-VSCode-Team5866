@@ -9,9 +9,8 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import frc.robot.commands.AutonomousCommand;
+import frc.robot.commands.TeleopCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
@@ -19,9 +18,13 @@ import frc.robot.subsystems.Intake;
 
 import static frc.robot.Constants.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * This class makes all of the parts and subsystems that make up the
- * robot accessible throughout the code.
+ * This class creates the subsystems of the robot, deals
+ * with the configuration of robot parts and holds the
+ * autonomous and teleop commands.
  */
 public final class RobotContainer {
       // region Controllers
@@ -38,27 +41,39 @@ public final class RobotContainer {
 
       // region Commands
       private final AutonomousCommand m_autonomousCommand;
-      private final Command m_teleopCommand;
+      private final TeleopCommand m_teleopCommand;
       // endregion
 
-      public RobotContainer() {
-            configureSubsystems();
-
-            // We initialize the autonomous command after m_drive
-            // has been constructed.
-            m_autonomousCommand = new AutonomousCommand(m_drive, m_intake);
-            m_teleopCommand = createTeleopCommand();
-      }
-      
       /**
-       * This creates all the motors and sensors objects, and this
-       * passes them to subsystems to instantiate them.
+       * Our front wheels are managed by {@see Drive}, but our back
+       * wheels are set up to `follow()` our front wheels. This leaves
+       * us with two motor controller objects that RobotContainer has
+       * to directly manage.
+       *
+       * We must keep a reference to our back wheels, so they are not
+       * garbage collected. If they are garbage collected, they disappear
+       * from the simulation GUI and (possibly?) no longer have the effect of
+       * follow()'ing the front wheels output.
        */
-      private void configureSubsystems() {
+      private final List<AutoCloseable> m_objectRefs = new ArrayList<>();
+
+      public RobotContainer() {
+            instantiateSubsystems();
+
+            // configureSubsystems() has made all of the subsystems.
+            m_autonomousCommand = new AutonomousCommand(m_drive, m_intake);
+            m_teleopCommand = new TeleopCommand(m_driverController, m_gunnerController, m_arm, m_drive, m_intake, m_elevator);
+      }
+
+      /**
+       * Creates subsystems and stores them to the RobotContainer.
+       */
+      private void instantiateSubsystems() {
             CANSparkMax armMotor = new CANSparkMax(kChArm, MotorType.kBrushless);
             DigitalInput armLimitUp = new DigitalInput(kChLimitUp);
             m_arm = new Arm(armMotor, armLimitUp);
 
+            // Four Motor-Controllers make up our tank-drive.
             WPI_TalonFX driveFl = new WPI_TalonFX(kChWheelFL);
             WPI_TalonFX driveFr = new WPI_TalonFX(kChWheelFR);
             WPI_TalonFX driveBl = new WPI_TalonFX(kChWheelBL);
@@ -71,8 +86,11 @@ public final class RobotContainer {
             driveFr.setNeutralMode(NeutralMode.Brake);
             driveBl.setNeutralMode(NeutralMode.Brake);
             driveBr.setNeutralMode(NeutralMode.Brake);
-            driveBl.close();
-            driveBr.close();
+            // We hold a reference to back motor-controllers,
+            // so they still alive and able to follow front
+            // motor-controllers.
+            m_objectRefs.add(driveBl);
+            m_objectRefs.add(driveBr);
             ADXRS450_Gyro gyro = new ADXRS450_Gyro(kChGyro);
             m_drive = new Drive(driveFl, driveFr, gyro);
             m_drive.getDrive().setMaxOutput(.5);
@@ -83,55 +101,21 @@ public final class RobotContainer {
             MotorControllerGroup elevatorMotors = new MotorControllerGroup(elevatorMotor1, elevatorMotor2);
             m_elevator = new Elevator(elevatorMotors);
 
-            m_intake = new Intake(new CANSparkMax(kChIntake, MotorType.kBrushless));
+            var intakeMotor = new CANSparkMax(kChIntake, MotorType.kBrushless);
+            m_intake = new Intake(intakeMotor);
       }
 
-      private Command createTeleopCommand() {
-            return new FunctionalCommand(
-                  // onInit
-                  () -> {},
-                  // onExecute
-                  () -> {
-                        m_drive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX());
-                        m_arm.moveSafely(-m_gunnerController.getLeftY());
-                        switch(m_gunnerController.getPOV()) {
-                              case 0:
-                                    m_elevator.move(1);
-                                    break;
-                              case 180:
-                                    m_elevator.move(-1);
-                                    break;
-                              default:
-                                    m_elevator.move(0);
-                        }
-                        if (m_gunnerController.getAButton()) {
-                              m_intake.move(1);
-                        } else if (m_gunnerController.getBButton()) {
-                              m_intake.move(-1);
-                        } else {
-                              m_intake.move(0);
-                        }
-                  },
-                  // onEnd
-                  (interrupted) -> {
-                        m_drive.arcadeDrive(0, 0);
-                        m_arm.moveSafely(0);
-                        m_elevator.move(0);
-                        m_intake.move(0);
-                  },
-                  // isFinished
-                  () -> {
-                        return false;
-                  },
-                  m_arm, m_drive, m_elevator, m_intake
-            );
-      }
-
+      /**
+       * Fetches the final instance of the {@see AutonomousCommand}.
+       */
       public AutonomousCommand getAutonomousCommand() {
             return m_autonomousCommand;
       }
 
-      public Command getTeleopCommand() {
+      /**
+       * Fetches the final instance of the {@see TeleopCommand}.
+       */
+      public TeleopCommand getTeleopCommand() {
             return m_teleopCommand;
       }
 }

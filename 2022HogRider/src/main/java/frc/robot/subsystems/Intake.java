@@ -7,7 +7,7 @@ import frc.robot.utilities.Debugging;
 import static frc.robot.Constants.*;
 
 /**
- * Encapsulates all to do with taking in balls.
+ * Moves balls in and out of the robot.
  */
 public final class Intake extends SubsystemBase {
       private final MotorController m_motor;
@@ -18,6 +18,7 @@ public final class Intake extends SubsystemBase {
 
       /**
        * Runs the intake, stopping when amount is too close to zero.
+       * Positive amounts takes balls in.
        *
        * @param amount the percent to multiply by Settings.INTAKE_SPEED()
        */

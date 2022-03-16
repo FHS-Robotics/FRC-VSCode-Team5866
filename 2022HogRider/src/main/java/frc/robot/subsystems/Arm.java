@@ -9,16 +9,14 @@ import frc.robot.utilities.Settings;
 import static frc.robot.Constants.*;
 
 /**
- * Runs the robot's arm.
+ * Robot Arm, a motor controller and a limit switch for
+ * it's high point.
  */
 public final class Arm extends SubsystemBase {
       private final MotorController m_arm;
       /**
        * A limit switch that is triggered once the arm moves
        * too far upwards.
-       * 
-       * "get()" calls return true when limit isn't hit...
-       * Pretty confusing.
        */
       private final DigitalInput m_limitUp;
 
@@ -29,6 +27,7 @@ public final class Arm extends SubsystemBase {
 
       /**
        * Moves the arm safely, braking the motors when a limit switch is triggered.
+       * Positive amounts go upwards.
        *
        * @param amount the percent to multiply by Settings.ARM_SPEED()
        */
@@ -38,14 +37,10 @@ public final class Arm extends SubsystemBase {
             if (amount < .1 && amount > -.1)
                   amount = 0;
 
-            Debugging.put("arm_limit_up", kInvertLimitUp ^ m_limitUp.get() ? "Yes" : "No");
+            Debugging.put("arm_limit_up", limitUpHit() ? "Yes" : "No");
             Debugging.put("arm_current_speed", amount);
 
-            // The "^" operator does an X-OR returning "true" when
-            // the booleans are different values.
-            // In other words, when kInvertLimitUp is true,
-            // m_limitUp.get() is inverted.
-            boolean hitLimit = kInvertLimitUp ^ m_limitUp.get() && amount >= 0;
+            boolean hitLimit = limitUpHit() && amount >= 0;
             if (hitLimit && Settings.get("arm_limits_enabled", true)) {
                   Debugging.put("arm_brakes_on", "Yes");
                   m_arm.set(0);
@@ -53,5 +48,14 @@ public final class Arm extends SubsystemBase {
                   Debugging.put("arm_brakes_on", "No");
                   m_arm.set(amount);
             }
+      }
+
+      public boolean limitUpHit() {
+            // The "^" operator does an X-OR. Normally
+            // when we get a true signal, the limit is hit.
+            // But if the limit switch is inverted the
+            // true signal becomes false, meaning we
+            // haven't reached the limit.
+            return kInvertLimitUp ^ m_limitUp.get();
       }
 }

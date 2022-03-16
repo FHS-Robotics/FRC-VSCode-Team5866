@@ -6,6 +6,15 @@ import frc.robot.subsystems.Intake;
 import frc.robot.utilities.AutoTrajectory;
 import static frc.robot.Constants.*;
 
+/**
+ * Controls the Intake and Arm according to an {@see AutoTrajectory}.
+ * This is used by {@see AutonomousCommand}, and trajectory actions
+ * are loaded from {@see Constants}.kAutoTrajectories.
+ *
+ * TODO: Add arm actions.
+ *
+ * @see AutonomousCommand
+ */
 public final class DoAutoActions extends CommandBase {
     private final Intake m_intake;
     private final AutoTrajectory m_actions;
@@ -52,6 +61,7 @@ public final class DoAutoActions extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        // This command is finished when it's last action is over.
         double time = Timer.getFPGATimestamp() - m_startTime;
         return time - m_actions.getLastActionTime() > kAutoActionTime;
     }

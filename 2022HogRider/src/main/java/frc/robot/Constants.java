@@ -8,6 +8,19 @@ import frc.robot.utilities.AutoTrajectory;
 
 /**
  * Magic numbers of the Robot.
+ *
+ * <p>
+ * Found here are:
+ * </p>
+ *
+ * <ul>
+ * <li>Channels of Motor Controllers, Gyros and a Limit Switch</li>
+ * <li>Meters per drive train encoder pulse</li>
+ * <li>Max speed of Intake, Arm and Elevator</li>
+ * <li>Encoder and Limit Switch Invert Settings</li>
+ * <li>Autonomous trajectories</li>
+ * <li>Robot Gains</li>
+ * </ul>
  */
 public final class Constants {
       public final static int kChArm = 5;

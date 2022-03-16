@@ -16,9 +16,10 @@ public final class Elevator extends SubsystemBase {
             m_motor = motor;
       }
 
-      
+
       /**
        * Moves the elevator, stopping when amount is too close to zero.
+       * Positive amounts go upwards.
        *
        * @param amount the percent to multiply by Settings.ELEVATOR_SPEED()
        */

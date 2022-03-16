@@ -19,6 +19,8 @@
       "/LiveWindow/Ungrouped/MotorControllerGroup[1]": "Motor Controller",
       "/LiveWindow/Ungrouped/MotorControllerGroup[3]": "Motor Controller",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/Talon FX [2]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon FX [3]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [5]": "Motor Controller",
       "/SmartDashboard/Robot Field2d": "Field2d"
     },
@@ -71,6 +73,24 @@
                 1.0
               ],
               "id": "CANMotor:Talon FX[1]-percentOutput"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "CANMotor:Talon FX[2]-percentOutput"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "CANMotor:Talon FX[3]-percentOutput"
             }
           ],
           "showPause": false

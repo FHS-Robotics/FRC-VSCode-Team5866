@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,10 +17,9 @@ import static frc.robot.Constants.*;
 import java.util.List;
 
 /**
- * Controls robot movement.
- * WARNING: Depends on phoenix's IMotorController
- * 
- * @see IMotorController
+ * Controls robot movement. Uses WPI_TalonFX's integrated
+ * sensors to estimate the robot's position on the field.
+ * It also sends SmartDashboard it's estimated location.
  */
 public final class Drive extends SubsystemBase {
       private final WPI_TalonFX m_left, m_right;

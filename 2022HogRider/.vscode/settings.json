@@ -2,17 +2,7 @@
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.server.launchMode": "Standard",
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "bin/": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true,
-    "**/*~": true
+    "**/.git": false
   },
   "java.test.config": [
     {
@@ -23,7 +13,9 @@
         "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release" ,
         "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
       }
-    },
+    }
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests"
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "files.enableTrash": false,
+  "files.autoSave": "afterDelay"
 }

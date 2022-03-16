@@ -17,29 +17,29 @@ public final class ElevatorTest {
     public void teardown() {
         m_motorSim.resetMock();
     }
-    
+
     @Test
     public void movesUpwards() {
         m_elevator.move(1);
-        
+
         assertEquals(1, m_motorSim.setSpeeds.size());
         assertEquals(Constants.kSpeedElevator, m_motorSim.setSpeeds.get(0), DELTA);
     }
-    
+
     @Test
     public void movesDownwards() {
         m_elevator.move(-1);
-        
+
         assertEquals(1, m_motorSim.setSpeeds.size());
         assertEquals(-Constants.kSpeedElevator, m_motorSim.setSpeeds.get(0), DELTA);
     }
-    
+
     @Test
     public void breaks() {
         double[] testValues = new double[] { 0.05, -0.05 };
         for (double test : testValues) {
             m_elevator.move(test);
-            
+
             assertEquals(1, m_motorSim.setSpeeds.size());
             assertEquals(0, m_motorSim.setSpeeds.get(0), 0);
             m_motorSim.resetMock();

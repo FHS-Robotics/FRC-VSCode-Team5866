@@ -21,6 +21,13 @@ import java.util.List;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 
+/**
+ * During autonomous, this command follows paths as listed in
+ * {@see Constants}.kAutoTrajectories. A {@see DoAutoActions}
+ * manipulates the arm and intake while the robot follows a trajectory.
+ *
+ * TODO: Use {@see Settings} to change which autonomous strategy runs.
+ */
 public final class AutonomousCommand extends SequentialCommandGroup {
       public AutonomousCommand(Drive drive, Intake intake) {
             List<Command> commands = new ArrayList<>();
@@ -59,7 +66,7 @@ public final class AutonomousCommand extends SequentialCommandGroup {
                   drive::tankDriveVolts,
                   drive
             );
-  
+
             return new SequentialCommandGroup(
                   new InstantCommand(() -> {
                         drive.resetOdometry(trajectory.getInitialPose());
