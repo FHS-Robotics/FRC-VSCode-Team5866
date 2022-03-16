@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.Map;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
@@ -47,8 +49,8 @@ public final class Constants {
        * Seconds to spend running intake during autonomous.
        */
       public final static double kAutoActionTime = 1;
-      public final static AutoTrajectory[] kAutoTrajectories = new AutoTrajectory[] {
-        };
+      public final static Map<String, AutoTrajectory> kAutoTrajectories = Map.of(
+      );
 
       // TODO: Acquire the gains of the robot.
       // https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html

@@ -15,43 +15,60 @@ import static frc.robot.Constants.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
+import frc.robot.utilities.Settings;
 
 /**
  * During autonomous, this command follows paths as listed in
  * {@see Constants}.kAutoTrajectories. A {@see DoAutoActions}
  * manipulates the arm and intake while the robot follows a trajectory.
  *
- * TODO: Use {@see Settings} to change which autonomous strategy runs.
+ * TODO: support multiple trajectory files in an autonomous strategy.
  */
-public final class AutonomousCommand extends SequentialCommandGroup {
+public final class AutonomousCommand extends ParallelCommandGroup {
+      private final Arm m_arm;
+      private final Drive m_drive;
+      private final Intake m_intake;
+
+      private final Map<String, Trajectory> m_file2trajectory = new HashMap<>();
+
       public AutonomousCommand(Arm arm, Drive drive, Intake intake) {
-            List<Command> commands = new ArrayList<>();
+            m_arm = arm;
+            m_drive = drive;
+            m_intake = intake;
+
             try {
-                  for (var trajectoryDef : kAutoTrajectories) {
-                        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryDef.file);
-                        Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-                        commands.add(
-                              new ParallelCommandGroup(
-                                    getRamsete(drive, trajectory),
-                                    new DoAutoActions(trajectoryDef, arm, intake)
-                              )
-                        );
+                  for (var entry : kAutoTrajectories.entrySet()) {
+                        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(entry.getValue().file);
+                        m_file2trajectory.put(entry.getKey(), TrajectoryUtil.fromPathweaverJson(trajectoryPath));
                   }
             } catch (IOException e) {
                   // Crash program on I/O failure
                   throw new RuntimeException(e);
             }
+      }
 
-            // Add our autonomous commands to the sequential command group.
-            Command[] _commands = new Command[commands.size()];
-            commands.toArray(_commands);
-            addCommands(_commands);
+      @Override
+      public void initialize() {
+            var selectedStrategy = Settings.get("auto_strategy", "BlueBottom");
+            var trajectoryDef = kAutoTrajectories.get(selectedStrategy);
+            var trajectory = m_file2trajectory.get(trajectoryDef.file);
+
+            addCommands(
+                  getRamsete(m_drive, trajectory),
+                  new DoAutoActions(trajectoryDef, m_arm, m_intake)
+            );
+            super.initialize();
+      }
+
+      @Override
+      public boolean isFinished() {
+          return true;
       }
 
       private static Command getRamsete(Drive drive, Trajectory trajectory) {
