@@ -36,7 +36,12 @@ public final class Constants {
       public final static int kChWheelBR = 3;
       public final static int kChLimitUp = 0;
 
-      public final static double kDistancePerPulse = (2048 * 3.75) * (1 / (.1524 * Math.PI));
+      /** Wheel Diameter in Meters */
+      public final static double kWheelDiameter = 0.1524;
+      public final static double kDrivePulsePerRotation = 2048;
+      public final static double kDriveGearReduction = 3.75;
+      public final static double kDistancePerRotation = kWheelDiameter * Math.PI;
+      public final static double kPulsePerDistance = kDrivePulsePerRotation * kDriveGearReduction / kDistancePerRotation;
       public final static double kSpeedIntake = 0.3;
       public final static double kSpeedArm = 0.3;
       public final static double kSpeedElevator = .25;
