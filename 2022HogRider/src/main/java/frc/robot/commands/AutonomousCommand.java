@@ -72,7 +72,8 @@ public final class AutonomousCommand extends ProxyCommandBase {
                   var trajectory = m_file2trajectory.get(file);
                   ramseteCommands.add(createRamsete(m_drive, trajectory));
             }
-            Command[] _ramseteCommands = (Command[]) ramseteCommands.toArray();
+            Command[] _ramseteCommands = new Command[ramseteCommands.size()];
+            ramseteCommands.toArray(_ramseteCommands);
 
             return new ParallelCommandGroup(
                   new SequentialCommandGroup(_ramseteCommands),
