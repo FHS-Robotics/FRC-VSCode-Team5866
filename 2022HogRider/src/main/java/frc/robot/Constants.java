@@ -66,5 +66,5 @@ public final class Constants {
       public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(1);
       public final static SimpleMotorFeedforward kAutoFeedforward = new SimpleMotorFeedforward(0, 0, 0);
       public final static DifferentialDriveVoltageConstraint kAutoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(kAutoFeedforward, kDriveKinematics, 10);
+            new DifferentialDriveVoltageConstraint(kAutoFeedforward, kDriveKinematics, 10);
 }
