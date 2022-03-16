@@ -111,4 +111,18 @@ public final class Robot extends TimedRobot {
       public void testExit() {
       }
       // endregion
+
+      // region disabled
+      @Override
+      public void disabledInit() {
+      }
+
+      @Override
+      public void disabledPeriodic() {
+      }
+
+      @Override
+      public void disabledExit() {
+      }
+      // endregion
 }
