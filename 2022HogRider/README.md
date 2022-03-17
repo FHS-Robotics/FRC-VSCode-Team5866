@@ -2,20 +2,23 @@
 5866 Fe Iron Tigers PRESENTS HogRider
 </h1>
 <hr/>
-<p align="center">
+<h2 align="center">
 HogRider is our 2022 FRC robot!
-</p>
-<p align="center">
+</h2>
+<h3 align="center">
 <a href="src/main/java/frc/robot/Robot.java">
 Robot.java
 </a>
 is documented to give <em>anyone</em> a rundown on how our robot's software is structured this year.
-</p>
+</h3>
 
 <em>
 
 ## Robot Software
 </em>
+
+<h3 align="right">Using the Command-Based Framework</h3>
+<img align="right" alt="Robot Project in Visual Studio Code" src="images/Robot%20Software%20Visual%20Studio%20Code.png" width="270" height="294" />
 
 * WPILib's Command-Based Framework
     * [TeleopCommand.java] and [AutonomousCommand.java]
@@ -48,24 +51,16 @@ src/test/java/frc/robot/
 gradle.build
 </pre>
 
-<ul>
-<li> <p align="right">
-They make for useful examples to study!
-</p> </li>
-<li> <p align="right">
-Test code at <a href="src/test/java/frc/robot">src/test/java/frc/robot</a>
-</p> </li>
-<li> <p align="right">
-You may add unit tests to your project by adding <code>test { useJUnit() }</code> to build.gradle:
-</p> </li>
-</ul>
+* They make for useful examples to study!
+* Test code at <a href="src/test/java/frc/robot">src/test/java/frc/robot</a>
+* You may add unit tests to your project by adding <code>test { useJUnit() }</code> to build.gradle:
 
 <em>
 
 ## Robot Simulation
 </em>
 
-<h3 align="left">An Autonomous Path on the Simulation GUI.</h3>
+<h3 align="right">An Autonomous Path on the Simulation GUI.</h3>
 
 ![Simulated Robot Autonomous Mode on Simulation GUI](images/Autonomous%20Simulation%20GUI.png)
 
