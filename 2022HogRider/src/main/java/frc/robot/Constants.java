@@ -59,7 +59,15 @@ public final class Constants {
       public final static Map<String, AutoTrajectory> kAutoTrajectories = Map.of(
             "BlueBottom", new AutoTrajectory(
                   List.of("FirstBall.wpilib.json", "SecondBall.wpilib.json"),
-                  new AutoAction(Type.DispenseBall, -1.2)
+                  new AutoAction(Type.DispenseBall, -1.2),
+                  new AutoAction(Type.ArmDown, 1),
+                  new AutoAction(Type.IntakeBall, 2),
+                  new AutoAction(Type.ArmUp, 3),
+                  new AutoAction(Type.DispenseBall, 4),
+                  new AutoAction(Type.ArmDown, 5),
+                  new AutoAction(Type.IntakeBall, 6),
+                  new AutoAction(Type.ArmUp, 7),
+                  new AutoAction(Type.DispenseBall, 8)
             )
       );
 
