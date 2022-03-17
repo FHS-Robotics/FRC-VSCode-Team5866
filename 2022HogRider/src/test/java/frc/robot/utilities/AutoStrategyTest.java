@@ -1,26 +1,26 @@
 package frc.robot.utilities;
 
 import org.junit.Test;
-import frc.robot.utilities.AutoTrajectory.AutoAction;
+import frc.robot.utilities.AutoStrategy.Action;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 
-public final class AutoTrajectoryTest {
+public final class AutoStrategyTest {
     private final static double DELTA = 1e-2;
-    private AutoAction intakeAction;
-    private AutoAction dispenseAction;
-    private AutoAction noopAction;
-    private AutoTrajectory trajectory;
+    private Action intakeAction;
+    private Action dispenseAction;
+    private Action noopAction;
+    private AutoStrategy trajectory;
 
     @Before
     public void setup() {
-        intakeAction = new AutoAction(AutoAction.Type.IntakeBall, -1);
-        dispenseAction = new AutoAction(AutoAction.Type.DispenseBall, 3);
-        noopAction = new AutoAction(AutoAction.Type.NoOp, 4);
+        intakeAction = new Action(Action.ActionType.IntakeBall, -1);
+        dispenseAction = new Action(Action.ActionType.DispenseBall, 3);
+        noopAction = new Action(Action.ActionType.NoOp, 4);
 
-        trajectory = new AutoTrajectory(
+        trajectory = new AutoStrategy(
             null, // The filename isn't applicable in this test.
             intakeAction,
             dispenseAction,

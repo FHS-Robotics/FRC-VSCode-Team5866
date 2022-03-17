@@ -48,7 +48,7 @@ public final class AutonomousCommand extends ProxyCommandBase {
             m_intake = intake;
 
             try {
-                  for (var entry : kAutoTrajectories.entrySet()) {
+                  for (var entry : kAutoStrategies.entrySet()) {
                         for (String filename : entry.getValue().files) {
                               if (m_file2trajectory.containsKey(filename)) {
                                     continue;
@@ -68,19 +68,19 @@ public final class AutonomousCommand extends ProxyCommandBase {
 
       @Override
       protected Command generateDelegate() {
-            var selectedStrategy = Settings.get("auto_strategy", "BlueBottom");
-            var trajectoryDef = kAutoTrajectories.get(selectedStrategy);
+            var strategyName = Settings.get("auto_strategy", "BlueBottom");
+            var strategy = kAutoStrategies.get(strategyName);
 
             List<Command> ramseteCommands = new ArrayList<>();
-            for (String file : trajectoryDef.files) {
+            for (String file : strategy.files) {
                   var trajectory = m_file2trajectory.get(file);
                   ramseteCommands.add(createRamsete(m_drive, trajectory));
             }
-            if (trajectoryDef.getFirstActionTime() < 0) {
+            if (strategy.getFirstActionTime() < 0) {
                   // Delay ramsete commands from running, so
                   // actions can happen before driving.
                   List<Command> temp = new ArrayList<>();
-                  temp.add(new RunCommand(() -> m_drive.tankDriveVolts(0, 0), m_drive).withTimeout(-trajectoryDef.getFirstActionTime()));
+                  temp.add(new RunCommand(() -> m_drive.tankDriveVolts(0, 0), m_drive).withTimeout(-strategy.getFirstActionTime()));
                   temp.addAll(ramseteCommands);
                   ramseteCommands = temp;
             }
@@ -90,7 +90,7 @@ public final class AutonomousCommand extends ProxyCommandBase {
 
             return new ParallelCommandGroup(
                   new SequentialCommandGroup(_ramseteCommands),
-                  new DoAutoActions(trajectoryDef, m_arm, m_intake)
+                  new DoStrategyActions(strategy, m_arm, m_intake)
             );
       }
 

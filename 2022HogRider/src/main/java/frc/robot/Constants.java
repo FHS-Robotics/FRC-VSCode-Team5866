@@ -6,9 +6,9 @@ import java.util.Map;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.SPI;
-import frc.robot.utilities.AutoTrajectory;
-import frc.robot.utilities.AutoTrajectory.AutoAction;
-import frc.robot.utilities.AutoTrajectory.AutoAction.Type;
+import frc.robot.utilities.AutoStrategy;
+import frc.robot.utilities.AutoStrategy.Action;
+import static frc.robot.utilities.AutoStrategy.Action.ActionType.*;
 
 /**
  * Magic numbers of the Robot.
@@ -56,18 +56,23 @@ public final class Constants {
        * Seconds to spend running intake during autonomous.
        */
       public final static double kAutoActionTime = 1;
-      public final static Map<String, AutoTrajectory> kAutoTrajectories = Map.of(
-            "BlueBottom", new AutoTrajectory(
+      /**
+       * The String key of this map is referenced in the "auto_strategy" setting.
+       * The AutoTrajectory hold the file names of trajectory files and the
+       * actions to perform throughout the autonomous routine.
+       */
+      public final static Map<String, AutoStrategy> kAutoStrategies = Map.of(
+            "BlueBottom", new AutoStrategy(
                   List.of("FirstBall.wpilib.json", "SecondBall.wpilib.json"),
-                  new AutoAction(Type.DispenseBall, -1.2),
-                  new AutoAction(Type.ArmDown, 1),
-                  new AutoAction(Type.IntakeBall, 2),
-                  new AutoAction(Type.ArmUp, 3),
-                  new AutoAction(Type.DispenseBall, 4),
-                  new AutoAction(Type.ArmDown, 5),
-                  new AutoAction(Type.IntakeBall, 6),
-                  new AutoAction(Type.ArmUp, 7),
-                  new AutoAction(Type.DispenseBall, 8)
+                  new Action(DispenseBall, -1.2),
+                  new Action(ArmDown, 1),
+                  new Action(IntakeBall, 2),
+                  new Action(ArmUp, 3),
+                  new Action(DispenseBall, 4),
+                  new Action(ArmDown, 5),
+                  new Action(IntakeBall, 6),
+                  new Action(ArmUp, 7),
+                  new Action(DispenseBall, 8)
             )
       );
 

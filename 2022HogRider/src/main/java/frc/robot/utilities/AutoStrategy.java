@@ -3,12 +3,12 @@ package frc.robot.utilities;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class AutoTrajectory {
-      public static final class AutoAction implements Comparable<AutoAction> {
-            public final Type type;
+public final class AutoStrategy {
+      public static final class Action implements Comparable<Action> {
+            public final ActionType type;
             public final double startTime;
 
-            public enum Type {
+            public enum ActionType {
                   DispenseBall, // Drop ball
                   IntakeBall, // Pickup ball
                   ArmUp, // Lift Arm
@@ -16,13 +16,13 @@ public final class AutoTrajectory {
                   NoOp,
             }
 
-            public AutoAction(Type type, double startTime) {
+            public Action(ActionType type, double startTime) {
                   this.type = type;
                   this.startTime = startTime;
             }
 
           @Override
-            public int compareTo(AutoAction other) {
+            public int compareTo(Action other) {
                   return Double.compare(startTime, other.startTime);
             }
       }
@@ -34,9 +34,9 @@ public final class AutoTrajectory {
       /**
        * List of actions, sorted by time ascending.
        */
-      private final List<AutoAction> actions;
+      private final List<Action> actions;
 
-      public AutoTrajectory(List<String> files, AutoAction ...actions) {
+      public AutoStrategy(List<String> files, Action ...actions) {
             this.files = files;
             this.actions = new ArrayList<>(List.of(actions));
             this.actions.sort((a, b) -> a.compareTo(b));
@@ -49,8 +49,8 @@ public final class AutoTrajectory {
        * @param time
        * @return
        */
-      public AutoAction sampleNearestAction(double time) {
-            AutoAction result = null;
+      public Action sampleNearestAction(double time) {
+            Action result = null;
             for (var action : actions) {
                   if (time >= action.startTime) {
                         result = action;

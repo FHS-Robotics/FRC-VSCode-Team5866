@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
-import frc.robot.utilities.AutoTrajectory;
+import frc.robot.utilities.AutoStrategy;
 import static frc.robot.Constants.*;
 
 /**
@@ -14,14 +14,14 @@ import static frc.robot.Constants.*;
  *
  * @see AutonomousCommand
  */
-public final class DoAutoActions extends CommandBase {
+public final class DoStrategyActions extends CommandBase {
     private final Arm m_arm;
     private final Intake m_intake;
-    private final AutoTrajectory m_actions;
+    private final AutoStrategy m_strategy;
     private double m_startTime;
 
-    public DoAutoActions(AutoTrajectory actions, Arm arm, Intake intake) {
-        m_actions = actions;
+    public DoStrategyActions(AutoStrategy strategy, Arm arm, Intake intake) {
+        m_strategy = strategy;
         m_arm = arm;
         m_intake = intake;
         addRequirements(arm, intake);
@@ -30,8 +30,8 @@ public final class DoAutoActions extends CommandBase {
     @Override
     public void initialize() {
         m_startTime = Timer.getFPGATimestamp();
-        if (m_actions.getFirstActionTime() < 0) {
-            m_startTime -= m_actions.getFirstActionTime();
+        if (m_strategy.getFirstActionTime() < 0) {
+            m_startTime -= m_strategy.getFirstActionTime();
         }
     }
 
@@ -41,7 +41,7 @@ public final class DoAutoActions extends CommandBase {
         // because we use this to decide when to run the intake.
         double time = Timer.getFPGATimestamp() - m_startTime;
 
-        var action = m_actions.sampleNearestAction(time);
+        var action = m_strategy.sampleNearestAction(time);
 
         if (time - action.startTime > kAutoActionTime) {
             // This action has already completed.
@@ -76,6 +76,6 @@ public final class DoAutoActions extends CommandBase {
     public boolean isFinished() {
         // This command is finished when it's last action is over.
         double time = Timer.getFPGATimestamp() - m_startTime;
-        return time - m_actions.getLastActionTime() > kAutoActionTime;
+        return time - m_strategy.getLastActionTime() > kAutoActionTime;
     }
 }
