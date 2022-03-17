@@ -45,6 +45,8 @@ public final class DoAutoActions extends CommandBase {
 
         if (time - action.startTime > kAutoActionTime) {
             // This action has already completed.
+            m_intake.move(0);
+            m_arm.moveSafely(0);
             return;
         }
 
@@ -59,7 +61,9 @@ public final class DoAutoActions extends CommandBase {
             case ArmDown:
                 m_arm.moveSafely(-1);
             case NoOp:
-                break;
+            default:
+                m_intake.move(0);
+                m_arm.moveSafely(0);
         }
     }
 
