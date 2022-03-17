@@ -1,5 +1,6 @@
 package frc.robot;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -7,6 +8,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.utilities.AutoTrajectory;
+import frc.robot.utilities.AutoTrajectory.AutoAction;
+import frc.robot.utilities.AutoTrajectory.AutoAction.Type;
 
 /**
  * Magic numbers of the Robot.
@@ -55,6 +58,10 @@ public final class Constants {
        */
       public final static double kAutoActionTime = 1;
       public final static Map<String, AutoTrajectory> kAutoTrajectories = Map.of(
+            "BlueBottom", new AutoTrajectory(
+                  List.of("FirstBall.wpilib.json", "SecondBall.wpilib.json"),
+                  new AutoAction(Type.DispenseBall, -1.2)
+            )
       );
 
       // TODO: Acquire the gains of the robot.

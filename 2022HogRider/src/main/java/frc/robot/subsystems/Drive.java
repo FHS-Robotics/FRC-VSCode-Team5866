@@ -89,7 +89,7 @@ public final class Drive extends SubsystemBase {
        * @param zRotation turning speed
        */
       public void arcadeDrive(double xSpeed, double zRotation) {
-            Debugging.put("drive_speed", "spd: " + xSpeed + ", rot: " + zRotation);
+            Debugging.put("arcade_drive_speed", "spd: " + xSpeed + ", rot: " + zRotation);
             if(Math.abs(xSpeed) > 0.05) {
                   Debugging.put("drive_brakes_on", "No");
 
@@ -102,6 +102,7 @@ public final class Drive extends SubsystemBase {
       }
 
       public void tankDriveVolts(double leftVolts, double rightVolts) {
+            Debugging.put("tank_drive_volts", "left: " + leftVolts + ", right: " + rightVolts);
             m_left.setVoltage(leftVolts);
             m_right.setVoltage(rightVolts);
             m_drive.feed();

@@ -18,6 +18,8 @@
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/MotorControllerGroup[1]": "Motor Controller",
       "/LiveWindow/Ungrouped/MotorControllerGroup[3]": "Motor Controller",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/Talon FX [2]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [3]": "Motor Controller",
@@ -32,6 +34,12 @@
         "left": 74,
         "right": 1774,
         "top": 50,
+        "trajectory": {
+          "arrowSize": 74,
+          "arrows": false,
+          "style": "Line",
+          "width": 0.029999999329447746
+        },
         "width": 16.459199905395508,
         "window": {
           "visible": true
