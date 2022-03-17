@@ -59,12 +59,12 @@ public final class Constants {
 
       // TODO: Acquire the gains of the robot.
       // https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html
-      public final static double kRamseteB = 0;
-      public final static double kRamseteZeta = 0;
-      public final static double kPDriveVel = 0;
+      public final static double kRamseteB = 2;
+      public final static double kRamseteZeta = 0.7;
+      public final static double kPDriveVel = 0.8;
       // TODO: measure track width.
       public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(1);
       public final static SimpleMotorFeedforward kAutoFeedforward = new SimpleMotorFeedforward(0, 0, 0);
       public final static DifferentialDriveVoltageConstraint kAutoVoltageConstraint =
-            new DifferentialDriveVoltageConstraint(kAutoFeedforward, kDriveKinematics, 10);
+            new DifferentialDriveVoltageConstraint(kAutoFeedforward, kDriveKinematics, 8);
 }
