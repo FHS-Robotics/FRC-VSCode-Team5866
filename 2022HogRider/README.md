@@ -18,7 +18,11 @@ is documented to give <em>anyone</em> a rundown on how our robot's software is s
 </em>
 
 * WPILib's Command-Based Framework
+    * [TeleopCommand.java] and [AutonomousCommand.java]
 * [Main.java], [Robot.java], [RobotContainer.java] and [Constants.java]
+
+[TeleopCommand.java]: src/main/java/frc/robot/commands/TeleopCommand.java
+[AutonomousCommand.java]: src/main/java/frc/robot/commands/AutonomousCommand.java
 
 [Main.java]: src/main/java/frc/robot/Main.java
 [Robot.java]: src/main/java/frc/robot/Robot.java
@@ -30,13 +34,41 @@ is documented to give <em>anyone</em> a rundown on how our robot's software is s
 ## Unit Testing
 </em>
 
-* They make for useful examples to study!
-* Located at [src/test/java/frc/robot]
-* Unit Tests require adding the following to `build.gradle`:
-    ```groovy
-    test {
-        useJUnit()
-    }
-    ```
+<h3 align="right">Files involved in our Unit Tests</h3>
+<pre>
+src/test/java/frc/robot/
+├─ subsystems/
+│  ├─ ArmTest.java
+│  ├─ ElevatorTest.java
+│  ├─ IntakeTest.java
+├─ utilities/
+│  ├─ AutoStrategyTest.java
+│  ├─ ProxyCommandBaseTest.java
+├─ MockMotorController.java
+gradle.build
+</pre>
 
-[src/test/java/frc/robot]: src/test/java/frc/robot
+<ul>
+<li> <p align="right">
+They make for useful examples to study!
+</p> </li>
+<li> <p align="right">
+Test code at <a href="src/test/java/frc/robot">src/test/java/frc/robot</a>
+</p> </li>
+<li> <p align="right">
+You may add unit tests to your project by adding <code>test { useJUnit() }</code> to build.gradle:
+</p> </li>
+</ul>
+
+<em>
+
+## Robot Simulation
+</em>
+
+<h3 align="left">An Autonomous Path on the Simulation GUI.</h3>
+
+![Simulated Robot Autonomous Mode on Simulation GUI](images/Autonomous%20Simulation%20GUI.png)
+
+* Simulated Drive, Arm, Intake, and Elevator subsystems.
+* A `Field2d` is fed the robot's location as well as the robot's trajectory.
+* That `Field2d` is transmitted through Network Tables, and it is visualized on the Simulation GUI.
