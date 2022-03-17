@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import static frc.robot.Constants.*;
 
@@ -71,6 +72,14 @@ public final class AutonomousCommand extends ProxyCommandBase {
             for (String file : trajectoryDef.files) {
                   var trajectory = m_file2trajectory.get(file);
                   ramseteCommands.add(createRamsete(m_drive, trajectory));
+            }
+            if (trajectoryDef.getFirstActionTime() < 0) {
+                  // Delay ramsete commands from running, so
+                  // actions can happen before driving.
+                  List<Command> temp = new ArrayList<>();
+                  temp.add(new WaitCommand(-trajectoryDef.getFirstActionTime()));
+                  temp.addAll(ramseteCommands);
+                  ramseteCommands = temp;
             }
             Command[] _ramseteCommands = new Command[ramseteCommands.size()];
             ramseteCommands.toArray(_ramseteCommands);

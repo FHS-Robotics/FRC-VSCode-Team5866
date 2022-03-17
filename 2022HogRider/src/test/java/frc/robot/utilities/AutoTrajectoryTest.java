@@ -16,7 +16,7 @@ public final class AutoTrajectoryTest {
 
     @Before
     public void setup() {
-        intakeAction = new AutoAction(AutoAction.Type.IntakeBall, 2);
+        intakeAction = new AutoAction(AutoAction.Type.IntakeBall, -1);
         dispenseAction = new AutoAction(AutoAction.Type.DispenseBall, 3);
         noopAction = new AutoAction(AutoAction.Type.NoOp, 4);
 
@@ -30,8 +30,8 @@ public final class AutoTrajectoryTest {
 
     @Test
     public void samplesValidActions() {
-        assertEquals(null, trajectory.sampleNearestAction(1));
-        assertEquals(null, trajectory.sampleNearestAction(1.999));
+        assertEquals(null, trajectory.sampleNearestAction(-10));
+        assertEquals(null, trajectory.sampleNearestAction(-1.001));
         assertEquals(intakeAction, trajectory.sampleNearestAction(2));
         assertEquals(intakeAction, trajectory.sampleNearestAction(2.999));
         assertEquals(dispenseAction, trajectory.sampleNearestAction(3));
@@ -39,6 +39,11 @@ public final class AutoTrajectoryTest {
         assertEquals(noopAction, trajectory.sampleNearestAction(4));
         assertEquals(noopAction, trajectory.sampleNearestAction(4.999));
         assertEquals(noopAction, trajectory.sampleNearestAction(10));
+    }
+
+    @Test
+    public void correctFirstActionTime() {
+        assertEquals(-1, trajectory.getFirstActionTime(), DELTA);
     }
 
     @Test

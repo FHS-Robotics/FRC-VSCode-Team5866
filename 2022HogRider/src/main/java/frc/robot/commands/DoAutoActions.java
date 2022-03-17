@@ -30,6 +30,9 @@ public final class DoAutoActions extends CommandBase {
     @Override
     public void initialize() {
         m_startTime = Timer.getFPGATimestamp();
+        if (m_actions.getFirstActionTime() < 0) {
+            m_startTime -= m_actions.getFirstActionTime();
+        }
     }
 
     @Override
