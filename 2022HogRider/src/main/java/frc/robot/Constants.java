@@ -5,7 +5,6 @@ import java.util.Map;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.utilities.AutoTrajectory;
 import frc.robot.utilities.AutoTrajectory.AutoAction;
@@ -68,10 +67,10 @@ public final class Constants {
       // https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html
       public final static double kRamseteB = 2;
       public final static double kRamseteZeta = 0.7;
-      public final static double kPDriveVel = 0.8;
+      public final static double kP = 10;
+      public final static double kI = 0.0;
+      public final static double kD = 0.1;
       // TODO: measure track width.
       public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(1);
       public final static SimpleMotorFeedforward kAutoFeedforward = new SimpleMotorFeedforward(0, 0, 0);
-      public final static DifferentialDriveVoltageConstraint kAutoVoltageConstraint =
-            new DifferentialDriveVoltageConstraint(kAutoFeedforward, kDriveKinematics, 8);
 }

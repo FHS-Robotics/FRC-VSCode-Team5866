@@ -37,6 +37,9 @@ public final class AutonomousCommand extends ProxyCommandBase {
       private final Drive m_drive;
       private final Intake m_intake;
 
+      private final PIDController m_leftPID = new PIDController(kP, kI, kD);
+      private final PIDController m_rightPID = new PIDController(kP, kI, kD);
+
       private final Map<String, Trajectory> m_file2trajectory = new HashMap<>();
 
       public AutonomousCommand(Arm arm, Drive drive, Intake intake) {
@@ -90,7 +93,7 @@ public final class AutonomousCommand extends ProxyCommandBase {
             );
       }
 
-      private static Command createRamsete(Drive drive, Trajectory trajectory) {
+      private Command createRamsete(Drive drive, Trajectory trajectory) {
             RamseteCommand ramseteCommand = new RamseteCommand(
                   trajectory,
                   drive::getPose,
@@ -98,14 +101,16 @@ public final class AutonomousCommand extends ProxyCommandBase {
                   kAutoFeedforward,
                   kDriveKinematics,
                   drive::getWheelSpeeds,
-                  new PIDController(kPDriveVel, 0, 0),
-                  new PIDController(kPDriveVel, 0, 0),
+                  m_leftPID,
+                  m_rightPID,
                   drive::tankDriveVolts,
                   drive
             );
 
             return new SequentialCommandGroup(
                   new InstantCommand(() -> {
+                        m_leftPID.reset();
+                        m_rightPID.reset();
                         drive.resetOdometry(trajectory.getInitialPose());
                         drive.setTrajectory(trajectory);
                   }, drive),
