@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import static frc.robot.Constants.*;
 
@@ -80,10 +80,11 @@ public final class AutonomousCommand extends ProxyCommandBase {
                   // Delay ramsete commands from running, so
                   // actions can happen before driving.
                   List<Command> temp = new ArrayList<>();
-                  temp.add(new WaitCommand(-trajectoryDef.getFirstActionTime()));
+                  temp.add(new RunCommand(() -> m_drive.tankDriveVolts(0, 0), m_drive).withTimeout(-trajectoryDef.getFirstActionTime()));
                   temp.addAll(ramseteCommands);
                   ramseteCommands = temp;
             }
+            ramseteCommands.add(new RunCommand(() -> m_drive.tankDriveVolts(0, 0), m_drive));
             Command[] _ramseteCommands = new Command[ramseteCommands.size()];
             ramseteCommands.toArray(_ramseteCommands);
 
