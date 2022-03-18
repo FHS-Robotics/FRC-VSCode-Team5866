@@ -5,13 +5,13 @@
 
 | Name | Description |
 | :--- | ----------: |
-| [2022HogRider] | FRC Year 2022 (HogRider) |
+| [2022HogRider] | Competition robot for FRC Rapid React (Year 2022) |
 | [2022RapidReact] | Abandoned |
-| [InfiniteRecharge2020] | ... |
 | [InfiniteRecharge2021] | ... |
-| [DestinationDeepSpace2019] | ... |
+| [InfiniteRecharge2020] | ... |
 | [OffSeason2019] | ...
-| [PathWeaver] | ... |
+| [DestinationDeepSpace2019] | ... |
+| [PathWeaver] | There is no explanation on why this is here... |
 
 [2022HogRider]: 2022HogRider#5866-fe-iron-tigers-presents-hogrider
 [2022RapidReact]: 2022RapidReact
