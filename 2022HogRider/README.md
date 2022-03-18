@@ -14,8 +14,7 @@ is documented to give <em>anyone</em> a rundown on how our robot's software is s
 <hr />
 
 <h3 align="right">Using the Command-Based Framework</h3>
-<img align="right" alt="Robot Project in Visual Studio Code" src="images/Robot%20Software%20Visual%20Studio%20Code.png" width="270" height="294" />
-<hr />
+<img alt="Robot Project in Visual Studio Code" src="images/Robot%20Software%20Visual%20Studio%20Code.png" width="270" height="294" />
 
 <h3 align="right">Files involved in our Unit Tests</h3>
 <pre>
