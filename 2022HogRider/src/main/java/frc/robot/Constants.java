@@ -48,8 +48,6 @@ public final class Constants {
       public final static double kSpeedArm = 0.3;
       public final static double kSpeedElevator = 0.75;
 
-      public final static boolean kInvertEncoderLeft = false;
-      public final static boolean kInvertEncoderRight = true;
       public final static boolean kInvertLimitUp = true;
 
       /**
