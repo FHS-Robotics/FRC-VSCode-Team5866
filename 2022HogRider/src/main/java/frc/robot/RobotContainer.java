@@ -110,6 +110,7 @@ public final class RobotContainer {
             m_elevator.setDefaultCommand(new RunCommand(() -> m_elevator.move(0), m_elevator));
 
             var intakeMotor = new CANSparkMax(kChIntake, MotorType.kBrushless);
+            intakeMotor.setInverted(true);
             m_intake = new Intake(intakeMotor);
             m_intake.setDefaultCommand(new RunCommand(() -> m_intake.move(0), m_intake));
       }
