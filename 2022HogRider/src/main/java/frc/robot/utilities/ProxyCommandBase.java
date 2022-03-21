@@ -3,7 +3,7 @@ package frc.robot.utilities;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-abstract public class ProxyCommandBase extends CommandBase {
+public abstract class ProxyCommandBase extends CommandBase {
     private Command delegate = null;
 
     @Override

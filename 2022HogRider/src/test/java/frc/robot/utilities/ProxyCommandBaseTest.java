@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static org.junit.Assert.*;
 
-public class ProxyCommandBaseTest {
+public final class ProxyCommandBaseTest {
     private static class MockCommand extends CommandBase {
             private boolean interrupted = false;
             private boolean markAsFinished = false;
