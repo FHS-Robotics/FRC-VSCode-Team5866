@@ -103,6 +103,8 @@ public final class RobotContainer {
 
             CANSparkMax elevatorMotor1 = new CANSparkMax(kChElevator1, MotorType.kBrushless);
             CANSparkMax elevatorMotor2 = new CANSparkMax(kChElevator2, MotorType.kBrushless);
+            elevatorMotor1.setInverted(true);
+            elevatorMotor2.setInverted(true);
             MotorControllerGroup elevatorMotors = new MotorControllerGroup(elevatorMotor1, elevatorMotor2);
             m_elevator = new Elevator(elevatorMotors);
             m_elevator.setDefaultCommand(new RunCommand(() -> m_elevator.move(0), m_elevator));
