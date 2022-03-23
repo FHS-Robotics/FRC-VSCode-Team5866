@@ -37,8 +37,8 @@ public final class AutonomousCommand extends ProxyCommandBase {
       private final Drive m_drive;
       private final Intake m_intake;
 
-      private final PIDController m_leftPID = new PIDController(kP, kI, kD);
-      private final PIDController m_rightPID = new PIDController(kP, kI, kD);
+      private final PIDController m_leftPID = new PIDController(kPDriveVel, 0, 0);
+      private final PIDController m_rightPID = new PIDController(kPDriveVel, 0, 0);
 
       private final Map<String, Trajectory> m_file2trajectory = new HashMap<>();
 
