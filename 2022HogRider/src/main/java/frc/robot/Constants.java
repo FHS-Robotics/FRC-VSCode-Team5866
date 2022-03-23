@@ -85,7 +85,7 @@ public final class Constants {
       public final static double kP = 10;
       public final static double kI = 0.0;
       public final static double kD = 0.1;
-      // TODO: measure track width.
-      public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(1);
+      // Track Width: 0.51435 meters.
+      public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.51435);
       public final static SimpleMotorFeedforward kAutoFeedforward = new SimpleMotorFeedforward(0, 0, 0);
 }
