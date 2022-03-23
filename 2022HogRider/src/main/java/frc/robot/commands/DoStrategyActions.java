@@ -51,11 +51,11 @@ public final class DoStrategyActions extends CommandBase {
         }
 
         switch(action.type) {
-            case DispenseBall:
+            case IntakeBall:
                 m_intake.move(1);
                 m_arm.moveSafely(0);
                 break;
-            case IntakeBall:
+            case DispenseBall:
                 m_intake.move(-1);
                 m_arm.moveSafely(0);
                 break;
