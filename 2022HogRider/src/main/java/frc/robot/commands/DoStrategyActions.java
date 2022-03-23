@@ -53,13 +53,20 @@ public final class DoStrategyActions extends CommandBase {
         switch(action.type) {
             case DispenseBall:
                 m_intake.move(1);
+                m_arm.moveSafely(0);
                 break;
             case IntakeBall:
                 m_intake.move(-1);
+                m_arm.moveSafely(0);
+                break;
             case ArmUp:
                 m_arm.moveSafely(1);
+                m_intake.move(0);
+                break;
             case ArmDown:
                 m_arm.moveSafely(-1);
+                m_intake.move(0);
+                break;
             case NoOp:
             default:
                 m_intake.move(0);
