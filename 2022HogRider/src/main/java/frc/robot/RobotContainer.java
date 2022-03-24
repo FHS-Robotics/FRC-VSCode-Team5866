@@ -2,10 +2,10 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -95,7 +95,7 @@ public final class RobotContainer {
             // motor-controllers.
             m_objectRefs.add(driveBl);
             m_objectRefs.add(driveBr);
-            ADXRS450_Gyro gyro = new ADXRS450_Gyro(kChGyro);
+            AHRS gyro = new AHRS(kChGyro);
             m_drive = new Drive(driveFl, driveFr, gyro);
             m_drive.setDefaultCommand(new RunCommand(() -> m_drive.arcadeDrive(0, 0), m_drive));
             m_drive.getDrive().setMaxOutput(.5);

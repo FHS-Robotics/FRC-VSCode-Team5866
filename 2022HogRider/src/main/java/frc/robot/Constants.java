@@ -31,7 +31,7 @@ public final class Constants {
       public final static int kChElevator1 = 6;
       public final static int kChElevator2 = 7;
       public final static int kChIntake = 4;
-      public final static SPI.Port kChGyro = SPI.Port.kOnboardCS0;
+      public final static SPI.Port kChGyro = SPI.Port.kMXP;
       public final static int kChWheelFL = 0;
       public final static int kChWheelFR = 1;
       public final static int kChWheelBL = 2;
@@ -46,7 +46,7 @@ public final class Constants {
       public final static double kPulsePerDistance = kDrivePulsePerRotation * kDriveGearReduction / kDistancePerRotation;
       public final static double kSpeedIntake = 0.3;
       public final static double kSpeedArm = 0.3;
-      public final static double kSpeedElevator = 0.75;
+      public final static double kSpeedElevator = 1;
 
       public final static boolean kInvertLimitUp = true;
 

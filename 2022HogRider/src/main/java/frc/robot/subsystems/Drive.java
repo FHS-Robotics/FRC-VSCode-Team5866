@@ -1,23 +1,23 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Debugging;
+import frc.robot.utilities.SimUtils;
+
 import static frc.robot.Constants.*;
 
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public final class Drive extends SubsystemBase {
       private final WPI_TalonFX m_left, m_right;
-      private final ADXRS450_Gyro m_gyro;
+      private final AHRS m_gyro;
       private final DifferentialDrive m_drive;
 
       private final DifferentialDriveOdometry m_odometry;
@@ -37,7 +37,6 @@ public final class Drive extends SubsystemBase {
 
       // Simulation Objects
       private DifferentialDrivetrainSim m_driveSim;
-      private ADXRS450_GyroSim m_gyroSim;
 
       /**
        * Creates a new drive train.
@@ -45,7 +44,7 @@ public final class Drive extends SubsystemBase {
        * @param right The left motor controller which other controllers follow()
        * @param gyro The gyro to orient the robot with.
        */
-      public Drive(WPI_TalonFX left, WPI_TalonFX right, ADXRS450_Gyro gyro) {
+      public Drive(WPI_TalonFX left, WPI_TalonFX right, AHRS gyro) {
             m_left = left;
             m_right = right;
             m_gyro = gyro;
@@ -79,7 +78,6 @@ public final class Drive extends SubsystemBase {
                                            // l and r position: 0.005 m
                   VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005)
             );
-            m_gyroSim = new ADXRS450_GyroSim(m_gyro);
       }
 
       /**
@@ -173,6 +171,6 @@ public final class Drive extends SubsystemBase {
             m_left.getSimCollection().setIntegratedSensorVelocity((int) (m_driveSim.getLeftVelocityMetersPerSecond() * kPulsePerDistance));
             m_right.getSimCollection().setIntegratedSensorRawPosition((int) (m_driveSim.getRightPositionMeters() * kPulsePerDistance));
             m_right.getSimCollection().setIntegratedSensorVelocity((int) (m_driveSim.getRightVelocityMetersPerSecond() * kPulsePerDistance));
-            m_gyroSim.setAngle(-m_driveSim.getHeading().getDegrees());
+            SimUtils.setGyroAngle(-m_driveSim.getHeading().getDegrees());
       }
 }
