@@ -41,6 +41,8 @@ public final class TimedAutoCommand extends CommandBase {
         if (elapsed < kDispenseTime) {
             // Dispense ball for kDispenseTime seconds.
             m_intake.move(-1);
+            m_arm.moveSafely(0);
+            m_drive.arcadeDrive(0, 0);
             return; // Don't move on to the next step
         }
         m_intake.move(0); // Stop the intake motor.
@@ -49,6 +51,8 @@ public final class TimedAutoCommand extends CommandBase {
         if (elapsed < kDriveTime) {
             // Drive backwards for kDriveTime seconds.
             m_drive.arcadeDrive(-0.3, 0);
+            m_arm.moveSafely(0);
+            m_intake.move(0);
             return; // Don't move on to the next step
         }
         m_drive.arcadeDrive(0, 0); // Stop the drive base.
@@ -58,6 +62,8 @@ public final class TimedAutoCommand extends CommandBase {
         if (elapsed < kArmLowerTime) {
             // Lower the arm for kArmLowerTime
             m_arm.moveSafely(-1);
+            m_drive.arcadeDrive(0, 0);
+            m_intake.move(0);
             return;
         }
         m_arm.moveSafely(0); // Stop the arm.
