@@ -69,7 +69,7 @@ public final class Drive extends SubsystemBase {
                                            // TODO: Get real values of MoI and Mass
                   7,                       // Moment of Inertia
                   60,                      // Robot Mass
-                  kWheelDiameter / 2,          // Wheel Diameter
+                  kWheelDiameter / 2,      // Wheel Radius
                   kTrackWidth,             // Track Width
                                            // The standard deviations for measurement noise:
                                            // x and y:          0.001 m
