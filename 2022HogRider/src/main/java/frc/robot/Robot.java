@@ -6,8 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.TeleopCommand;
+import frc.robot.utilities.AutonomousCommandGenerator;
 import frc.robot.utilities.Settings;
 
 /**
@@ -38,7 +38,7 @@ import frc.robot.utilities.Settings;
  * @see RobotContainer
  * @see Settings
  * @see Constants
- * @see AutonomousCommand
+ * @see AutonomousCommandGenerator
  * @see TeleopCommand
  */
 public final class Robot extends TimedRobot {
@@ -59,14 +59,7 @@ public final class Robot extends TimedRobot {
       // region autonomous
       @Override
       public void autonomousInit() {
-            var autoCmd = m_robotContainer.getAutonomousCommand();
-
-            // IMPORTANT: We need to call resolveDelegate(), before
-            // scheduling the command because auto cmd is a proxy to
-            // a "real" command that is picked according to the
-            // setting "auto_strategy" on the dashboard.
-            autoCmd.resolveDelegate();
-            autoCmd.schedule();
+            m_robotContainer.createAutonomousCommand().schedule();
       }
 
       @Override
@@ -75,7 +68,7 @@ public final class Robot extends TimedRobot {
 
       @Override
       public void autonomousExit() {
-            m_robotContainer.getAutonomousCommand().cancel();
+            m_robotContainer.fetchAutonomousCommand().cancel();
       }
       // endregion
 

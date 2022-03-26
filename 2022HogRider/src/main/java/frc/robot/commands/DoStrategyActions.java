@@ -5,14 +5,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.utilities.AutoStrategy;
+import frc.robot.utilities.AutonomousCommandGenerator;
+
 import static frc.robot.Constants.*;
 
 /**
- * Controls the Intake and Arm according to an {@see AutoTrajectory}.
- * This is used by {@see AutonomousCommand}, and trajectory actions
- * are loaded from {@see Constants}.kAutoTrajectories.
+ * Controls the Intake and Arm according to an {@link AutoTrajectory}.
+ * This is used by {@link AutonomousCommandGenerator}, and trajectory actions
+ * are loaded from {@link Constants}.kAutoTrajectories.
  *
- * @see AutonomousCommand
+ * @see AutonomousCommandGenerator
  */
 public final class DoStrategyActions extends CommandBase {
     private final Arm m_arm;

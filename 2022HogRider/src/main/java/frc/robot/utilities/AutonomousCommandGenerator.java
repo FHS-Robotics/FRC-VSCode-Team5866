@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.utilities;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
@@ -21,18 +21,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import frc.robot.commands.DoStrategyActions;
+import frc.robot.commands.TimedAutoCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
-import frc.robot.utilities.ProxyCommandBase;
-import frc.robot.utilities.Settings;
 
 /**
  * During autonomous, this command follows paths as listed in
  * {@see Constants}.kAutoTrajectories. A {@see DoAutoActions}
  * manipulates the arm and intake while the robot follows a trajectory.
  */
-public final class AutonomousCommand extends ProxyCommandBase {
+public final class AutonomousCommandGenerator {
       private final Arm m_arm;
       private final Drive m_drive;
       private final Intake m_intake;
@@ -42,7 +42,7 @@ public final class AutonomousCommand extends ProxyCommandBase {
 
       private final Map<String, Trajectory> m_file2trajectory = new HashMap<>();
 
-      public AutonomousCommand(Arm arm, Drive drive, Intake intake) {
+      public AutonomousCommandGenerator(Arm arm, Drive drive, Intake intake) {
             m_arm = arm;
             m_drive = drive;
             m_intake = intake;
@@ -66,18 +66,21 @@ public final class AutonomousCommand extends ProxyCommandBase {
             }
       }
 
-      @Override
-      protected Command generateDelegate() {
+      public Command generateCommand() {
             var strategyName = Settings.get("auto_strategy", "BlueBottom");
             if ("TimeBased".equals(strategyName)) {
-                  return new TimedAutoCommand(m_drive, m_intake, m_arm);
+                  return new TimedAutoCommand(m_drive, m_intake, m_arm).andThen(new RunCommand(() -> {
+                        m_arm.moveSafely(0);
+                        m_drive.arcadeDrive(0, 0);
+                        m_intake.move(0);
+                  }, m_arm, m_drive, m_intake));
             }
             var strategy = kAutoStrategies.get(strategyName);
 
             List<Command> ramseteCommands = new ArrayList<>();
             for (String file : strategy.files) {
                   var trajectory = m_file2trajectory.get(file);
-                  ramseteCommands.add(createRamsete(m_drive, trajectory));
+                  ramseteCommands.add(createRamsete(trajectory));
             }
             if (strategy.getFirstActionTime() < 0) {
                   // Delay ramsete commands from running, so
@@ -94,35 +97,39 @@ public final class AutonomousCommand extends ProxyCommandBase {
             return new ParallelCommandGroup(
                   new SequentialCommandGroup(_ramseteCommands),
                   new DoStrategyActions(strategy, m_arm, m_intake)
-            );
+            ).andThen(new RunCommand(() -> {
+                  m_arm.moveSafely(0);
+                  m_drive.arcadeDrive(0, 0);
+                  m_intake.move(0);
+            }, m_arm, m_drive, m_intake));
       }
 
-      private Command createRamsete(Drive drive, Trajectory trajectory) {
+      private Command createRamsete(Trajectory trajectory) {
             RamseteCommand ramseteCommand = new RamseteCommand(
                   trajectory,
-                  drive::getPose,
+                  m_drive::getPose,
                   new RamseteController(kRamseteB, kRamseteZeta),
                   kAutoFeedforward,
                   kDriveKinematics,
-                  drive::getWheelSpeeds,
+                  m_drive::getWheelSpeeds,
                   m_leftPID,
                   m_rightPID,
-                  drive::tankDriveVolts,
-                  drive
+                  m_drive::tankDriveVolts,
+                  m_drive
             );
 
             return new SequentialCommandGroup(
                   new InstantCommand(() -> {
                         m_leftPID.reset();
                         m_rightPID.reset();
-                        drive.resetOdometry(trajectory.getInitialPose());
-                        drive.setTrajectory(trajectory);
-                  }, drive),
+                        m_drive.resetOdometry(trajectory.getInitialPose());
+                        m_drive.setTrajectory(trajectory);
+                  }, m_drive),
                   ramseteCommand,
                   new InstantCommand(() -> {
-                        drive.tankDriveVolts(0, 0);
-                        drive.setTrajectory(null);
-                  }, drive)
+                        m_drive.tankDriveVolts(0, 0);
+                        m_drive.setTrajectory(null);
+                  }, m_drive)
             );
       }
 }

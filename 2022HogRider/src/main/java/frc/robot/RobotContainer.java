@@ -9,14 +9,15 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.TeleopCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.utilities.AutonomousCommandGenerator;
 
 import static frc.robot.Constants.*;
 
@@ -42,7 +43,8 @@ public final class RobotContainer {
       // endregion
 
       // region Commands
-      private final AutonomousCommand m_autonomousCommand;
+      private final AutonomousCommandGenerator m_autoCmdGenerator;
+      private Command m_latestAutoCmd;
       private final TeleopCommand m_teleopCommand;
       // endregion
 
@@ -64,7 +66,7 @@ public final class RobotContainer {
             CommandScheduler.getInstance().registerSubsystem(m_arm, m_drive, m_elevator, m_intake);
 
             // configureSubsystems() has made all of the subsystems.
-            m_autonomousCommand = new AutonomousCommand(m_arm, m_drive, m_intake);
+            m_autoCmdGenerator = new AutonomousCommandGenerator(m_arm, m_drive, m_intake);
             m_teleopCommand = new TeleopCommand(m_driverController, m_gunnerController, m_arm, m_drive, m_intake, m_elevator);
       }
 
@@ -116,10 +118,22 @@ public final class RobotContainer {
       }
 
       /**
-       * Fetches the final instance of the {@see AutonomousCommand}.
+       * Creates a new autonomous command that can be fetched
+       * later with {@link RobotContainer#fetchAutonomousCommand()}.
        */
-      public AutonomousCommand getAutonomousCommand() {
-            return m_autonomousCommand;
+      public Command createAutonomousCommand() {
+            return m_latestAutoCmd = m_autoCmdGenerator.generateCommand();
+      }
+
+      /**
+       * Returns the last autonomous command generated
+       * by {@link RobotContainer#createAutonomousCommand()}.
+       */
+      public Command fetchAutonomousCommand() {
+            if (m_latestAutoCmd == null) {
+                  throw new IllegalStateException("fetchAutonomousCommand() before createAutonomousCommand()");
+            }
+            return m_latestAutoCmd;
       }
 
       /**
