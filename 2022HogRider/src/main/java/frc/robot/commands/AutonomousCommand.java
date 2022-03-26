@@ -69,6 +69,9 @@ public final class AutonomousCommand extends ProxyCommandBase {
       @Override
       protected Command generateDelegate() {
             var strategyName = Settings.get("auto_strategy", "BlueBottom");
+            if ("TimeBased".equals(strategyName)) {
+                  return new TimedAutoCommand(m_drive, m_intake, m_arm);
+            }
             var strategy = kAutoStrategies.get(strategyName);
 
             List<Command> ramseteCommands = new ArrayList<>();
