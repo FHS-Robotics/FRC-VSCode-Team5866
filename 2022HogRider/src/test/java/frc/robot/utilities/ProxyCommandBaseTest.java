@@ -60,6 +60,7 @@ public final class ProxyCommandBaseTest {
 
         assertMockCommand(0, 0, 0, 0, false, delegate);
 
+        proxy.resolveDelegate();
         proxy.initialize();
         assertMockCommand(1, 0, 0, 0, false, delegate);
         assertEquals(false, proxy.isFinished());
@@ -85,6 +86,7 @@ public final class ProxyCommandBaseTest {
 
         assertMockCommand(0, 0, 0, 0, false, delegate);
 
+        proxy.resolveDelegate();
         proxy.initialize();
         assertMockCommand(1, 0, 0, 0, false, delegate);
         assertEquals(false, proxy.isFinished());

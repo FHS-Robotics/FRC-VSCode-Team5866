@@ -1,14 +1,36 @@
 package frc.robot.utilities;
 
+import java.util.Set;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public abstract class ProxyCommandBase extends CommandBase {
     private Command delegate = null;
 
+    /**
+     * Must be called before {@link CommandBase#schedule()} or {@link CommandScheduler#schedule(Command...)}
+     *
+     * This generates a "real" command that the proxy will run when scheduled.
+     */
+    public void resolveDelegate() {
+        delegate = generateDelegate();
+        m_requirements.clear();
+        m_requirements.addAll(delegate.getRequirements());
+    }
+
+    @Override
+    public Set<Subsystem> getRequirements() {
+        return m_requirements;
+    }
+
     @Override
     public void initialize() {
-        delegate = generateDelegate();
+        if (delegate == null) {
+            throw new IllegalStateException("initialize() before a call to resolveDelegate()");
+        }
         delegate.initialize();
     }
 

@@ -59,7 +59,14 @@ public final class Robot extends TimedRobot {
       // region autonomous
       @Override
       public void autonomousInit() {
-            m_robotContainer.getAutonomousCommand().schedule();
+            var autoCmd = m_robotContainer.getAutonomousCommand();
+
+            // IMPORTANT: We need to call resolveDelegate(), before
+            // scheduling the command because auto cmd is a proxy to
+            // a "real" command that is picked according to the
+            // setting "auto_strategy" on the dashboard.
+            autoCmd.resolveDelegate();
+            autoCmd.schedule();
       }
 
       @Override
