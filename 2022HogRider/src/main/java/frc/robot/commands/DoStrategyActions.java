@@ -77,6 +77,7 @@ public final class DoStrategyActions extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_intake.move(0);
+        m_arm.moveSafely(0);
     }
 
     @Override

@@ -62,4 +62,17 @@ public final class TimedAutoCommand extends CommandBase {
         }
         m_arm.moveSafely(0); // Stop the arm.
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_drive.arcadeDrive(0, 0);
+        m_intake.move(0);
+        m_arm.moveSafely(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        double elapsed = m_timer.get();
+        return elapsed > kDispenseTime + kDriveTime + kArmLowerTime;
+    }
 }
