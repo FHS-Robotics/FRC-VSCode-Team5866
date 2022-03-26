@@ -66,11 +66,11 @@ public final class Drive extends SubsystemBase {
             m_driveSim = new DifferentialDrivetrainSim(
                   DCMotor.getFalcon500(2), // Two Falcon 500s per side of drivetrain
                   kDriveGearReduction,     // Gear Reduction
-                                           // TODO: Get real values of MoI, Mass and Track Width
+                                           // TODO: Get real values of MoI and Mass
                   7,                       // Moment of Inertia
                   60,                      // Robot Mass
-                  kWheelDiameter,          // Wheel Diameter
-                  0.7112,                  // Track Width
+                  kWheelDiameter / 2,          // Wheel Diameter
+                  kTrackWidth,             // Track Width
                                            // The standard deviations for measurement noise:
                                            // x and y:          0.001 m
                                            // heading:          0.001 rad

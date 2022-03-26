@@ -92,8 +92,9 @@ public final class Constants {
       public static final double kvVoltSecondsPerMeter = 1.98;
       public static final double kaVoltSecondsSquaredPerMeter = 0.2;
       public static final double kPDriveVel = 8.5;
+      public static final double kTrackWidth = 0.51435;
 
       // Track Width: 0.51435 meters.
-      public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.51435);
+      public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidth);
       public final static SimpleMotorFeedforward kAutoFeedforward = new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
 }
