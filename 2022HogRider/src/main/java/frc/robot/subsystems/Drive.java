@@ -88,7 +88,7 @@ public final class Drive extends SubsystemBase {
        */
       public void arcadeDrive(double xSpeed, double zRotation) {
             Debugging.put("arcade_drive_speed", "spd: " + xSpeed + ", rot: " + zRotation);
-            if(Math.abs(xSpeed) > 0.05) {
+            if(Math.abs(xSpeed) > 0.05 || Math.abs(zRotation) > 0.05) {
                   Debugging.put("drive_brakes_on", "No");
 
                   m_drive.arcadeDrive(xSpeed, zRotation);
