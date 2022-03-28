@@ -44,7 +44,7 @@ public final class Constants {
       public final static double kDriveGearReduction = 3.75;
       public final static double kDistancePerRotation = kWheelDiameter * Math.PI;
       public final static double kPulsePerDistance = kDrivePulsePerRotation * kDriveGearReduction / kDistancePerRotation;
-      public final static double kSpeedIntake = 0.3;
+      public final static double kSpeedIntake = 0.5;
       public final static double kSpeedArm = 0.3;
       public final static double kSpeedElevator = 1;
 
