@@ -72,7 +72,7 @@ public final class AutonomousCommandGenerator {
 
       public Command generateCommand() {
             var strategyName = Settings.get("auto_strategy", "BlueBottom");
-            if ("TimeBased".equals(strategyName)) {
+            if ("Simple".equals(strategyName)) {
                   return new TimedAutoCommand(m_drive, m_intake, m_arm).andThen(new RunCommand(() -> {
                         m_arm.moveSafely(0);
                         m_drive.arcadeDrive(0, 0);
