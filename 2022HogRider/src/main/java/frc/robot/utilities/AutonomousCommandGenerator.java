@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import frc.robot.Constants;
 import frc.robot.commands.DoStrategyActions;
 import frc.robot.commands.TimedAutoCommand;
 import frc.robot.subsystems.Arm;
@@ -28,9 +29,12 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 
 /**
- * During autonomous, this command follows paths as listed in
- * {@see Constants}.kAutoTrajectories. A {@see DoAutoActions}
+ * Uses paths in {@link Constants}.kAutoTrajectories. A {@link DoAutoActions}
  * manipulates the arm and intake while the robot follows a trajectory.
+ *
+ * Alternatively, if "TimeBased" is selected in the dashboard,
+ * A {@link TimeBased} will do as follows: run the intake, move backwards,
+ * and lower the robot's arm.
  */
 public final class AutonomousCommandGenerator {
       private final Arm m_arm;
