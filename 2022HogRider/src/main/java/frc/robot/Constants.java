@@ -60,6 +60,14 @@ public final class Constants {
        * actions to perform throughout the autonomous routine.
        */
       public final static Map<String, AutoStrategy> kAutoStrategies = Map.of(
+            "TestPath", new AutoStrategy(
+                  List.of("Test1.wpilib.json", "Test2.wpilib.json"),
+                  new Action(DispenseBall, -1.2),
+                  new Action(ArmDown, 3),
+                  new Action(IntakeBall, 4),
+                  new Action(ArmUp, 5),
+                  new Action(DispenseBall, 6)
+            ),
             "BlueTop", new AutoStrategy(
                   List.of("Top1.wpilib.json", "Top2.wpilib.json"),
                   new Action(DispenseBall, -1.2),
