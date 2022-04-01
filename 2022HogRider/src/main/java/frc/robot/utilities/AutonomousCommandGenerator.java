@@ -72,14 +72,14 @@ public final class AutonomousCommandGenerator {
 
       public Command generateCommand() {
             var strategyName = Settings.get("auto_strategy", "BlueBottom");
-            if ("Simple".equals(strategyName)) {
+            var strategy = kAutoStrategies.get(strategyName);
+            if (strategy == null || "Simple".equals(strategyName)) {
                   return new TimedAutoCommand(m_drive, m_intake, m_arm).andThen(new RunCommand(() -> {
                         m_arm.moveSafely(0);
                         m_drive.arcadeDrive(0, 0);
                         m_intake.move(0);
                   }, m_arm, m_drive, m_intake));
             }
-            var strategy = kAutoStrategies.get(strategyName);
 
             List<Command> ramseteCommands = new ArrayList<>();
             for (String file : strategy.files) {
