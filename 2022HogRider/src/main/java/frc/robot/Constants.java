@@ -69,7 +69,7 @@ public final class Constants {
                   new Action(DispenseBall, 6)
             ),
             "BlueTop", new AutoStrategy(
-                  List.of("Top1.wpilib.json", "Top2.wpilib.json"),
+                  List.of("BlueTop1.wpilib.json", "BlueTop2.wpilib.json"),
                   new Action(DispenseBall, -1.2),
                   new Action(ArmDown, 1),
                   new Action(IntakeBall, 2),
@@ -77,7 +77,23 @@ public final class Constants {
                   new Action(DispenseBall, 4)
             ),
             "BlueBottom", new AutoStrategy(
-                  List.of("Bottom1.wpilib.json", "Bottom2.wpilib.json"),
+                  List.of("BlueBottom1.wpilib.json", "BlueBottom2.wpilib.json"),
+                  new Action(DispenseBall, -1.2),
+                  new Action(ArmDown, 1),
+                  new Action(IntakeBall, 2),
+                  new Action(ArmUp, 3),
+                  new Action(DispenseBall, 4)
+            ),
+            "RedTop", new AutoStrategy(
+                  List.of("RedTop1.wpilib.json", "RedTop2.wpilib.json"),
+                  new Action(DispenseBall, -1.2),
+                  new Action(ArmDown, 1),
+                  new Action(IntakeBall, 2),
+                  new Action(ArmUp, 3),
+                  new Action(DispenseBall, 4)
+            ),
+            "RedBottom", new AutoStrategy(
+                  List.of("RedBottom1.wpilib.json", "RedBottom2.wpilib.json"),
                   new Action(DispenseBall, -1.2),
                   new Action(ArmDown, 1),
                   new Action(IntakeBall, 2),
