@@ -50,7 +50,7 @@ public final class TimedAutoCommand extends CommandBase {
 
         if (elapsed < kDriveTime) {
             // Drive backwards for kDriveTime seconds.
-            m_drive.arcadeDrive(-0.3, 0);
+            m_drive.arcadeDrive(-0.6, 0);
             m_arm.moveSafely(0);
             m_intake.move(0);
             return; // Don't move on to the next step
