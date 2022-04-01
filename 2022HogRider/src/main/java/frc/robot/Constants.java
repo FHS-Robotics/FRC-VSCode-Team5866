@@ -88,17 +88,15 @@ public final class Constants {
 
       public final static double kRamseteB = 2;
       public final static double kRamseteZeta = 0.7;
-      // TODO: Acquire the gains of the robot.
-      // https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-tutorial/entering-constants.html
 
-      // FAKE GAINS. We need the REAL GAINS
-      public static final double ksVolts = 0.22;
-      public static final double kvVoltSecondsPerMeter = 1.98;
-      public static final double kaVoltSecondsSquaredPerMeter = 0.2;
-      public static final double kPDriveVel = 8.5;
+      // System Identification Documentation:
+      // https://docs.wpilib.org/en/stable/docs/software/pathplanning/system-identification/
+      public static final double ksVolts = 0.68126;
+      public static final double kvVoltSecondsPerMeter = 1.0125;
+      public static final double kaVoltSecondsSquaredPerMeter = 0.3397;
+      public static final double kPDriveVel = 3.2639;
       public static final double kTrackWidth = 0.51435;
 
-      // Track Width: 0.51435 meters.
       public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidth);
       public final static SimpleMotorFeedforward kAutoFeedforward = new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
 }
