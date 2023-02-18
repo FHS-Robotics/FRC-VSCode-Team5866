@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -52,17 +53,17 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 1;
-    public static final int kRearLeftDrivingCanId = 3;
-    public static final int kFrontRightDrivingCanId = 7;
-    public static final int kRearRightDrivingCanId = 5;
+    public static final int kFrontLeftDrivingCanId = 5;//kFrontLeftDrivingCanId
+    public static final int kRearLeftDrivingCanId = 7;//kRearLeftDrivingCanId
+    public static final int kFrontRightDrivingCanId = 3;//kFrontRightDrivingCanId
+    public static final int kRearRightDrivingCanId = 1;//kRearRightDrivingCanId
 
-    public static final int kFrontLeftTurningCanId = 2;
-    public static final int kRearLeftTurningCanId = 4;
-    public static final int kFrontRightTurningCanId = 8;
-    public static final int kRearRightTurningCanId = 6;
+    public static final int kFrontLeftTurningCanId = 6;//kFrontLeftTurningCanId
+    public static final int kRearLeftTurningCanId = 8;//kRearLeftTurningCanId
+    public static final int kFrontRightTurningCanId = 4;//kFrontRightTurningCanId
+    public static final int kRearRightTurningCanId = 2;//kRearRightTurningCanId
 
-    public static final boolean kGyroReversed = false;
+    public static final boolean kGyroReversed = false;//false
   }
 
   public static final class ModuleConstants {
@@ -160,7 +161,7 @@ public final class Constants {
   public static final class ArmConstants{
 
     public static final int shoulderCanID = 9; //shoulder motor
-    public static final double shoulder_speed = 0.4;
+    public static final double shoulder_speed = 0.6;
     public static final int s_reset_id = 1; //shoulder reset limit switch
         
     //Shoulder PID values
@@ -171,22 +172,22 @@ public final class Constants {
 
 
     public static final int elbowCanID = 10; //elbow motor
-    public static final double elbow_speed_multiplier = 1;
+    public static final double elbow_speed_multiplier = 0.8;
     public static final int elbow_en_ID = 0; //elbow encoder
     public static final int e_reset_id = 2; //elbow reset limit switch
 
-    public static final double shoulder_upper_limit = -4.5; //angle in degrees
+    public static final double shoulder_upper_limit = -6.5; //angle in degrees
 
   }
 
   public static final class ClawConstants {
     
     public static final int clawCanID = 11; //id of claw neo 550 motor
-    public static final double claw_speed_close = 0.4;
+    public static final double claw_speed_close = 0.5;
     public static final double claw_speed_open = 0.2;
     public static final int c_reset_id = 3; //outter limit switch of claw
 
-    public static final double default_close_degrees = 0.7;
+    public static final double default_close_degrees = 10;
     public static final double cube_close_degrees = 10;
     public static final double cone_close_degrees = 20;
   }
